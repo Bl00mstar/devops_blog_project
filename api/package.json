@@ -1,0 +1,14 @@
+{
+  "name": "devops_blog",
+  "version": "1.0.0",
+  "description": "api blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kkam",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
