@@ -1,16 +1,39 @@
-'use strict';
-
-const express = require('express');
-
-// Constants
-const PORT = 6000;
-const HOST = '0.0.0.0';
-
-// App
+const express = require("express");
+const mongoose = require("mongoose");
+const { Client } = require('pg')
+const cors = require("cors");
 const app = express();
-app.get('/', (req, res) => {
-  res.send('test');
-});
+const config = require("config");
+app.use(express.json());
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+app.use(cors());
+
+//setup mongo
+const db_mongo = config.get("mongoURI");
+mongoose
+  .connect(db_mongo, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB connected..."))
+  .catch((err) => console.log(err));
+
+//setup pg test
+// const db_pg = config.get('postgresURI')
+// const client = new Client({db_pg})
+// client.connect()
+// client.query('SELECT * FROM topics', (err, res) => {
+//     console.log(err, res)
+//     client.end()
+// })
+//use routes
+// app.use(require("./routes/index"));
+
+app.get('/', (req, res) => {
+    res.send('Hello World');
+  });
+
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => console.log(`Server started on port ${port}`));

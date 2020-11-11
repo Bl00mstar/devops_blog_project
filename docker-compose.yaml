@@ -1,0 +1,28 @@
+version: "3"
+services:
+  api:
+    image: docker-node-mongo
+    build: api/.
+    command: "node server.js"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - "mongo"
+      - "database"
+  database:
+    image: "postgres"
+    build: db/.
+    ports:
+      - "5500:5432"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+  # frontend:
+  #   build: client/.
+  #   container_name: frontend
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./:/frontend
+  #     - /frontend/node_modules
