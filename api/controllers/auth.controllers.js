@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const authService = require("../services/auth.service");
 const { body, validationResult } = require("express-validator");
-const bycrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");
 
@@ -17,7 +17,7 @@ exports.postAuthUser = async (req, res) => {
     const exsistingUser = await authService.findUser(email);
     if (!exsistingUser)
       return res.status(400).json({ msg: "User Does not exists" });
-    bycrypt.compare(password, exsistingUser.password).then((isMatch) => {
+    bcrypt.compare(password, exsistingUser.password).then((isMatch) => {
       if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
       jwt.sign(
         { id: exsistingUser.id },

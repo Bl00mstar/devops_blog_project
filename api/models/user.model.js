@@ -22,7 +22,7 @@ const UserSchema = new Schema({
   },
   enabled: {
     type: Boolean,
-    required: true,
+    default: true,
   },
 });
 

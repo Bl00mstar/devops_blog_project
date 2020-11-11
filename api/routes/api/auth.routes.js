@@ -8,8 +8,8 @@ const authController = require("../../controllers/auth.controllers");
 //@Public
 //@auth users
 router.post("/", [
-//   authController.validate("login"),
-//   authController.postAuthUser,
+  //   authController.validate("login"),
+  //   authController.postAuthUser,
 ]);
 // @route   GET api/auth/user
 // @desc    Get user data

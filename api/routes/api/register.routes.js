@@ -7,11 +7,5 @@ router.post("/", [
   registerController.validate("register"),
   registerController.postRegisterUser,
 ]);
-router.get("/", function (req, res) {
-  res.status(201).json({
-    data: userInfo,
-    message: "Successfully logged in.",
-  });
-});
 
 module.exports = router;
