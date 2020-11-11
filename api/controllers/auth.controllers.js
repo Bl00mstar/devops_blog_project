@@ -1,0 +1,70 @@
+const User = require("../models/user.model");
+const authService = require("../services/auth.service");
+const { body, validationResult } = require("express-validator");
+const bycrypt = require("bcryptjs");
+const config = require("config");
+const jwt = require("jsonwebtoken");
+
+exports.postAuthUser = async (req, res) => {
+  console.log(req.body);
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ msg: "Please enter all fields." });
+      return;
+    }
+    const { email, password } = req.body;
+    const exsistingUser = await authService.findUser(email);
+    if (!exsistingUser)
+      return res.status(400).json({ msg: "User Does not exists" });
+    bycrypt.compare(password, exsistingUser.password).then((isMatch) => {
+      if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
+      jwt.sign(
+        { id: exsistingUser.id },
+        config.get("jwtSecret"),
+        { expiresIn: 3600 },
+        (err, token) => {
+          if (err) return res.status(400).json({ msg: "Cannot log in." });
+          const userInfo = {
+            token,
+            user: {
+              id: exsistingUser.id,
+              nick: exsistingUser.nick,
+              email: exsistingUser.email,
+            },
+          };
+          return res.status(200).json({
+            data: userInfo,
+            message: "Successfully logged in.",
+          });
+        }
+      );
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: error.message });
+  }
+};
+
+exports.getUserData = async (req, res) => {
+  try {
+    const userData = await authService.getUser(req.user.id);
+    return res.status(200).json({
+      status: 200,
+      data: userData,
+      message: "Successfully logged in.",
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: error.message });
+  }
+};
+
+exports.validate = (method) => {
+  switch (method) {
+    case "login": {
+      return [
+        body("email", "Input correct email address.").isEmail(),
+        body("password", "Input password.").not().isEmpty(),
+      ];
+    }
+  }
+};

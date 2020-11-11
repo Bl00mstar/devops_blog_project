@@ -8,14 +8,16 @@ services:
       - "5000:5000"
     depends_on:
       - "mongo"
-      - "database"
-  database:
-    image: "postgres"
-    build: db/.
-    ports:
-      - "5500:5432"
+      # - "database"
+  # database:
+  #   image: "postgres"
+  #   build: db/.
+  #   ports:
+  #     - "5500:5432"
   mongo:
     image: mongo
+    volumes:
+      - ./localFolder:/data/db
     ports:
       - "27017:27017"
   # frontend:

@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { Client } = require('pg')
+// 
 const cors = require("cors");
 const app = express();
 const config = require("config");
@@ -28,11 +28,7 @@ mongoose
 //     client.end()
 // })
 //use routes
-// app.use(require("./routes/index"));
-
-app.get('/', (req, res) => {
-    res.send('Hello World');
-  });
+app.use(require("./routes/index"));
 
 const port = process.env.PORT || 5000;
 
