@@ -13,8 +13,8 @@ exports.postAuthUser = async (req, res) => {
       res.status(400).json({ msg: "Please enter all fields." });
       return;
     }
-    const { email, password } = req.body;
-    const exsistingUser = await authService.findUser(email);
+    const { nick, password } = req.body;
+    const exsistingUser = await authService.findUser(nick);
     if (!exsistingUser)
       return res.status(400).json({ msg: "User Does not exists" });
     bcrypt.compare(password, exsistingUser.password).then((isMatch) => {
@@ -62,7 +62,7 @@ exports.validate = (method) => {
   switch (method) {
     case "login": {
       return [
-        body("email", "Input correct email address.").isEmail(),
+        body("nick", "Input correct nickname.").not().isEmpty(),
         body("password", "Input password.").not().isEmpty(),
       ];
     }

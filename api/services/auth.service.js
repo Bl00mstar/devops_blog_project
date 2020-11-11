@@ -8,11 +8,11 @@ exports.getUser = async (id) => {
   }
 };
 
-exports.findUser = async (email) => {
+exports.findUser = async (nick) => {
   try {
-    const findByEmail = await User.findOne({ email });
-    return findByEmail;
+    const findByNick = await User.findOne({ nick });
+    return findByNick;
   } catch (error) {
-    throw Error("Cannot find email address.");
+    throw Error("Cannot find this username.");
   }
 };
