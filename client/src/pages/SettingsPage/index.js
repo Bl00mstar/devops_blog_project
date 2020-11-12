@@ -1,17 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import LoginForm from "../../components/Form/LoginForm";
 
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ isUserAuthenticated }) => {
+const Settings = ({ isUserAuthenticated }) => {
   let navigate = useNavigate();
 
-  if (isUserAuthenticated) {
-    navigate("/settings");
+  if (!isUserAuthenticated) {
+    navigate("/login");
   }
 
-  return <LoginForm />;
+  return <div>Settings</div>;
 };
 
 const mapStateToProps = (state) => ({
@@ -19,4 +18,4 @@ const mapStateToProps = (state) => ({
   isUserAuthenticated: state.user.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(Settings);

@@ -28,3 +28,14 @@ services:
   #   volumes:
   #     - ./:/frontend
   #     - /frontend/node_modules
+  frontend:
+    build:
+      context: client/.
+      dockerfile: client/Dockerfile.dev
+    command: npm run start
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/frontend
+      - /frontend/node_modules

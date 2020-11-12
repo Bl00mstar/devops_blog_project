@@ -1,0 +1,9 @@
+const userTypes = {
+  USER_LOADING: "USER_LOADING",
+  USER_LOADED: "USER_LOADED",
+  AUTH_ERROR: "AUTH_ERROR",
+  LOGIN_FAIL: "LOGIN_FAIL",
+  LOGIN_SUCCESS: "LOGIN_SUCCESS",
+};
+
+export default userTypes;

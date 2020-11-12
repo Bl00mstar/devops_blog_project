@@ -16,7 +16,7 @@ exports.postAuthUser = async (req, res) => {
     const { nick, password } = req.body;
     const exsistingUser = await authService.findUser(nick);
     if (!exsistingUser)
-      return res.status(400).json({ msg: "User Does not exists" });
+      return res.status(400).json({ msg: "Invalid credentials" });
     bcrypt.compare(password, exsistingUser.password).then((isMatch) => {
       if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
       jwt.sign(

@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 
+import { useDispatch } from "react-redux";
+
+import { logInUser } from "../../store/user/user.actions";
+import Error from "../Alert/Error";
+
 import Button from "../Button/Button";
 import InputForm from "../Input/InputForm";
 
@@ -7,6 +12,8 @@ export default function LoginForm() {
   const [nick, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState("disabled");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (nick.length !== 0 && password.length !== 0) {
@@ -19,7 +26,7 @@ export default function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(nick, password);
-    // dispatch(logInUser({ nick, password }));
+    dispatch(logInUser({ nick, password }));
   };
 
   return (
@@ -27,7 +34,7 @@ export default function LoginForm() {
       <div className='container'>
         <div className='row'>
           <div className='col s12 m6 offset-m3'>
-            {/* <Error /> */}
+            <Error />
             <div
               className='card transparent z-depth-0 '
               style={{ opacity: "1" }}

@@ -1,23 +1,37 @@
 import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 import NewNavLink from "./navLink";
 import { routes } from "../../Routes";
 
-export default function Navbar() {
+const Navbar = ({ isUserAuthenticated }) => {
   useEffect(() => {
     const sidenav = document.querySelectorAll(".sidenav");
     M.Sidenav.init(sidenav, {});
   }, []);
 
-  const publicRoutes = routes.map(({ name, path, type }, key) => {
-    if (type === "public" || type === "private" || type === "auth")
-      return (
-        <li>
-          <NewNavLink path={path} name={name} key={key} />
-        </li>
-      );
-    return <></>;
-  });
+  let siteRoutes;
+  if (isUserAuthenticated) {
+    siteRoutes = routes.map(({ name, path, type }, key) => {
+      if (type === "public" || type === "private")
+        return (
+          <li>
+            <NewNavLink path={path} name={name} key={key} />
+          </li>
+        );
+      return <></>;
+    });
+  } else {
+    siteRoutes = routes.map(({ name, path, type }, key) => {
+      if (type === "public" || type === "auth")
+        return (
+          <li>
+            <NewNavLink path={path} name={name} key={key} />
+          </li>
+        );
+      return <></>;
+    });
+  }
 
   return (
     <header>
@@ -31,7 +45,7 @@ export default function Navbar() {
         className='sidenav sidenav-fixed'
         style={{ transform: "translateX(0%)" }}
       >
-        {publicRoutes}
+        {siteRoutes}
       </ul>
 
       <ul
@@ -39,8 +53,15 @@ export default function Navbar() {
         id='mobile-demo'
         style={{ top: "50px", width: "150px" }}
       >
-        {publicRoutes}
+        {siteRoutes}
       </ul>
     </header>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  isUserLoading: state.user.isLoading,
+  isUserAuthenticated: state.user.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(Navbar);
