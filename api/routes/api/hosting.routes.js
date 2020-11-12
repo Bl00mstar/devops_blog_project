@@ -1,19 +1,37 @@
 const express = require("express");
 const router = express.Router();
 
-const { auth } = require("../../middleware/auth");
 const hostingController = require("../../controllers/hosting.controllers");
 
+const path = require("path");
+const GridFsStorage = require("multer-gridfs-storage");
+const multer = require("multer");
+const crypto = require("crypto");
+const config = require("config");
 // PATH /api/hosting
 
-//upload
-router.post("/", [hostingController.postUploadFile]);
-//download
-router.get("/", [hostingController.getDownloadFile]);
-//delete
-router.post("/:filename", [hostingController.postDeleteFile]);
+//init storage
+const storage = new GridFsStorage({
+  url: config.mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString("hex") + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: "uploads",
+        };
+        resolve(fileInfo);
+      });
+    });
+  },
+});
 
-//render image?
-// router.get("/user", auth, authController.getUserData);
+const upload = multer({ storage });
+
+router.use("/", hostingController(upload));
 
 module.exports = router;

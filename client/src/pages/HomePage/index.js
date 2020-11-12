@@ -1,5 +1,11 @@
 import React from "react";
 
+import ShowImages from "./showImages";
+
 export default function index() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <ShowImages />
+    </div>
+  );
 }
