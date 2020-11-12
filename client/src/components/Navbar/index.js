@@ -15,8 +15,8 @@ const Navbar = ({ isUserAuthenticated }) => {
     siteRoutes = routes.map(({ name, path, type }, key) => {
       if (type === "public" || type === "private")
         return (
-          <li>
-            <NewNavLink path={path} name={name} key={key} />
+          <li key={key}>
+            <NewNavLink path={path} name={name} />
           </li>
         );
       return <></>;
@@ -25,8 +25,8 @@ const Navbar = ({ isUserAuthenticated }) => {
     siteRoutes = routes.map(({ name, path, type }, key) => {
       if (type === "public" || type === "auth")
         return (
-          <li>
-            <NewNavLink path={path} name={name} key={key} />
+          <li key={key}>
+            <NewNavLink path={path} name={name} />
           </li>
         );
       return <></>;

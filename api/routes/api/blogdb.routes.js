@@ -1,0 +1,15 @@
+const express = require("express");
+const router = express.Router();
+
+const { auth } = require("../../middleware/auth");
+const blogController = require("../../controllers/blog.controllers");
+
+router.get("/topics", [blogController.getTopics]);
+router.post("/topics", [blogController.postTopics]);
+router.delete("/topics/:id", [blogController.deleteTopic]);
+
+router.get("/tools", [blogController.getTools]);
+router.post("/tools", [blogController.postTools]);
+router.delete("/tools/:id", [blogController.deleteTool]);
+
+module.exports = router;

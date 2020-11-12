@@ -2,3 +2,4 @@ api/node_modules
 api/config
 stat.txt
 database.env
+api/db.js

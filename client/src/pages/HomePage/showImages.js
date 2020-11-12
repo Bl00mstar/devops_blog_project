@@ -12,12 +12,13 @@ export default function ShowImages() {
       })
       .catch((err) => alert(err));
   }, [imageList]);
+
   return (
     <div>
       <div className='ListPage'>
         <div className='ListImageContainer'>
-          {imageList.map((file) => (
-            <div className='ListImage'>
+          {imageList.map((file, key) => (
+            <div className='ListImage' key={key}>
               <p className='ListImage__Caption'>{file.caption}</p>
               <p className='ListImage__Date'>{file.createdAt}</p>
               <img
@@ -27,7 +28,7 @@ export default function ShowImages() {
                 }
                 width='200'
                 height='200'
-                alt='list-image'
+                alt='list'
                 className='ListImage__Image'
               />
             </div>

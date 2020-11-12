@@ -37,7 +37,7 @@ export const isAuthenticated = (getState) => {
     } else {
       reject({ data: "no token here" });
     }
-    console.log(config);
+
     axios
       .get(`${api_url}api/auth/user`, config)
       .then((res) => {
