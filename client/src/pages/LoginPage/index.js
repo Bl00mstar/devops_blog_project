@@ -1,5 +1,11 @@
 import React from "react";
 
-export default function index() {
-  return <div>Login</div>;
+import LoginForm from "../../components/Form/LoginForm";
+
+export default function Login(props) {
+  return (
+    <div>
+      <LoginForm />
+    </div>
+  );
 }

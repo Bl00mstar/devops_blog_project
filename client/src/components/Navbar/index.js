@@ -10,7 +10,7 @@ export default function Navbar() {
   }, []);
 
   const publicRoutes = routes.map(({ name, path, type }, key) => {
-    if (type === "public")
+    if (type === "public" || type === "private" || type === "auth")
       return (
         <li>
           <NewNavLink path={path} name={name} key={key} />
