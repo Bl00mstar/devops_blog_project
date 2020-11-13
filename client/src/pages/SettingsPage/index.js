@@ -7,7 +7,6 @@ import UploadContainer from "../../components/Settings/uploadContainer";
 import Tool from "../../components/Settings/addTool";
 import Post from "../../components/Settings/addPost";
 import Topic from "../../components/Settings/addTopic";
-import Chapter from "../../components/Settings/addChapter";
 
 const Settings = ({ isUserAuthenticated }) => {
   let navigate = useNavigate();

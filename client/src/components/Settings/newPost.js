@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
 
+import AddChapter from "./addChapter";
+
 const NewPost = () => {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
   const [value, setValue] = useState(0);
+  const [fields, setFields] = useState();
+
   useEffect(() => {
     const options = {
       inDuration: 250,
@@ -14,7 +18,7 @@ const NewPost = () => {
       startingTop: "4%",
       endingTop: "5%",
     };
-    var elems = document.querySelectorAll(".chapters");
+    var elems = document.querySelectorAll(".collapsible");
     M.Collapsible.init(elems, {});
     var elems = document.getElementById("sel");
     var instances = window.M.FormSelect.init(elems, {});
@@ -26,14 +30,6 @@ const NewPost = () => {
       setShowModal(false);
     }
   }, [showModal]);
-
-  //   const onSubmit = (e) => {
-  //     e.preventDefault();
-  //     const newAmount = {
-  //       value,
-  //       name,
-  //     };
-  //   };
 
   return (
     <div className='row center'>
@@ -75,30 +71,11 @@ const NewPost = () => {
                 </div>
               </form>
             </div>
-            <button class='btn-small'>add chapter</button>
-            <ul className='collapsible'>
-              <li>
-                <div id='name' className='collapsible-header'>
-                  Chapter 1
-                </div>
-                <div className='collapsible-body'>
-                  <label for='aaaa'>Chpater 1 title</label>
-                  <input id='aaaa' type='text' class='validate'></input>
-                  <form action='#'>
-                    <div class='file-field input-field'>
-                      <div class='btn-small'>
-                        <span>Choose image</span>
-                        <input type='file'></input>
-                      </div>
-                      <div class='file-path-wrapper'>
-                        <input class='file-path validate' type='text'></input>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </li>
-            </ul>
+            {/* <button class='btn-small'>add chapter</button> */}
+
+            <AddChapter></AddChapter>
           </form>
+          <button class='btn-small'>CREATE</button>
         </div>
       </div>
     </div>
