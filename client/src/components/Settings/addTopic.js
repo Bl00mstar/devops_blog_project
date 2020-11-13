@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+
+import M from "materialize-css/dist/js/materialize.min.js";
 
 import * as api from "../../services/settings.service";
 
@@ -7,7 +8,6 @@ import InputForm from "../Input/InputForm";
 import Button from "../Button/Button";
 
 export default function AddTopic() {
-  const [reload, setReload] = useState("");
   const [newTopic, setNewTopic] = useState("");
   const [topics, setTopics] = useState([]);
 
@@ -16,16 +16,23 @@ export default function AddTopic() {
       const topics = await api.fetchData("api/blog/topics", "GET");
       setTopics(topics);
     } catch (err) {
-      console.error(err.message);
+      M.toast({ html: err.message });
     }
   };
 
   const deleteTopic = async (id) => {
     try {
-      const topics = await api.fetchData(`api/blog/topics/${id}`, "DELETE");
-      setTopics(topics.filter((topic) => topic.topic_id !== id));
+      const deleteTopic = await api.fetchData(
+        `api/blog/topics/${id}`,
+        "DELETE"
+      );
+      if (deleteTopic.success) {
+        getTopics() && M.toast({ html: deleteTopic.msg });
+      } else {
+        M.toast({ html: deleteTopic.msg });
+      }
     } catch (err) {
-      console.error(err.message);
+      M.toast({ html: err.message });
     }
   };
 
@@ -35,8 +42,17 @@ export default function AddTopic() {
 
   const handleTopic = async (e) => {
     e.preventDefault();
-    // setReload("");
-    await api.postData(`api/blog/topics`, { newTopic: newTopic });
+    try {
+      await api
+        .postData(`api/blog/topics`, { newTopic: newTopic })
+        .then((data) => {
+          data.success
+            ? getTopics() && M.toast({ html: newTopic + " was added" })
+            : M.toast({ html: "Failure." });
+        });
+    } catch (err) {
+      M.toast({ html: err.message });
+    }
   };
 
   return (

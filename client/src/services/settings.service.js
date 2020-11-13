@@ -27,6 +27,6 @@ export const postData = async (path, data = {}) => {
     const jsonData = await src.json();
     return jsonData;
   } catch (err) {
-    console.error(err.message);
+    return err.message;
   }
 };

@@ -29,15 +29,21 @@ exports.postTopics = async (req, res) => {
 };
 
 exports.deleteTopic = async (req, res) => {
+  console.log("asd");
   try {
     const { id } = req.params;
     const deleteTodo = await pool.query(
       "DELETE FROM topics WHERE topic_id = $1",
       [id]
     );
-    res.json("Todo was deleted!");
-  } catch (err) {
-    console.log(err.message);
+    if (deleteTodo) {
+      return res.status(200).json({
+        success: true,
+        msg: "Topic was deleted.",
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({ success: false, msg: error.message });
   }
 };
 
@@ -50,16 +56,16 @@ exports.getTools = async (req, res) => {
   }
 };
 exports.postTools = async (req, res) => {
-  const { newTopic } = req.body;
+  const { tool, topic } = req.body;
   try {
-    const topics = await pool.query(
-      "INSERT INTO topics (description) VALUES($1)",
-      [newTopic]
+    const tools = await pool.query(
+      "INSERT INTO tools(topic_id,description) VALUES($1,$2) RETURNING *",
+      [topic, tool]
     );
-    if (topics) {
+    if (tools) {
       return res.status(200).json({
         success: true,
-        message: topics,
+        message: tools,
       });
     }
   } catch (error) {

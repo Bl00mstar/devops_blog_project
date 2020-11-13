@@ -25,7 +25,7 @@ const Settings = ({ isUserAuthenticated }) => {
     { name: "Topic", element: <Topic /> },
     { name: "Tool", element: <Tool /> },
     { name: "Post", element: <Post /> },
-    { name: "Chapter", element: <Chapter /> },
+    // { name: "Chapter", element: <Chapter /> },
   ];
 
   let settingsTools;
