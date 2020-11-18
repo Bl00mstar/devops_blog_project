@@ -5,10 +5,22 @@ const UploadContainer = () => {
   const [caption, setCaption] = useState("");
   const [uploadedImage, setUploadedImage] = useState("");
   const [image, setImage] = useState("");
+  const [imageId, setImageId] = useState("");
 
   useEffect(() => {
     console.log(image);
   }, [image]);
+
+  const handleDelete = () => {
+    axios
+      .get("http://192.168.55.200:5000/api/hosting/delete/" + imageId)
+      .then((response) => {
+        if (response.data.success) {
+          alert("File with ID: " + imageId + " has been deleted");
+        }
+      })
+      .catch((err) => alert(err));
+  };
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -19,9 +31,9 @@ const UploadContainer = () => {
     axios
       .post("http://192.168.55.200:5000/api/hosting", formData)
       .then((response) => {
-        console.log(response.data.image.filename);
         response.data.success
-          ? setImage(response.data.image.filename)
+          ? setImage(response.data.image.filename) &&
+            setImageId(response.data.image._id)
           : alert("File already exists");
       })
       .catch((err) => alert("Error: " + err));
@@ -31,6 +43,7 @@ const UploadContainer = () => {
     <div className='row center s12'>
       {image ? (
         <div className='container'>
+          <button onClick={handleDelete(image)}>{image}</button>
           <img
             src={"http://192.168.55.200:5000/api/hosting/image/" + image}
             width='50'
@@ -57,10 +70,10 @@ const UploadContainer = () => {
                   <span>File</span>
                   <input
                     type='file'
-                    onChange={(e) => {
-                      setUploadedImage(e.target.files[0]);
-                      // setUploadedImageUrl(URL.createObjectURL(e.target.files[0]));
-                    }}
+                    //onChange={(e) => {
+                    //setUploadedImage(e.target.files[0]);
+                    // setUploadedImageUrl(URL.createObjectURL(e.target.files[0]));
+                    //}}
                   ></input>
                 </div>
                 <div class='file-path-wrapper'>
