@@ -3,6 +3,7 @@ const imageRouter = express.Router();
 const mongoose = require("mongoose");
 const Image = require("../models/image.model");
 const config = require("config");
+const { v4: uuidv4 } = require("uuid");
 
 module.exports = (upload) => {
   const db_mongo = config.get("mongoURI");
@@ -27,8 +28,9 @@ module.exports = (upload) => {
     .route("/")
     .post(upload.single("file"), (req, res, next) => {
       console.log(req.body);
+      let caption = uuidv4();
       // check for existing images
-      Image.findOne({ caption: req.body.caption })
+      Image.findOne({ caption: caption })
         .then((image) => {
           console.log(image);
           if (image) {
@@ -39,7 +41,7 @@ module.exports = (upload) => {
           }
 
           let newImage = new Image({
-            caption: req.body.caption,
+            caption: caption,
             filename: req.file.filename,
             fileId: req.file.id,
           });

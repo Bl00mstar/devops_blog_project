@@ -4,12 +4,15 @@ import axios from "axios";
 const UploadContainer = () => {
   const [caption, setCaption] = useState("");
   const [uploadedImage, setUploadedImage] = useState("");
+  const [showUploadButton, setShowUploadButton] = useState(false);
   const [image, setImage] = useState("");
   const [imageId, setImageId] = useState("");
 
   useEffect(() => {
     console.log(image);
-  }, [image]);
+  }, [uploadedImage]);
+
+  const UploadButton = <div></div>;
 
   const handleDelete = () => {
     axios
@@ -41,7 +44,7 @@ const UploadContainer = () => {
 
   return (
     <div className='row center s12'>
-      {image ? (
+      {/* {image ? (
         <div className='container'>
           <button onClick={handleDelete(image)}>{image}</button>
           <img
@@ -51,30 +54,28 @@ const UploadContainer = () => {
             alt='foto'
           ></img>
           <span>http://192.168.55.200:5000/api/hosting/image/{image}</span>
-        </div>
-      ) : (
-        <div>
-          <div className='col s4'>
-            <input
-              type='text'
-              className='Upload__Caption'
-              placeholder='Image Caption'
-              onChange={(e) => setCaption(e.target.value)}
-              value={caption}
-            />
+        </div>*/}
+      {showUploadButton ? (
+        <>
+          <div className='col s12'>
+            <button className='btn-small' onClick={handleClick}>
+              Upload image
+            </button>
           </div>
-          <div className='col s4'>
+        </>
+      ) : (
+        <>
+          <div className='col s12'>
             <form action='#'>
-              <div class='file-field input-field'>
+              <label for='upload-image'>Upload image</label>
+              <div class='file-field input-field' id='upload-image'>
                 <div class='btn-small'>
-                  <span>File</span>
+                  <span>Choose image</span>
                   <input
                     type='file'
                     onChange={(e) => {
                       setUploadedImage(e.target.files[0]);
-                      // setUploadedImageUrl(
-                      //   URL.createObjectURL(e.target.files[0])
-                      // );
+                      setShowUploadButton(true);
                     }}
                   ></input>
                 </div>
@@ -84,12 +85,7 @@ const UploadContainer = () => {
               </div>
             </form>
           </div>
-          <div className='col s4'>
-            <button className='btn-large' onClick={handleClick}>
-              Upload
-            </button>
-          </div>
-        </div>
+        </>
       )}
     </div>
   );
