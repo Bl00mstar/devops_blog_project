@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
 
+import * as api from "../../services/settings.service";
+
 import AddChapter from "./addChapter";
 
-const NewPost = () => {
+import UploadContainer from "./uploadContainer";
+
+import InputForm from "../Input/InputForm";
+import SelectForm from "../Select/SelectForm";
+
+const PostCreate = () => {
   const [showModal, setShowModal] = useState(false);
+  const [tools, setTools] = useState([]);
+  const [selectedTools, setSelectedTools] = useState(null);
   const [name, setName] = useState("");
   const [value, setValue] = useState(0);
   const [fields, setFields] = useState();
 
   useEffect(() => {
+    getTools();
     const options = {
       inDuration: 250,
       outDuration: 250,
@@ -20,8 +30,6 @@ const NewPost = () => {
     };
     var elems = document.querySelectorAll(".collapsible");
     M.Collapsible.init(elems, {});
-    var elems = document.getElementById("sel");
-    var instances = window.M.FormSelect.init(elems, {});
     const modal = document.querySelectorAll(".amount");
     M.Modal.init(modal, options);
     if (showModal) {
@@ -31,55 +39,61 @@ const NewPost = () => {
     }
   }, [showModal]);
 
+  useEffect(() => {
+    console.log(selectedTools);
+  }, [selectedTools]);
+
+  const getTools = async () => {
+    try {
+      const tools = await api.fetchData("api/blog/tools", "GET");
+      setTools(tools);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <div className='row center'>
       <a
         className='btn black waves-effect waves-light modal-trigger'
         data-target='add-amount'
       >
-        Add Post
+        Create Post
       </a>
       <div id='add-amount' className='modal amount'>
         <div className='modal-content'>
           <form id='add_amount'>
             <h5>Create post:</h5>
             <div class='input-field col s12'>
-              <input id='first_name' type='text' class='validate'></input>
-              <label for='first_name'>Title</label>
+              <InputForm
+                label={"post-title"}
+                type={"text"}
+                name={"Topic Title"}
+                onChange={(e) => console.log(e.target.value)}
+              />
+            </div>
+
+            <div class='input-field col s12'>
+              <SelectForm
+                data={tools}
+                value={"tool_id"}
+                name={"description"}
+                key={"tool_id"}
+                onChange={setSelectedTools}
+              />
             </div>
             <div class='input-field col s12'>
-              <select id='sel' multiple>
-                <option value='' disabled selected>
-                  Choose your option
-                </option>
-                <option value='1'>Option 1</option>
-                <option value='2'>Option 2</option>
-                <option value='3'>Option 3</option>
-              </select>
-              <label>Select tools</label>
-            </div>
-            <div class='input-field col s12'>
-              <form action='#'>
-                <div class='file-field input-field'>
-                  <div class='btn-small'>
-                    <span>Choose image</span>
-                    <input type='file'></input>
-                  </div>
-                  <div class='file-path-wrapper'>
-                    <input class='file-path validate' type='text'></input>
-                  </div>
-                </div>
-              </form>
+              <UploadContainer />
             </div>
             {/* <button class='btn-small'>add chapter</button> */}
 
             <AddChapter></AddChapter>
           </form>
-          <button class='btn-small'>CREATE</button>
+          <button className='btn-small'>CREATE</button>
         </div>
       </div>
     </div>
   );
 };
 
-export default NewPost;
+export default PostCreate;

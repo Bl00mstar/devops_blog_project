@@ -3,9 +3,8 @@ import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { useNavigate } from "react-router-dom";
 
-import UploadContainer from "../../components/Settings/uploadContainer";
 import Tool from "../../components/Settings/addTool";
-import Post from "../../components/Settings/addPost";
+import Post from "../../components/Settings/postCreate";
 import Topic from "../../components/Settings/addTopic";
 
 const Settings = ({ isUserAuthenticated }) => {
@@ -24,7 +23,6 @@ const Settings = ({ isUserAuthenticated }) => {
     { name: "Topic", element: <Topic /> },
     { name: "Tool", element: <Tool /> },
     { name: "Post", element: <Post /> },
-    // { name: "Chapter", element: <Chapter /> },
   ];
 
   let settingsTools;
@@ -43,7 +41,6 @@ const Settings = ({ isUserAuthenticated }) => {
     <div className='valign' style={{ width: "100%" }}>
       <span className='card-title black-text center'></span>
       <ul className='collapsible'>{settingsTools}</ul>
-      <UploadContainer />
     </div>
   );
 };

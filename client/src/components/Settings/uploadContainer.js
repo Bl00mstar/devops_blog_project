@@ -70,10 +70,12 @@ const UploadContainer = () => {
                   <span>File</span>
                   <input
                     type='file'
-                    //onChange={(e) => {
-                    //setUploadedImage(e.target.files[0]);
-                    // setUploadedImageUrl(URL.createObjectURL(e.target.files[0]));
-                    //}}
+                    onChange={(e) => {
+                      setUploadedImage(e.target.files[0]);
+                      // setUploadedImageUrl(
+                      //   URL.createObjectURL(e.target.files[0])
+                      // );
+                    }}
                   ></input>
                 </div>
                 <div class='file-path-wrapper'>
