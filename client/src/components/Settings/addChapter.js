@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { useForm } from "react-hook-form";
 
-import InputForm from "../../components/Input/InputForm";
 import UploadContainer from "./uploadContainer";
 export default function NewPost() {
   const [indexes, setIndexes] = React.useState([]);
