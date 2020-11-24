@@ -30,18 +30,33 @@ export default function NewPost() {
   };
 
   const clearChapters = () => {
+    setCounter(1);
     setIndexes([]);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <button type='button' onClick={addChapter}>
-        Add Chapter
-      </button>
-      <button type='button' onClick={clearChapters}>
-        Clear Chapters
-      </button>
-      <input type='submit' />
+      <div class='row'>
+        <div class='col s4'>
+          <a
+            className='waves-effect waves-light btn-small blue'
+            onClick={addChapter}
+          >
+            Add Chapter
+          </a>
+        </div>
+        <div class='col s4'>
+          <a
+            className='waves-effect waves-light btn-small blue'
+            onClick={clearChapters}
+          >
+            Clear Chapters
+          </a>
+        </div>
+        <div class='col s4'>
+          <a className='waves-effect waves-light btn-small blue'>Submit?</a>
+        </div>
+      </div>
       {indexes.map((index) => {
         const fieldName = `chapters[${index}]`;
         return (
