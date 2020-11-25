@@ -16,7 +16,9 @@ export default function NewPost() {
   const onSubmit = (data) => {
     console.log(data);
   };
-
+  const handleImage = (name, value, a) => {
+    console.log(name, value, a);
+  };
   const addChapter = () => {
     setIndexes((prevIndexes) => [...prevIndexes, counter]);
     setCounter((prevCounter) => prevCounter + 1);
@@ -82,18 +84,16 @@ export default function NewPost() {
                       ref={register}
                     />
                   </label>
-                  <UploadContainer></UploadContainer>
-                  {/* <form action='#'>
-                    <div class='file-field input-field'>
-                      <div class='btn-small'>
-                        <span>Chapter image</span>
-                        <input type='file'></input>
-                      </div>
-                      <div class='file-path-wrapper'>
-                        <input class='file-path validate' type='text'></input>
-                      </div>
-                    </div>
-                  </form> */}
+
+                  <UploadContainer imageUrl={handleImage} />
+                  <label>
+                    Image {index} Url:
+                    <input
+                      type='text'
+                      name={`${fieldName}.imageUrl`}
+                      ref={register}
+                    />
+                  </label>
                   <div class='row'>
                     <form class='col s12'>
                       <div class='row'>

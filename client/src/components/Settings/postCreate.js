@@ -14,9 +14,14 @@ const PostCreate = () => {
   const [showModal, setShowModal] = useState(false);
   const [tools, setTools] = useState([]);
   const [selectedTools, setSelectedTools] = useState(null);
-  const [name, setName] = useState("");
-  const [value, setValue] = useState(0);
-  const [fields, setFields] = useState();
+  const [selectedImage, setSelectedImage] = useState("");
+
+  const [data, setData] = useState({
+    titlePost: "",
+    toolsPost: [],
+    image: "",
+    chapters: [],
+  });
 
   useEffect(() => {
     getTools();
@@ -39,10 +44,6 @@ const PostCreate = () => {
     }
   }, [showModal]);
 
-  useEffect(() => {
-    console.log(selectedTools);
-  }, [selectedTools]);
-
   const getTools = async () => {
     try {
       const tools = await api.fetchData("api/blog/tools", "GET");
@@ -50,6 +51,19 @@ const PostCreate = () => {
     } catch (err) {
       console.error(err.message);
     }
+  };
+
+  useEffect(() => {
+    handleCreate("toolsPost", selectedTools);
+  }, [selectedTools]);
+
+  const handleCreate = (name, value) => {
+    console.log("asd" + name + value);
+    setData((data) => ({
+      ...data,
+      [name]: value,
+    }));
+    console.log(data);
   };
 
   return (
@@ -66,10 +80,11 @@ const PostCreate = () => {
             <h5>Create post:</h5>
             <div class='input-field col s12'>
               <InputForm
+                id={"xd"}
                 label={"post-title"}
                 type={"text"}
                 name={"Topic Title"}
-                onChange={(e) => console.log(e.target.value)}
+                onChange={(e) => handleCreate("titlePost", e.target.value)}
               />
             </div>
 
@@ -83,13 +98,15 @@ const PostCreate = () => {
               />
             </div>
             <div class='input-field col s12'>
-              <UploadContainer />
+              <UploadContainer imageUrl={handleCreate} />
             </div>
             {/* <button class='btn-small'>add chapter</button> */}
 
-            <AddChapter></AddChapter>
+            {/* <AddChapter></AddChapter> */}
           </form>
-          <button className='btn-small'>CREATE</button>
+          <button className='btn-small' onClick={handleCreate}>
+            CREATE
+          </button>
         </div>
       </div>
     </div>

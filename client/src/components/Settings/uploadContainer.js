@@ -3,7 +3,7 @@ import axios from "axios";
 
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const UploadContainer = () => {
+const UploadContainer = ({ imageUrl }) => {
   const [uploadedImage, setUploadedImage] = useState("");
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [image, setImage] = useState("");
@@ -15,6 +15,10 @@ const UploadContainer = () => {
       setShowUploadButton(false) &&
       setUploadedImage("");
   };
+
+  useEffect(() => {
+    imageUrl("image", image);
+  }, [image]);
 
   const copyToClipBoard = async (copyLink) => {
     try {
@@ -28,7 +32,7 @@ const UploadContainer = () => {
   const handleClick = (e) => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("caption", "asd8uyfbas80df");
+    // formData.append("caption", "asd8uyfbas80df");
     formData.append("file", uploadedImage);
     axios
       .post("http://192.168.55.200:5000/api/hosting", formData)

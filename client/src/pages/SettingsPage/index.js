@@ -4,7 +4,7 @@ import M from "materialize-css/dist/js/materialize.min.js";
 import { useNavigate } from "react-router-dom";
 
 import Tool from "../../components/Settings/addTool";
-import Post from "../../components/Settings/postCreate";
+import Create from "../../components/Settings/postMenu";
 import Topic from "../../components/Settings/addTopic";
 
 const Settings = ({ isUserAuthenticated }) => {
@@ -22,7 +22,7 @@ const Settings = ({ isUserAuthenticated }) => {
   const tools = [
     { name: "Topic", element: <Topic /> },
     { name: "Tool", element: <Tool /> },
-    { name: "Post", element: <Post /> },
+    { name: "Create", element: <Create /> },
   ];
 
   let settingsTools;
