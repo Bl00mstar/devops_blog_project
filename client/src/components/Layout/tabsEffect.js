@@ -5,32 +5,41 @@ import React, { useEffect } from "react";
 export default function TabsEffect({ tabsContent }) {
   useEffect(() => {
     var el = document.querySelectorAll(".tabs");
-    M.Modal.init(el);
+    M.Tabs.init(el);
     console.log(tabsContent);
     console.log(tabsContent);
   });
 
-  //   let ul_options = tabsContent.map((tab, index) => (
-  //     <li class="tab col s6" key={index}> {tab.label} </li>
-  //   ));
+  //   let arr = [
+  //     { label: "Show all", name: "list", content: "list of chapters" },
+  //     {
+  //       label: "Add chapter",
+  //       name: "Add",
+  //       content: "Dodaj nowy",
+  //     },
+  //   ];
+  //   console.log(arr);
 
-  return (
-    <div class='row'>
-      <div class='col s12'>
-        <ul class='tabs'>
-          {tabsContent.map((tab, index) => (
-            <li class='tab col s6' key={index}>
-              <a href={"#" + tab.name}>{tab.label}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div id={"#Add"} class='col s12'>
-        asdasddsa
-      </div>
-      <div id={"#list"} class='col s12'>
-        dddddddddddddd
-      </div>
+  let li_options = tabsContent.map((tab, index) => (
+    <li key={index} class='tab'>
+      <a href={"#" + tab.name}>{tab.label}</a>
+    </li>
+  ));
+
+  let li_content = tabsContent.map((tab, index) => (
+    <div id={tab.name} class='col s12'>
+      <p>{tab.content}</p>
+    </div>
+  ));
+
+  let tab_content = (
+    <div>
+      <ul class='tabs tabs-fixed-width tab-demo z-depth-1'>{li_options}</ul>
+      {li_content}
     </div>
   );
+
+  console.log(tab_content);
+
+  return <div>{tab_content}</div>;
 }
