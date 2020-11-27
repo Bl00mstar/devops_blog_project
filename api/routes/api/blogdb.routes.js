@@ -13,6 +13,8 @@ router.get("/tools", [blogController.getTools]);
 router.post("/tools", [blogController.postTools]);
 router.delete("/tools/:id", [blogController.deleteTool]);
 
+// PATH /api/blog
+
 router.post("/post", [postController.postPost]);
 
 module.exports = router;

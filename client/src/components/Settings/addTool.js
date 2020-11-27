@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 import * as api from "../../services/settings.service";
 import M from "materialize-css/dist/js/materialize.min.js";
@@ -30,14 +29,14 @@ export default function AddTool() {
     }
   };
 
-  const deleteTool = async (id) => {
-    try {
-      const tools = await api.fetchData(`api/blog/tools/${id}`, "DELETE");
-      setTools(tools.filter((tool) => tool.tool_id !== id));
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
+  // const deleteTool = async (id) => {
+  //   try {
+  //     const tools = await api.fetchData(`api/blog/tools/${id}`, "DELETE");
+  //     setTools(tools.filter((tool) => tool.tool_id !== id));
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,8 +69,8 @@ export default function AddTool() {
         <div className='col s7'>
           <thead></thead>
           <tbody>
-            {tools.map((tool) => (
-              <tr key={tool.tool_id}>
+            {tools.map((tool, key) => (
+              <tr key={key}>
                 <td>{tool.description}</td>
                 <td>
                   <button className='btn btn-small red'>
@@ -95,8 +94,8 @@ export default function AddTool() {
                   <option value='select' disabled selected>
                     Choose your option
                   </option>
-                  {topics.map(({ description, topic_id }) => (
-                    <option id={topic_id} value={topic_id}>
+                  {topics.map(({ description, topic_id }, key) => (
+                    <option key={key} id={topic_id} value={topic_id}>
                       {description}
                     </option>
                   ))}

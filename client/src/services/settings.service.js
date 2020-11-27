@@ -11,7 +11,7 @@ export const fetchData = async (path, method) => {
     const jsonData = await src.json();
     return jsonData;
   } catch (err) {
-    console.error(err.message);
+    return err.message;
   }
 };
 

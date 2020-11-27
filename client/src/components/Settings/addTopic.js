@@ -59,7 +59,6 @@ export default function AddTopic() {
     <div className='row'>
       <div className='col s12'>
         <div className='col s7'>
-          <thead></thead>
           <tbody>
             {topics.map((topic) => (
               <tr key={topic.topic_id}>

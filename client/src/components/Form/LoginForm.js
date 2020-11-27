@@ -58,6 +58,7 @@ export default function LoginForm() {
                     label={"login-password"}
                     name={"password"}
                     type={"password"}
+                    autocomplete='current-password'
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <div className='card-action center'>

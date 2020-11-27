@@ -1,31 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import Modal from "../Layout/modalEffect";
+
+import AddNewPost from "./addNewPost";
 
 const PostMenu = () => {
   const postOptions = [
     {
-      id: "post",
-      label: "POSTS",
+      id: "chapter",
+      label: "CHAPTERS",
       elements: [
-        { label: "Show all", name: "list", content: "list of posts" },
+        { label: "Chapters", name: "chapterList", content: "list of chapters" },
         {
-          label: "Add post",
-          name: "Add",
-          content: "Dodaj nowy",
+          label: "Add chapter",
+          name: "addChapter",
+          content: "add new chapter",
         },
       ],
       background: Modal,
     },
+
     {
-      id: "chapter",
-      label: "CHAPTERS",
+      id: "post",
+      label: "POSTS",
       elements: [
-        { label: "Show all", name: "list", content: "list of chapters" },
+        { label: "Posts", name: "postList", content: "list of posts" },
         {
-          label: "Add chapter",
-          name: "Add",
-          content: "Dodaj nowy",
+          label: "Add post",
+          name: "addPost",
+          content: <AddNewPost />,
         },
       ],
       background: Modal,

@@ -5,7 +5,8 @@ const Button = ({
   value,
   disabled,
   className = "btn waves-effect waves-blue blue ",
-  onClick = {},
+  onClick = "",
+  autocomplete = "off",
 }) => {
   return (
     <button
@@ -13,7 +14,8 @@ const Button = ({
       type={type}
       className={className}
       value={value}
-      onClick={onClick}
+      autoComplete={autocomplete}
+      // onClick={onClick}
     >
       {value}
     </button>

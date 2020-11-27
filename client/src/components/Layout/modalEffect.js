@@ -18,7 +18,6 @@ export default function ModalEffect(label, id, element) {
     M.Collapsible.init(elems, {});
     const modal = document.querySelectorAll("." + id);
     M.Modal.init(modal, options);
-    // console.log(element);
     if (showModal) {
       modal[1].M_Modal.close();
 

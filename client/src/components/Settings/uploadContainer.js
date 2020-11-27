@@ -32,7 +32,6 @@ const UploadContainer = ({ imageUrl }) => {
   const handleClick = (e) => {
     e.preventDefault();
     let formData = new FormData();
-    // formData.append("caption", "asd8uyfbas80df");
     formData.append("file", uploadedImage);
     axios
       .post("http://192.168.55.200:5000/api/hosting", formData)
@@ -53,7 +52,7 @@ const UploadContainer = ({ imageUrl }) => {
             <div className='col s12'>
               <div className='col s4'>
                 <a
-                  class='btn-small waves-effect waves-light black '
+                  class='btn-small waves-effect waves-light blue '
                   onClick={() =>
                     copyToClipBoard(
                       "http://192.168.55.200:5000/api/hosting/image/" + image
@@ -73,7 +72,7 @@ const UploadContainer = ({ imageUrl }) => {
               </div>
               <div className='col s4'>
                 <a
-                  class=' btn-small waves-effect waves-light black'
+                  class=' btn-small waves-effect waves-light blue'
                   onClick={() => removeAddedImage()}
                 >
                   remove
@@ -96,9 +95,8 @@ const UploadContainer = ({ imageUrl }) => {
             <>
               <div className='col s12'>
                 <form action='#'>
-                  <label for='upload-image'>Upload image</label>
                   <div class='file-field input-field' id='upload-image'>
-                    <div class='btn-small'>
+                    <div class='btn-small blue'>
                       <span>Choose image</span>
                       <input
                         type='file'
