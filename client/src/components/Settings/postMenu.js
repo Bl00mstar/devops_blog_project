@@ -3,6 +3,7 @@ import React from "react";
 import Modal from "../Layout/modalEffect";
 
 import AddNewPost from "./addNewPost";
+import PostList from "./postList";
 
 const PostMenu = () => {
   const postOptions = [
@@ -24,7 +25,7 @@ const PostMenu = () => {
       id: "post",
       label: "POSTS",
       elements: [
-        { label: "Posts", name: "postList", content: "list of posts" },
+        { label: "Posts", name: "postList", content: <PostList /> },
         {
           label: "Add post",
           name: "addPost",

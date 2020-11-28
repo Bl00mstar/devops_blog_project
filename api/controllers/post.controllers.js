@@ -53,6 +53,21 @@ exports.postPost = async (req, res) => {
   }
 };
 
+exports.getPost = async (req, res) => {
+  try {
+    const posts = await pool.query("SELECT * FROM posts;");
+    return res.status(200).json({
+      success: true,
+      message: posts.rows,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: "post fail",
+    });
+  }
+};
+
 exports.validate = (method) => {
   switch (method) {
     case "addPost": {

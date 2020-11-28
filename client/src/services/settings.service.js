@@ -3,11 +3,10 @@ const api_url = "http://192.168.55.200:5000/";
 
 export const fetchData = async (path, method) => {
   try {
+    let token = await tokenConfig();
     const src = await fetch(api_url + path, {
       method: method,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: token.headers,
     });
     const jsonData = await src.json();
     return jsonData;

@@ -20,4 +20,9 @@ router.post("/post", auth, [
   postController.postPost,
 ]);
 
+router.get("/post", auth, [
+  // postController.validate("addPost"),
+  postController.getPost,
+]);
+
 module.exports = router;
