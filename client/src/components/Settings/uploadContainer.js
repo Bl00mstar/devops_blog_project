@@ -17,7 +17,7 @@ const UploadContainer = ({ imageUrl }) => {
   };
 
   useEffect(() => {
-    imageUrl("image", image);
+    imageUrl("image", "http://192.168.55.200:5000/api/hosting/image/" + image);
   }, [image]);
 
   const copyToClipBoard = async (copyLink) => {

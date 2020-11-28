@@ -1,9 +1,46 @@
-// /api/blog/post
+const pool = require("../db");
+const { body, validationResult, Result } = require("express-validator");
+
 exports.postPost = async (req, res) => {
+  const errorFormatter = ({ msg }) => {
+    return `${msg}`;
+  };
+  const result = validationResult(req).formatWith(errorFormatter);
+  if (!result.isEmpty()) {
+    return res.status(422).json({
+      success: false,
+      message: { errors: result.array() },
+    });
+  }
   try {
-    // const topics = await pool.query("SELECT * FROM topics;");
-    console.log("asd");
-    console.log(req.body);
+    const {
+      titlePost,
+      image,
+      descriptionPost,
+      toolsPost,
+      user,
+    } = req.body.newPost;
+
+    console.log(toolsPost);
+
+    const post = await pool.query(
+      "INSERT INTO posts(title, content, photo_url,user_nick) VALUES($1,$2,$3,$4) RETURNING(id) ",
+      [titlePost, descriptionPost, image, user]
+    );
+    let post_id = post.rows[0].id;
+
+    if (post_id) {
+      for (const key in toolsPost) {
+        if (user.hasOwnProperty(key)) {
+          let tool_id = `${toolsPost[key].value}`;
+          await pool.query(
+            "INSERT INTO tools_posts(tool_id, post_id) VALUES ($1,$2)",
+            [tool_id, post_id]
+          );
+        }
+      }
+    }
+
     return res.status(200).json({
       success: true,
       message: "post ok",
@@ -13,6 +50,25 @@ exports.postPost = async (req, res) => {
       success: false,
       message: "post fail",
     });
-    // return res.status(400).json({ msg: error.message });
+  }
+};
+
+exports.validate = (method) => {
+  switch (method) {
+    case "addPost": {
+      return [
+        body("newPost.titlePost", "Please input correct title.")
+          .not()
+          .isEmpty(),
+        body("newPost.image", "Please upload image.").not().isEmpty(),
+        body("newPost.descriptionPost", "Please input correct description.")
+          .not()
+          .isEmpty(),
+        body("newPost.toolsPost", "Please select at least one tool.")
+          .not()
+          .isEmpty(),
+        body("newPost.user", "Not authorized.").not().isEmpty(),
+      ];
+    }
   }
 };

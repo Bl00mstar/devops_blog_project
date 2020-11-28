@@ -15,6 +15,9 @@ router.delete("/tools/:id", [blogController.deleteTool]);
 
 // PATH /api/blog
 
-router.post("/post", [postController.postPost]);
+router.post("/post", auth, [
+  postController.validate("addPost"),
+  postController.postPost,
+]);
 
 module.exports = router;
