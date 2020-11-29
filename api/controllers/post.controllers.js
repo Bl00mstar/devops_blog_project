@@ -68,6 +68,50 @@ exports.getPost = async (req, res) => {
   }
 };
 
+exports.deletePost = async (req, res) => {
+  console.log(req.body);
+  try {
+    const { id } = req.params;
+    const delPost = await pool.query("DELETE FROM posts WHERE id=$1", [id]);
+    return res.status(200).json("deleted");
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.getPostById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const selectPost = await pool.query("SELECT * FROM posts WHERE id = $1", [
+      id,
+    ]);
+    return res.status(200).json(selectPost.rows);
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.updatePost = async (req, res) => {
+  try {
+    const updPost = await pool.query(
+      "UPDATE posts SET title=newtitle where id=$1",
+      [13]
+    );
+    return res.status(200).json("updated");
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 exports.validate = (method) => {
   switch (method) {
     case "addPost": {

@@ -21,13 +21,34 @@ export default function PostList() {
   };
   const list = posts.map((post) => {
     return (
-      <tr key={post.topic_id}>
+      <tr key={post._id}>
         <th>{post.title}</th>
         <th>edit</th>
-        <th>delete</th>
+        <th>
+          {" "}
+          <button
+            className='btn btn-small red'
+            onClick={() => deletePost(post.id)}
+          >
+            <i className=' tiny material-icons '>delete</i>
+          </button>
+        </th>
       </tr>
     );
   });
+
+  const deletePost = async (id) => {
+    try {
+      const deletePost = await api.fetchData(`api/blog/post/${id}`, "DELETE");
+      if (deletePost.success) {
+        getPosts() && M.toast({ html: deletePost.msg });
+      } else {
+        M.toast({ html: deletePost.msg });
+      }
+    } catch (err) {
+      M.toast({ html: err.message });
+    }
+  };
 
   return (
     <div id='postList'>
