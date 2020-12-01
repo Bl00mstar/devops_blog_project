@@ -1,40 +1,59 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import M from "materialize-css/dist/js/materialize.min.js";
+import * as api from "../../services/settings.service";
+
 export default function ShowImages() {
-  const [imageList, setImageList] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://192.168.55.200:5000/api/hosting")
-      .then((response) => {
-        setImageList(response.data.images);
-      })
-      .catch((err) => alert(err));
-  }, [imageList]);
+    getPosts();
+  }, []);
 
-  return (
-    <div>
-      <div className='ListPage'>
-        <div className='ListImageContainer'>
-          {imageList.map((file, key) => (
-            <div className='ListImage' key={key}>
-              <p className='ListImage__Caption'>{file.caption}</p>
-              <p className='ListImage__Date'>{file.createdAt}</p>
-              <img
-                src={
-                  "http://192.168.55.200:5000/api/hosting/image/" +
-                  file.filename
-                }
-                width='200'
-                height='200'
-                alt='list'
-                className='ListImage__Image'
-              />
-            </div>
-          ))}
+  const getPosts = async () => {
+    try {
+      const posts = await api.fetchData("api/blog/post", "GET");
+      setPosts(posts.message);
+      console.log(posts);
+    } catch (err) {
+      M.toast({ html: err.message });
+    }
+  };
+  // console.log(posts);
+
+  const list = posts.map((post) => {
+    return (
+      <div class='col s12 m6 l4'>
+        <div class='card'>
+          <div class='card-image waves-effect waves-block waves-light'>
+            <img class='activator' src={post.photo_url} />
+          </div>
+          <div class='card-content'>
+            <span class='card-title activator grey-text text-darken-4'>
+              {post.title}
+              <i class='material-icons right'>more_vert</i>
+            </span>
+            <p>
+              <a href='#'>Continue...</a>
+            </p>
+          </div>
+          <div class='card-reveal'>
+            <span class='card-title grey-text text-darken-4'>
+              {post.title}
+              <i class='material-icons right'>close</i>
+            </span>
+            <p>{post.content}</p>
+          </div>
         </div>
       </div>
+    );
+  });
+
+  return (
+    <div className='row'>
+      <div className='col s12 '>{list}</div>
+      <div>SHOW MORE....</div>
     </div>
   );
 }

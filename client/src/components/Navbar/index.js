@@ -45,6 +45,13 @@ const Navbar = ({ isUserAuthenticated }) => {
         className='sidenav sidenav-fixed'
         style={{ transform: "translateX(0%)" }}
       >
+        <li className='center-align'>
+          <img
+            src='http://192.168.55.200:5000/api/hosting/image/46b3901cba83cc83a2cb9ebc1b1cac70.png'
+            width='135px'
+            onClick={() => window.location.replace("/")}
+          />
+        </li>
         {siteRoutes}
       </ul>
 

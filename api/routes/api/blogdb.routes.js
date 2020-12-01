@@ -19,7 +19,7 @@ router.post("/post", auth, [
   postController.validate("addPost"),
   postController.postPost,
 ]);
-router.get("/post", auth, [postController.getPost]);
+router.get("/post", [postController.getPost]);
 router.get("/post/:id", [postController.getPostById]);
 router.delete("/post/:id", [postController.deletePost]);
 

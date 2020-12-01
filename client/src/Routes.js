@@ -7,7 +7,7 @@ import Settings from "./pages/SettingsPage";
 import Logout from "./pages/LogoutPage";
 
 export const routes = [
-  { name: "Home", path: "/", element: <Home />, type: "public" },
+  { name: "Home", path: "/", element: <Home />, type: "image" },
   { name: "Login", path: "/login", element: <Login />, type: "auth" },
   { name: "About", path: "/about", element: <About />, type: "public" },
   {
@@ -22,7 +22,7 @@ export const routes = [
     element: <Logout />,
     type: "private",
   },
-  { name: "404", path: "*", element: <div>404</div>, type: "noone" },
+  // { name: "404", path: "*", element: <div>404</div>, type: "noone" },
 ];
 
 export default routes;

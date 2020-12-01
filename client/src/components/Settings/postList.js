@@ -4,8 +4,21 @@ import M from "materialize-css/dist/js/materialize.min.js";
 
 import * as api from "../../services/settings.service";
 
+import editPost from "./editPost";
+import EditPost from "./editPost";
+
 export default function PostList() {
   const [posts, setPosts] = useState([]);
+  //   const [edit, setEdit] = useState(false);
+  const [id, setId] = useState("");
+
+  const handleId = () => {
+    setId("");
+  };
+
+  const handleEdit = async (id) => {
+    setId(id);
+  };
 
   useEffect(() => {
     getPosts();
@@ -23,7 +36,15 @@ export default function PostList() {
     return (
       <tr key={post._id}>
         <th>{post.title}</th>
-        <th>edit</th>
+        <th>
+          <button
+            className='btn btn-small blue'
+            value={post.id}
+            onClick={() => handleEdit(post.id)}
+          >
+            <i className='tiny material-icons'>edit</i>
+          </button>
+        </th>
         <th>
           {" "}
           <button
@@ -52,16 +73,20 @@ export default function PostList() {
 
   return (
     <div id='postList'>
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>{list}</tbody>
-      </table>
+      {id ? (
+        <EditPost postId={id} clearId={handleId} />
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>{list}</tbody>
+        </table>
+      )}
     </div>
   );
 }

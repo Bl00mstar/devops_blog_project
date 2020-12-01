@@ -3,6 +3,7 @@ const api_url = "http://192.168.55.200:5000/";
 
 export const fetchData = async (path, method) => {
   try {
+    console.log(path);
     let token = await tokenConfig();
     const src = await fetch(api_url + path, {
       method: method,

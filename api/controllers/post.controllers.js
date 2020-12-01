@@ -84,11 +84,16 @@ exports.deletePost = async (req, res) => {
 
 exports.getPostById = async (req, res) => {
   try {
+    console.log(req.params);
     const { id } = req.params;
     const selectPost = await pool.query("SELECT * FROM posts WHERE id = $1", [
       id,
     ]);
-    return res.status(200).json(selectPost.rows);
+    console.log(selectPost);
+    return res.status(200).json({
+      success: true,
+      message: selectPost.rows,
+    });
   } catch (error) {
     return res.status(400).json({
       success: false,
