@@ -106,7 +106,7 @@ const AddNewPost = ({ userNick, topics, tools }) => {
 
 const mapStateToProps = (state) => ({
   userNick: state.user.user.nick,
-  topics: state.blog.posts.topicsData,
+  posts: state.blog.posts.postsData,
   tools: state.blog.tools.toolsData,
 });
 

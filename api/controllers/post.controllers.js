@@ -1,6 +1,26 @@
 const pool = require("../db");
 const { body, validationResult, Result } = require("express-validator");
 
+exports.postChapter = async (req, res) => {
+  console.log(req.body);
+  // INSERT INTO public.chapters(
+  //   post_id, topic, content, code,photo_url)
+  //   VALUES (?, ?, ?, ?, ? );
+  try {
+    res.status(200);
+  } catch (error) {
+    res.status(400);
+  }
+};
+exports.getChaptersByPostId = async (req, res) => {
+  console.log(req.params);
+  try {
+    res.status(200);
+  } catch (error) {
+    res.status(400);
+  }
+};
+
 exports.postPost = async (req, res) => {
   const errorFormatter = ({ msg }) => {
     return `${msg}`;

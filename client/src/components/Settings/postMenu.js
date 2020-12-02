@@ -5,17 +5,20 @@ import Modal from "../Layout/modalEffect";
 import AddNewPost from "./addNewPost";
 import PostList from "./postList";
 
+import ChapterList from "./chapterList";
+import AddNewChapter from "./addNewChapter";
+
 const PostMenu = () => {
   const postOptions = [
     {
       id: "chapter",
       label: "CHAPTERS",
       elements: [
-        { label: "Chapters", name: "chapterList", content: "list of chapters" },
+        { label: "Chapters", name: "chapterList", content: <ChapterList /> },
         {
           label: "Add chapter",
           name: "addChapter",
-          content: "add new chapter",
+          content: <AddNewChapter />,
         },
       ],
       background: Modal,

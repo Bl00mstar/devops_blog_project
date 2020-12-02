@@ -26,7 +26,7 @@ const AddTool = ({ tools, topics }) => {
   };
   const handleAddTool = (e) => {
     e.preventDefault();
-    if (tool.length > 4) {
+    if (tool.length > 2) {
       const newTool = { tool: tool, topic: selectedTopic };
       addTool(newTool)
         .then((data) =>
@@ -39,7 +39,7 @@ const AddTool = ({ tools, topics }) => {
           dispatch(getTopicsTools());
         });
     } else {
-      M.toast({ html: "Field required minimum 5 characters." });
+      M.toast({ html: "Field required minimum 3 characters." });
     }
   };
 
