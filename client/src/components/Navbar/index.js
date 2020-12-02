@@ -4,7 +4,14 @@ import M from "materialize-css/dist/js/materialize.min.js";
 import NewNavLink from "./navLink";
 import { routes } from "../../Routes";
 
+import "./index.css";
+
 const Navbar = ({ isUserAuthenticated }) => {
+  useEffect(() => {
+    var elems = document.querySelectorAll(".collapsible");
+    M.Collapsible.init(elems, {});
+  }, []);
+
   useEffect(() => {
     const sidenav = document.querySelectorAll(".sidenav");
     M.Sidenav.init(sidenav, {});
@@ -53,6 +60,52 @@ const Navbar = ({ isUserAuthenticated }) => {
           />
         </li>
         {siteRoutes}
+        <li>
+          <ul class='collapsible'>
+            <li>
+              <a class='collapsible-header nav-link nav-link grey-text'>
+                Virtualization
+              </a>
+              <div class='collapsible-body'>
+                <ul>
+                  <li>
+                    <a class='nav-link nav-link grey-text'>tool1</a>
+                  </li>
+                  <li>
+                    <a class='nav-link nav-link grey-text'>tool2</a>
+                  </li>
+                  <li>
+                    <a class='nav-link nav-link grey-text'>tool3</a>
+                  </li>
+                  <li>
+                    <a class='nav-link nav-link grey-text'>tool4</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <a class='collapsible-header nav-link nav-link grey-text'>
+                Cloud
+              </a>
+              <div class='collapsible-body'>
+                <ul>
+                  <li>
+                    <a class='nav-link nav-link grey-text'>tool1</a>
+                  </li>
+                  <li>
+                    <a class='nav-link nav-link grey-text'>tool2</a>
+                  </li>
+                  <li>
+                    <a class='nav-link nav-link grey-text'>tool3</a>
+                  </li>
+                  <li>
+                    <a class='nav-link nav-link grey-text'>tool4</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
       </ul>
 
       <ul

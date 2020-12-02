@@ -8,6 +8,7 @@ import { routes } from "./Routes";
 
 import { useDispatch } from "react-redux";
 import { getUser } from "./store/user/user.actions";
+import { getPosts, getTopicsTools } from "./store/blog/blog.actions";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,8 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getTopicsTools());
+    dispatch(getPosts());
     // eslint-disable-next-line
   }, []);
 

@@ -1,8 +1,8 @@
 import React from "react";
-
+import { connect } from "react-redux";
 import ShowImages from "./showImages";
 
-export default function index() {
+const HomePage = () => {
   return (
     <div>
       <navbar className='top-nav'>
@@ -20,4 +20,11 @@ export default function index() {
       <footer>TEST</footer>
     </div>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  isUserLoading: state.user.isLoading,
+  isUserAuthenticated: state.user.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(HomePage);

@@ -8,8 +8,7 @@ import UploadContainer from "./uploadContainer";
 
 import Select from "react-select";
 
-const AddNewPost = ({ userNick }) => {
-  const [tools, setTools] = useState([]);
+const AddNewPost = ({ userNick, topics, tools }) => {
   const [selectedTools, setSelectedTools] = useState(null);
   const [user, setUser] = useState("");
   const [postData, setPostData] = useState({
@@ -21,18 +20,8 @@ const AddNewPost = ({ userNick }) => {
   });
 
   useEffect(() => {
-    getTools();
     setUser(userNick);
   }, [selectedTools]);
-
-  const getTools = async () => {
-    try {
-      const tools = await api.fetchData("api/blog/tools", "GET");
-      setTools(tools);
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
 
   const options = tools.map((item) => ({
     value: item.id,
@@ -117,6 +106,8 @@ const AddNewPost = ({ userNick }) => {
 
 const mapStateToProps = (state) => ({
   userNick: state.user.user.nick,
+  topics: state.blog.posts.topicsData,
+  tools: state.blog.tools.toolsData,
 });
 
 export default connect(mapStateToProps)(AddNewPost);

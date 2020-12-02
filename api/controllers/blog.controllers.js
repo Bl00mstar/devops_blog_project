@@ -3,7 +3,9 @@ const pool = require("../db");
 exports.getTopics = async (req, res) => {
   try {
     const topics = await pool.query("SELECT * FROM topics;");
-    res.json(topics.rows);
+    return res.status(200).json({
+      message: topics.rows,
+    });
   } catch (error) {
     return res.status(400).json({ msg: error.message });
   }
@@ -29,13 +31,12 @@ exports.postTopics = async (req, res) => {
 };
 
 exports.deleteTopic = async (req, res) => {
-  console.log("asd");
+  console.log("Delete Topic" + req.params.id);
   try {
     const { id } = req.params;
-    const deleteTodo = await pool.query(
-      "DELETE FROM topics WHERE topic_id = $1",
-      [id]
-    );
+    const deleteTodo = await pool.query("DELETE FROM topics WHERE id = $1", [
+      id,
+    ]);
     if (deleteTodo) {
       return res.status(200).json({
         success: true,
@@ -49,14 +50,34 @@ exports.deleteTopic = async (req, res) => {
 
 exports.getTools = async (req, res) => {
   try {
-    const topics = await pool.query("SELECT * FROM tools;");
-    res.json(topics.rows);
+    const tools = await pool.query("SELECT * FROM tools;");
+    return res.status(200).json({
+      message: tools.rows,
+    });
   } catch (error) {
     return res.status(400).json({ msg: error.message });
   }
 };
+
+exports.getToolsByTopicId = async (req, res) => {
+  const { id } = req.params;
+  console.log(req.params);
+  try {
+    const toolsById = await pool.query(
+      "SELECT * FROM tools WHERE topic_id= $1",
+      [id]
+    );
+    return res.status(200).json({
+      success: true,
+      message: toolsById.rows,
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: error.message });
+  }
+};
+
 exports.postTools = async (req, res) => {
-  const { tool, topic } = req.body;
+  const { tool, topic } = req.body.data;
   try {
     const tools = await pool.query(
       "INSERT INTO tools(topic_id,description) VALUES($1,$2) RETURNING *",
@@ -75,12 +96,14 @@ exports.postTools = async (req, res) => {
 exports.deleteTool = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleteTodo = await pool.query(
-      "DELETE FROM topics WHERE topic_id = $1",
-      [id]
-    );
-    res.json("Todo was deleted!");
-  } catch (err) {
-    console.log(err.message);
+    const deleteTool = await pool.query("DELETE FROM tools WHERE id = $1", [
+      id,
+    ]);
+    return res.status(200).json({
+      success: true,
+      msg: "Tool was deleted.",
+    });
+  } catch (error) {
+    return res.status(400).json({ msg: error.message });
   }
 };

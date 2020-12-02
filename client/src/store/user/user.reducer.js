@@ -24,9 +24,7 @@ const userReducer = (state = initialState, action) => {
         user: action.payload.data,
       };
     case "FETCHED_USER_SUCCESS":
-    case "REGISTER_SUCCESS":
       localStorage.setItem("token", action.payload.token);
-      // console.log(action.payload.token);
       return {
         ...state,
         ...action.payload,
@@ -48,7 +46,6 @@ const userReducer = (state = initialState, action) => {
       };
     case "LOGIN_FAIL":
     case "LOGOUT_SUCCESS":
-    case "REGISTER_FAIL":
       localStorage.removeItem("token");
       return {
         ...state,
@@ -58,22 +55,6 @@ const userReducer = (state = initialState, action) => {
         },
         isAuthenticated: false,
         isLoading: false,
-      };
-    case "UPDATE_SETTINGS_NAME":
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          name: action.payload,
-        },
-      };
-    case "UPDATE_SETTINGS_EMAIL":
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          email: action.payload,
-        },
       };
     default:
       return state;

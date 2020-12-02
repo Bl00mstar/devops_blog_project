@@ -1,56 +1,45 @@
-import React, { useState, useEffect } from "react";
-
-import * as api from "../../services/settings.service";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
-import InputForm from "../Input/InputForm";
-import Button from "../Button/Button";
 
-export default function AddTool() {
-  const [tools, setTools] = useState([]);
-  const [topics, setTopics] = useState([]);
-  const [newTool, setNewTool] = useState("");
+import { addTool, deleteTool } from "../../store/blog/blog.helpers";
+import { getTopicsTools } from "../../store/blog/blog.actions";
+
+const AddTool = ({ tools, topics }) => {
+  const [tool, setTool] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("select");
 
-  const getTopics = async () => {
-    try {
-      const topics = await api.fetchData("api/blog/topics", "GET");
-      setTopics(topics);
-    } catch (err) {
-      M.toast({ html: err.message });
-    }
+  const dispatch = useDispatch();
+
+  const handleDeleteTool = (id) => {
+    deleteTool(id)
+      .then((data) =>
+        data.success
+          ? M.toast({ html: `Tool was deleted.` })
+          : M.toast({ html: "Failure." })
+      )
+      .catch((err) => M.toast({ html: err.data.msg }))
+      .finally(() => {
+        dispatch(getTopicsTools());
+      });
   };
-
-  const getTools = async () => {
-    try {
-      const tools = await api.fetchData("api/blog/tools", "GET");
-      setTools(tools);
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-
-  // const deleteTool = async (id) => {
-  //   try {
-  //     const tools = await api.fetchData(`api/blog/tools/${id}`, "DELETE");
-  //     setTools(tools.filter((tool) => tool.tool_id !== id));
-  //   } catch (err) {
-  //     console.error(err.message);
-  //   }
-  // };
-
-  const handleSubmit = async (e) => {
+  const handleAddTool = (e) => {
     e.preventDefault();
-    let topicId = parseInt(selectedTopic);
-    try {
-      await api
-        .postData(`api/blog/tools`, { tool: newTool, topic: topicId })
-        .then((data) => {
+    if (tool.length > 4) {
+      const newTool = { tool: tool, topic: selectedTopic };
+      addTool(newTool)
+        .then((data) =>
           data.success
-            ? getTopics() && M.toast({ html: newTool + " was added" })
-            : M.toast({ html: "Failure." });
+            ? M.toast({ html: `${tool} was added.` }) && setTool("")
+            : M.toast({ html: "Failure." })
+        )
+        .catch((err) => M.toast({ html: err.data.msg }))
+        .finally(() => {
+          dispatch(getTopicsTools());
         });
-    } catch (err) {
-      M.toast({ html: err.message });
+    } else {
+      M.toast({ html: "Field required minimum 5 characters." });
     }
   };
 
@@ -58,22 +47,19 @@ export default function AddTool() {
     setSelectedTopic(e.target.value);
   };
 
-  useEffect(() => {
-    getTools();
-    getTopics();
-  }, []);
-
   return (
     <div className='row'>
       <div className='col s12'>
         <div className='col s7'>
-          <thead></thead>
           <tbody>
             {tools.map((tool, key) => (
               <tr key={key}>
                 <td>{tool.description}</td>
                 <td>
-                  <button className='btn btn-small red'>
+                  <button
+                    className='btn btn-small red'
+                    onClick={() => handleDeleteTool(tool.id)}
+                  >
                     <i className=' tiny material-icons '>delete</i>
                   </button>
                 </td>
@@ -83,9 +69,9 @@ export default function AddTool() {
         </div>
         <div className='col s5'>
           <card>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleAddTool}>
               <div>
-                <label>Select your topic</label>
+                <label>Select topic</label>
                 <select
                   className='browser-default'
                   onChange={handleChange}
@@ -94,28 +80,37 @@ export default function AddTool() {
                   <option value='select' disabled selected>
                     Choose your option
                   </option>
-                  {topics.map(({ description, topic_id }, key) => (
-                    <option key={key} id={topic_id} value={topic_id}>
+                  {topics.map(({ description, id }, key) => (
+                    <option key={key} id={id} value={id}>
                       {description}
                     </option>
                   ))}
                 </select>
               </div>
               <div>
-                <InputForm
-                  label={"addTool"}
-                  name={"AddTool"}
-                  type={"text"}
-                  onChange={(e) => setNewTool(e.target.value)}
-                />
+                <label for='newTool'>New tool</label>
+                <input
+                  id='newTool'
+                  value={tool}
+                  type='text'
+                  className='validate'
+                  onChange={(e) => setTool(e.target.value)}
+                ></input>
               </div>
-              <div>
-                <Button type={"submit"} value={"Add"} />
-              </div>
+              <button type='submit' className='waves-effect waves-light btn'>
+                ADD
+              </button>
             </form>
           </card>
         </div>
       </div>
     </div>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  topics: state.blog.topics.topicsData,
+  tools: state.blog.tools.toolsData,
+});
+
+export default connect(mapStateToProps)(AddTool);

@@ -1,57 +1,43 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-import * as api from "../../services/settings.service";
+import { addTopic, deleteTopic } from "../../store/blog/blog.helpers";
+import { getTopicsTools } from "../../store/blog/blog.actions";
 
-import InputForm from "../Input/InputForm";
-import Button from "../Button/Button";
+const AddTopic = ({ topics }) => {
+  const [topic, setTopic] = useState("");
 
-export default function AddTopic() {
-  const [newTopic, setNewTopic] = useState("");
-  const [topics, setTopics] = useState([]);
+  const dispatch = useDispatch();
 
-  const getTopics = async () => {
-    try {
-      const topics = await api.fetchData("api/blog/topics", "GET");
-      setTopics(topics);
-    } catch (err) {
-      M.toast({ html: err.message });
-    }
+  const handleDeleteTopic = (id) => {
+    deleteTopic(id)
+      .then((data) =>
+        data.success
+          ? M.toast({ html: `Topic was deleted.` })
+          : M.toast({ html: "Failure." })
+      )
+      .catch((err) => M.toast({ html: err.data.msg }))
+      .finally(() => {
+        dispatch(getTopicsTools());
+      });
   };
 
-  const deleteTopic = async (id) => {
-    try {
-      const deleteTopic = await api.fetchData(
-        `api/blog/topics/${id}`,
-        "DELETE"
-      );
-      if (deleteTopic.success) {
-        getTopics() && M.toast({ html: deleteTopic.msg });
-      } else {
-        M.toast({ html: deleteTopic.msg });
-      }
-    } catch (err) {
-      M.toast({ html: err.message });
-    }
-  };
-
-  useEffect(() => {
-    getTopics();
-  }, []);
-
-  const handleTopic = async (e) => {
-    e.preventDefault();
-    try {
-      await api
-        .postData(`api/blog/topics`, { newTopic: newTopic })
-        .then((data) => {
+  const handleAddTopic = () => {
+    if (topic.length > 4) {
+      addTopic(topic)
+        .then((data) =>
           data.success
-            ? getTopics() && M.toast({ html: newTopic + " was added" })
-            : M.toast({ html: "Failure." });
+            ? M.toast({ html: `${topic} was added.` }) && setTopic("")
+            : M.toast({ html: "Failure." })
+        )
+        .catch((err) => M.toast({ html: err.data.msg }))
+        .finally(() => {
+          dispatch(getTopicsTools());
         });
-    } catch (err) {
-      M.toast({ html: err.message });
+    } else {
+      M.toast({ html: "Field required minimum 5 characters." });
     }
   };
 
@@ -61,12 +47,12 @@ export default function AddTopic() {
         <div className='col s7'>
           <tbody>
             {topics.map((topic) => (
-              <tr key={topic.topic_id}>
+              <tr key={topic.id}>
                 <td>{topic.description}</td>
                 <td>
                   <button
                     className='btn btn-small red'
-                    onClick={() => deleteTopic(topic.topic_id)}
+                    onClick={() => handleDeleteTopic(topic.id)}
                   >
                     <i className=' tiny material-icons '>delete</i>
                   </button>
@@ -76,17 +62,29 @@ export default function AddTopic() {
           </tbody>
         </div>
         <div className='col s5'>
-          <form onSubmit={handleTopic}>
-            <InputForm
-              label={"addTopic"}
-              name={"NewTopic"}
-              type={"text"}
-              onChange={(e) => setNewTopic(e.target.value)}
-            />
-            <Button type={"submit"} value={"Add"} />
-          </form>
+          <div className='input-field col s12'>
+            <input
+              id='newTopic'
+              value={topic}
+              type='text'
+              className='validate'
+              onChange={(e) => setTopic(e.target.value)}
+            ></input>
+            <label for='newTopic'>New Topic</label>
+            <a
+              className='waves-effect waves-light btn'
+              onClick={() => handleAddTopic()}
+            >
+              ADD
+            </a>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
+const mapStateToProps = (state) => ({
+  topics: state.blog.topics.topicsData,
+});
+
+export default connect(mapStateToProps)(AddTopic);

@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
-import M from "materialize-css/dist/js/materialize.min.js";
-import * as api from "../../services/settings.service";
+import { connect } from "react-redux";
 
-export default function ShowImages() {
-  const [posts, setPosts] = useState([]);
+import Preloader from "../../components/Preloader/linearPreloader";
 
-  useEffect(() => {
-    getPosts();
-  }, []);
-
-  const getPosts = async () => {
-    try {
-      const posts = await api.fetchData("api/blog/post", "GET");
-      setPosts(posts.message);
-      console.log(posts);
-    } catch (err) {
-      M.toast({ html: err.message });
-    }
-  };
-  // console.log(posts);
+const ShowImages = ({ postsLoading, posts }) => {
+  if (postsLoading) {
+    return <Preloader />;
+  }
 
   const list = posts.map((post) => {
     return (
@@ -56,4 +43,11 @@ export default function ShowImages() {
       <div>SHOW MORE....</div>
     </div>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  postsLoading: state.blog.posts.isLoading,
+  posts: state.blog.posts.postsData,
+});
+
+export default connect(mapStateToProps)(ShowImages);
