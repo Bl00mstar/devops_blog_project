@@ -6,7 +6,7 @@ import { routes } from "../../Routes";
 
 import "./index.css";
 
-const Navbar = ({ isUserAuthenticated }) => {
+const Navbar = ({ isUserAuthenticated, topics, tools, topicstools }) => {
   useEffect(() => {
     var elems = document.querySelectorAll(".collapsible");
     M.Collapsible.init(elems, {});
@@ -40,6 +40,23 @@ const Navbar = ({ isUserAuthenticated }) => {
     });
   }
 
+  const toolstopics = Object.entries(topicstools).map(([key, value], index) => (
+    <li key={index}>
+      <a className='collapsible-header nav-link nav-link grey-text'>{key}</a>
+      <div className='collapsible-body'>
+        <ul>
+          {value.map((item, idx) => (
+            <li key={idx}>
+              <a className='collapsible-header nav-link nav-link grey-text'>
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </li>
+  ));
+
   return (
     <header>
       <a href='#!' data-target='mobile-demo' className='sidenav-trigger'>
@@ -61,50 +78,7 @@ const Navbar = ({ isUserAuthenticated }) => {
         </li>
         {siteRoutes}
         <li>
-          <ul className='collapsible'>
-            <li>
-              <a className='collapsible-header nav-link nav-link grey-text'>
-                Virtualization
-              </a>
-              <div className='collapsible-body'>
-                <ul>
-                  <li>
-                    <a className='nav-link nav-link grey-text'>tool1</a>
-                  </li>
-                  <li>
-                    <a className='nav-link nav-link grey-text'>tool2</a>
-                  </li>
-                  <li>
-                    <a className='nav-link nav-link grey-text'>tool3</a>
-                  </li>
-                  <li>
-                    <a className='nav-link nav-link grey-text'>tool4</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li>
-              <a className='collapsible-header nav-link nav-link grey-text'>
-                Cloud
-              </a>
-              <div className='collapsible-body'>
-                <ul>
-                  <li>
-                    <a className='nav-link nav-link grey-text'>tool1</a>
-                  </li>
-                  <li>
-                    <a className='nav-link nav-link grey-text'>tool2</a>
-                  </li>
-                  <li>
-                    <a className='nav-link nav-link grey-text'>tool3</a>
-                  </li>
-                  <li>
-                    <a className='nav-link nav-link grey-text'>tool4</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+          <ul className='collapsible'>{toolstopics}</ul>
         </li>
       </ul>
 
@@ -120,6 +94,9 @@ const Navbar = ({ isUserAuthenticated }) => {
 };
 
 const mapStateToProps = (state) => ({
+  topicstools: state.blog.topics.tools,
+  topics: state.blog.topics.topicsData,
+  tools: state.blog.topics.toolsData,
   isUserLoading: state.user.isLoading,
   isUserAuthenticated: state.user.isAuthenticated,
 });
