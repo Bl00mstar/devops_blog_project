@@ -9,7 +9,7 @@ const HomePage = () => {
         {/* <navbar className='nav-wrapper'> */}
         <h3
           className='header center blue-text text-darken-3'
-          style={{ fontFamily: "Sansita Swashed" }}
+          style={{ fontFamily: "Poppins" }}
         >
           DevOps Notes
         </h3>
@@ -17,7 +17,7 @@ const HomePage = () => {
       </navbar>
       {/* <header className='center'>DevOps Journal</header> */}
       <ShowImages />
-      <footer>TEST</footer>
+      <footer>FOOTERHERE</footer>
     </div>
   );
 };

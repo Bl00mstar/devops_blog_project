@@ -91,3 +91,29 @@ export const deleteTool = (id) => {
       });
   });
 };
+
+export const postChapter = (data) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${api_url}api/blog/chapter`, { data })
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err.response);
+      });
+  });
+};
+
+export const getChapters = (id) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${api_url}api/blog/chapter/${id}`)
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err.response);
+      });
+  });
+};

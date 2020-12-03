@@ -2,20 +2,44 @@ const pool = require("../db");
 const { body, validationResult, Result } = require("express-validator");
 
 exports.postChapter = async (req, res) => {
-  console.log(req.body);
-  // INSERT INTO public.chapters(
-  //   post_id, topic, content, code,photo_url)
-  //   VALUES (?, ?, ?, ?, ? );
+  //postid value
+  const { value } = req.body.data.postId;
+  // console.log(value);
+
+  const { chapters } = req.body.data.chaptersContent;
+  chapters.forEach((item, index) => {
+    if (item) {
+      pool.query(
+        "INSERT INTO chapters(post_id,topic,content,code,photo_url) VALUES ($1,$2,$3,$4,$5)",
+        [
+          value,
+          item.chapterTitle,
+          item.chapterContent,
+          item.chapterCode,
+          item.chapterImage,
+        ]
+      );
+    }
+  });
+
   try {
-    res.status(200);
+    res.status(200).json("siema");
   } catch (error) {
     res.status(400);
   }
 };
 exports.getChaptersByPostId = async (req, res) => {
-  console.log(req.params);
   try {
-    res.status(200);
+    const { id } = req.params;
+
+    const selectChapters = await pool.query(
+      "SELECT * FROM chapters WHERE post_id = $1",
+      [id]
+    );
+    return res.status(200).json({
+      success: true,
+      message: selectChapters.rows,
+    });
   } catch (error) {
     res.status(400);
   }

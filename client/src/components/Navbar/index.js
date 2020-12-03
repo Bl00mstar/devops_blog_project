@@ -61,45 +61,45 @@ const Navbar = ({ isUserAuthenticated }) => {
         </li>
         {siteRoutes}
         <li>
-          <ul class='collapsible'>
+          <ul className='collapsible'>
             <li>
-              <a class='collapsible-header nav-link nav-link grey-text'>
+              <a className='collapsible-header nav-link nav-link grey-text'>
                 Virtualization
               </a>
-              <div class='collapsible-body'>
+              <div className='collapsible-body'>
                 <ul>
                   <li>
-                    <a class='nav-link nav-link grey-text'>tool1</a>
+                    <a className='nav-link nav-link grey-text'>tool1</a>
                   </li>
                   <li>
-                    <a class='nav-link nav-link grey-text'>tool2</a>
+                    <a className='nav-link nav-link grey-text'>tool2</a>
                   </li>
                   <li>
-                    <a class='nav-link nav-link grey-text'>tool3</a>
+                    <a className='nav-link nav-link grey-text'>tool3</a>
                   </li>
                   <li>
-                    <a class='nav-link nav-link grey-text'>tool4</a>
+                    <a className='nav-link nav-link grey-text'>tool4</a>
                   </li>
                 </ul>
               </div>
             </li>
             <li>
-              <a class='collapsible-header nav-link nav-link grey-text'>
+              <a className='collapsible-header nav-link nav-link grey-text'>
                 Cloud
               </a>
-              <div class='collapsible-body'>
+              <div className='collapsible-body'>
                 <ul>
                   <li>
-                    <a class='nav-link nav-link grey-text'>tool1</a>
+                    <a className='nav-link nav-link grey-text'>tool1</a>
                   </li>
                   <li>
-                    <a class='nav-link nav-link grey-text'>tool2</a>
+                    <a className='nav-link nav-link grey-text'>tool2</a>
                   </li>
                   <li>
-                    <a class='nav-link nav-link grey-text'>tool3</a>
+                    <a className='nav-link nav-link grey-text'>tool3</a>
                   </li>
                   <li>
-                    <a class='nav-link nav-link grey-text'>tool4</a>
+                    <a className='nav-link nav-link grey-text'>tool4</a>
                   </li>
                 </ul>
               </div>

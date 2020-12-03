@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import {
-  useRoutes,
   Link,
   useLocation,
   useResolvedLocation,
@@ -40,7 +39,6 @@ export default function NewNavLink({ path, name }) {
     M.Sidenav.init(sidenav, {});
   }, []);
 
-  let element = useRoutes(routes);
   return (
     <NavLink
       activeClassName='nav-link blue-text '

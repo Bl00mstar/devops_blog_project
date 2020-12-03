@@ -1,34 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { connect } from "react-redux";
 
 import Preloader from "../../components/Preloader/linearPreloader";
 
+import ReadPost from "./readPost";
+
 const ShowImages = ({ postsLoading, posts }) => {
+  const [readPost, setReadPost] = useState("");
+
   if (postsLoading) {
     return <Preloader />;
   }
 
-  const list = posts.map((post) => {
+  if (readPost) {
+    return <ReadPost id={readPost} />;
+  }
+
+  const list = posts.map((post, key) => {
     return (
-      <div class='col s12 m6 l4'>
-        <div class='card'>
-          <div class='card-image waves-effect waves-block waves-light'>
-            <img class='activator' src={post.photo_url} />
+      <div className='col s12 m6 l4' key={key}>
+        <div className='card'>
+          <div className='card-image waves-effect waves-block waves-light'>
+            <img className='activator' src={post.photo_url} />
           </div>
-          <div class='card-content'>
-            <span class='card-title activator grey-text text-darken-4'>
+          <div className='card-content'>
+            <span className='card-title activator grey-text text-darken-4'>
               {post.title}
-              <i class='material-icons right'>more_vert</i>
+              <i className='material-icons right'>more_vert</i>
             </span>
             <p>
-              <a href='#'>Continue...</a>
+              <a onClick={() => setReadPost(post.id)}>Continue...</a>
             </p>
           </div>
-          <div class='card-reveal'>
-            <span class='card-title grey-text text-darken-4'>
+          <div className='card-reveal'>
+            <span className='card-title grey-text text-darken-4'>
               {post.title}
-              <i class='material-icons right'>close</i>
+              <i className='material-icons right'>close</i>
             </span>
             <p>{post.content}</p>
           </div>
@@ -40,7 +48,6 @@ const ShowImages = ({ postsLoading, posts }) => {
   return (
     <div className='row'>
       <div className='col s12 '>{list}</div>
-      <div>SHOW MORE....</div>
     </div>
   );
 };
