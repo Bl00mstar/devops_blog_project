@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
@@ -8,7 +8,7 @@ import { selectPath } from "../../store/action/action.actions";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 
-const Navbar = ({ isUserAuthenticated, topicstools }) => {
+const Navbar = ({ isUserAuthenticated, topicstools, currentPath }) => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   useEffect(() => {
@@ -62,10 +62,13 @@ const Navbar = ({ isUserAuthenticated, topicstools }) => {
           {value.map((item, idx) => (
             <li key={idx}>
               <a
+                name={item}
                 onClick={() => setPath(item)}
-                className='nav-link nav-link grey-text'
+                className={
+                  "nav-link nav-link " +
+                  (item === currentPath ? "blue-text" : "grey-text")
+                }
               >
-                {/* <span class='badge'>1</span> */}
                 {item}
               </a>
             </li>
@@ -112,6 +115,7 @@ const Navbar = ({ isUserAuthenticated, topicstools }) => {
 };
 
 const mapStateToProps = (state) => ({
+  currentPath: state.action.path.selectedPath,
   topicstools: state.blog.topics.tools,
   topics: state.blog.topics.topicsData,
   tools: state.blog.topics.toolsData,

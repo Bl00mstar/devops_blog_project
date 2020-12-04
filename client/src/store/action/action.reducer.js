@@ -25,8 +25,21 @@ const actionReducer = (state = initialState, action) => {
     case actionTypes.SELECT_PATH:
       return {
         ...state,
-        tool: {
-          selectedTool: action.payload,
+        path: {
+          selectedPath: action.payload,
+          title: action.payload + " posts",
+          isLoading: true,
+          content: [],
+        },
+      };
+    case actionTypes.SET_PATH:
+      console.log(action.payload);
+      return {
+        ...state,
+        path: {
+          ...state.path,
+          isLoading: false,
+          content: action.payload,
         },
       };
     default:

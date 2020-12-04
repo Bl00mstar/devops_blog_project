@@ -54,7 +54,7 @@ const ShowImages = ({ loading, posts }) => {
 
 const mapStateToProps = (state) => ({
   loading: state.action.path.isLoading,
-  posts: state.blog.posts.postsData,
+  posts: state.action.path.content,
 });
 
 export default connect(mapStateToProps)(ShowImages);
