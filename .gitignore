@@ -3,3 +3,4 @@ api/config
 stat.txt
 database.env
 api/db.js
+.env
