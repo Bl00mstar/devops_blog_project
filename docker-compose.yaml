@@ -3,39 +3,41 @@ services:
   api:
     image: docker-node-mongo
     build: api/.
-    command: "node server.js"
     ports:
       - "5000:5000"
+    volumes:
+      - ./api:/usr/src/app
+    links:
+      - db_postgres
     depends_on:
-      - "mongo"
-      # - "database"
-  # database:
-  #   image: "postgres"
-  #   build: db/.
-  #   ports:
-  #     - "5500:5432"
-  mongo:
+      - db_mongo
+      - db_postgres
+  db_mongo:
     image: mongo
-    volumes:
-      - ./localFolder:/data/db
     ports:
-      - "27017:27017"
-  # frontend:
-  #   build: client/.
-  #   container_name: frontend
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./:/frontend
-  #     - /frontend/node_modules
+      - 27017:27017
+  db_postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: docker
+      POSTGRES_USERNAME: docker
+    volumes:
+      - ./db/db_script.sh:/docker-entrypoint-initdb.d/initdb.sh
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
   frontend:
-    build:
-      context: client/.
-      dockerfile: client/Dockerfile.dev
-    command: npm run start
-    container_name: frontend
+    image: react-app
     ports:
-      - "3000:3000"
+      - 3000:3000
+    stdin_open: true
+    links:
+      - api
     volumes:
-      - ./:/frontend
-      - /frontend/node_modules
+      - ./client:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: npm start
