@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 import NewNavLink from "./navLink";
 import { routes } from "../../Routes";
-
+import { selectPath } from "../../store/action/action.actions";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 
-const Navbar = ({ isUserAuthenticated, topics, tools, topicstools }) => {
+const Navbar = ({ isUserAuthenticated, topicstools }) => {
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
   useEffect(() => {
     var elems = document.querySelectorAll(".collapsible");
     M.Collapsible.init(elems, {});
@@ -40,14 +44,28 @@ const Navbar = ({ isUserAuthenticated, topics, tools, topicstools }) => {
     });
   }
 
+  const setPath = (item) => {
+    dispatch(selectPath(item));
+    navigate("/");
+  };
+
   const toolstopics = Object.entries(topicstools).map(([key, value], index) => (
     <li key={index}>
-      <a className='collapsible-header nav-link nav-link grey-text'>{key}</a>
+      <a
+        id={"li_" + index}
+        className='collapsible-header nav-link nav-link grey-text'
+      >
+        {key}
+      </a>
       <div className='collapsible-body'>
         <ul>
           {value.map((item, idx) => (
             <li key={idx}>
-              <a className='collapsible-header nav-link nav-link grey-text'>
+              <a
+                onClick={() => setPath(item)}
+                className='nav-link nav-link grey-text'
+              >
+                {/* <span class='badge'>1</span> */}
                 {item}
               </a>
             </li>
@@ -77,8 +95,8 @@ const Navbar = ({ isUserAuthenticated, topics, tools, topicstools }) => {
           />
         </li>
         {siteRoutes}
-        <li>
-          <ul className='collapsible'>{toolstopics}</ul>
+        <li className='no-padding'>
+          <ul className='collapsible collapsible-accordion'>{toolstopics}</ul>
         </li>
       </ul>
 

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import ShowImages from "./showImages";
 
-const HomePage = () => {
+const HomePage = ({ title }) => {
   return (
     <div>
       <navbar className='top-nav'>
@@ -11,7 +11,7 @@ const HomePage = () => {
           className='header center blue-text text-darken-3'
           style={{ fontFamily: "Poppins" }}
         >
-          DevOps Notes
+          {title}
         </h3>
         {/* </navbar> */}
       </navbar>
@@ -23,6 +23,7 @@ const HomePage = () => {
 };
 
 const mapStateToProps = (state) => ({
+  title: state.action.path.title,
   isUserLoading: state.user.isLoading,
   isUserAuthenticated: state.user.isAuthenticated,
 });

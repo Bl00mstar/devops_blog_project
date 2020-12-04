@@ -17,14 +17,6 @@ const ReadPost = ({ posts, id }) => {
     );
   }, []);
 
-  //   const choosenChapters = chapters.map((chapter) => {
-  //     if (chapter) {
-  //       setLoading(false);
-  //     } else {
-  //       return <Preloader />;
-  //     }
-  //   });
-
   const choosenPost = posts.map((post, key) => {
     if (post.id === id) {
       return (

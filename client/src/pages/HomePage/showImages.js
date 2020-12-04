@@ -6,10 +6,10 @@ import Preloader from "../../components/Preloader/linearPreloader";
 
 import ReadPost from "./readPost";
 
-const ShowImages = ({ postsLoading, posts }) => {
+const ShowImages = ({ loading, posts }) => {
   const [readPost, setReadPost] = useState("");
 
-  if (postsLoading) {
+  if (loading) {
     return <Preloader />;
   }
 
@@ -53,7 +53,7 @@ const ShowImages = ({ postsLoading, posts }) => {
 };
 
 const mapStateToProps = (state) => ({
-  postsLoading: state.blog.posts.isLoading,
+  loading: state.action.path.isLoading,
   posts: state.blog.posts.postsData,
 });
 

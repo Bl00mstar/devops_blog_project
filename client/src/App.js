@@ -9,12 +9,13 @@ import { routes } from "./Routes";
 import { useDispatch } from "react-redux";
 import { getUser } from "./store/user/user.actions";
 import { getPosts, getTopicsTools } from "./store/blog/blog.actions";
-
+import { loadPath } from "./store/action/action.actions";
 const App = () => {
   const dispatch = useDispatch();
   let element = useRoutes(routes);
 
   useEffect(() => {
+    dispatch(loadPath());
     dispatch(getUser());
     dispatch(getTopicsTools());
     dispatch(getPosts());
