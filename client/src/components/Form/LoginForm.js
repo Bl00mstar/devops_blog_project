@@ -8,12 +8,18 @@ import Error from "../Alert/Error";
 import Button from "../Button/Button";
 import InputForm from "../Input/InputForm";
 
+import { loadTitle } from "../../store/action/action.actions";
+
 export default function LoginForm() {
   const [nick, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState("disabled");
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadTitle("Login"));
+  }, []);
 
   useEffect(() => {
     if (nick.length !== 0 && password.length !== 0) {
@@ -35,16 +41,6 @@ export default function LoginForm() {
         <div className='row'>
           <div className='col s12 m6 offset-m3'>
             <Error />
-            <div
-              className='card transparent z-depth-0 '
-              style={{ opacity: "1" }}
-            >
-              <div className='card-content'>
-                <span className='card-title blue-text center'>
-                  <>LOGIN</>
-                </span>
-              </div>
-            </div>
             <div className='card'>
               <div className='card-content'>
                 <form onSubmit={handleSubmit}>

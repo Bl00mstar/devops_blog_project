@@ -8,7 +8,7 @@ import { selectPath } from "../../store/action/action.actions";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 
-const Navbar = ({ isUserAuthenticated, topicstools, currentPath }) => {
+const Header = ({ isUserAuthenticated, topicstools, currentPath }) => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   useEffect(() => {
@@ -80,19 +80,24 @@ const Navbar = ({ isUserAuthenticated, topicstools, currentPath }) => {
 
   return (
     <header>
-      <a href='#!' data-target='mobile-demo' className='sidenav-trigger'>
-        <i className='material-icons' style={{ color: "#039be5 " }}>
-          menu
-        </i>
-      </a>
+      <div className='container'>
+        <a
+          href='#'
+          data-target='nav-mobile'
+          className='top-nav sidenav-trigger waves-effect waves-light circle hide-on-large-only left'
+        >
+          <i className='material-icons'>menu</i>
+        </a>
+      </div>
+
       <ul
         id='nav-mobile'
         className='sidenav sidenav-fixed'
-        style={{ transform: "translateX(0%)" }}
+        style={{ transform: "translateX(-105%)" }}
       >
-        <li className='center-align'>
+        <li className='logo'>
           <img
-            src='http://192.168.55.200:5000/api/hosting/image/46b3901cba83cc83a2cb9ebc1b1cac70.png'
+            src=''
             width='135px'
             onClick={() => window.location.replace("/")}
           />
@@ -102,7 +107,6 @@ const Navbar = ({ isUserAuthenticated, topicstools, currentPath }) => {
           <ul className='collapsible collapsible-accordion'>{toolstopics}</ul>
         </li>
       </ul>
-
       <ul
         className='sidenav sidenav-close transparent z-depth-0'
         id='mobile-demo'
@@ -123,4 +127,4 @@ const mapStateToProps = (state) => ({
   isUserAuthenticated: state.user.isAuthenticated,
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(Header);

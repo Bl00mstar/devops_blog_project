@@ -15,3 +15,7 @@ export const selectPath = (data) => {
 export const setPathData = (data) => {
   return { type: actionTypes.SET_PATH, payload: data };
 };
+
+export const loadTitle = (data) => {
+  return { type: actionTypes.LOAD_TITLE, payload: data };
+};

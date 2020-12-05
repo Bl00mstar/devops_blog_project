@@ -1,7 +1,7 @@
 import actionTypes from "./action.types";
 
 const initialState = {
-  tool: { selectedTool: "" },
+  route: { title: "DevOps Notes" },
   path: {
     isLoading: true,
     selectedPath: "HOME",
@@ -13,6 +13,12 @@ const initialState = {
 
 const actionReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.LOAD_TITLE:
+      return {
+        ...state,
+        path: initialState.path,
+        route: { title: action.payload },
+      };
     case actionTypes.LOADED_PATH:
       return {
         ...state,

@@ -1,5 +1,5 @@
 import axios from "axios";
-const api_url = "api:5000/";
+const api_url = "http://localhost:5000/";
 
 export const getPosts = () => {
   return new Promise((resolve, reject) => {
