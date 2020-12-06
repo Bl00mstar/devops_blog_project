@@ -4,6 +4,8 @@ const actionTypes = {
   LOADED_PATH: "LOADED_PATH",
   SET_PATH: "SET_PATH",
   LOAD_TITLE: "LOAD_TITLE",
+  SET_POST: "SET_POST",
+  ADD_HISTORY: "ADD_HISTORY",
 };
 
 export default actionTypes;

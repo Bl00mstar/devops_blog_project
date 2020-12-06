@@ -43,7 +43,7 @@ export default function NewNavLink({ path, name }) {
     <NavLink
       activeClassName='nav-link blue-text '
       inactiveClassName='nav-link grey-text '
-      className='nav-link '
+      className='sidenav-close nav-link '
       to={path}
     >
       {name}

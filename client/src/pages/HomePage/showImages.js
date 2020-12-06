@@ -5,10 +5,12 @@ import { connect } from "react-redux";
 import Preloader from "../../components/Preloader/linearPreloader";
 
 import ReadPost from "./readPost";
+import { useDispatch } from "react-redux";
+import { setPost } from "../../store/action/action.actions";
 
-const ShowImages = ({ loading, posts }) => {
-  const [readPost, setReadPost] = useState("");
-
+const ShowImages = ({ loading, posts, readPost }) => {
+  // const [readPost, setReadPost] = useState("");
+  const dispatch = useDispatch();
   if (loading) {
     return <Preloader />;
   }
@@ -25,12 +27,21 @@ const ShowImages = ({ loading, posts }) => {
             <img className='activator' src={post.photo_url} />
           </div>
           <div className='card-content'>
-            <span className='card-title activator grey-text text-darken-4'>
+            <span
+              className='card-title activator grey-text text-darken-4 '
+              style={{ overflow: "hidden" }}
+            >
               {post.title}
               <i className='material-icons right'>more_vert</i>
             </span>
             <p>
-              <a onClick={() => setReadPost(post.id)}>Continue...</a>
+              <a
+                onClick={() =>
+                  dispatch(setPost({ postId: post.id, title: post.title }))
+                }
+              >
+                Continue...
+              </a>
             </p>
           </div>
           <div className='card-reveal'>
@@ -53,6 +64,7 @@ const ShowImages = ({ loading, posts }) => {
 };
 
 const mapStateToProps = (state) => ({
+  readPost: state.action.post.postId,
   loading: state.action.path.isLoading,
   posts: state.action.path.content,
 });

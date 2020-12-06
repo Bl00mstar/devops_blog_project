@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import Preloader from "../../components/Preloader/linearPreloader";
-
+import { useDispatch } from "react-redux";
 import "./index.css";
-
+import { addToHistory } from "../../store/action/action.actions";
 import { getChapters } from "../../store/blog/blog.helpers";
 
 const ReadPost = ({ posts, id }) => {
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
   const [chapters, setChapters] = useState([]);
 
   useEffect(() => {
+    dispatch(addToHistory(id));
     getChapters(id).then((data) =>
       data.success ? setChapters(data.message) : console.log("falure")
     );
@@ -21,7 +22,6 @@ const ReadPost = ({ posts, id }) => {
     if (post.id === id) {
       return (
         <div className='center-align' key={key}>
-          <div>{post.title}</div>
           <div>{post.content}</div>
           <img width='300' src={post.photo_url}></img>
         </div>

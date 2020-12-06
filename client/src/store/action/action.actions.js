@@ -19,3 +19,11 @@ export const setPathData = (data) => {
 export const loadTitle = (data) => {
   return { type: actionTypes.LOAD_TITLE, payload: data };
 };
+
+export const setPost = (data) => {
+  return { type: actionTypes.SET_POST, payload: data };
+};
+
+export const addToHistory = (data) => {
+  return { type: actionTypes.ADD_HISTORY, payload: data };
+};

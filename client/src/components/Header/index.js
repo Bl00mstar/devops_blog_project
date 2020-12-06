@@ -8,7 +8,12 @@ import { selectPath } from "../../store/action/action.actions";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 
-const Header = ({ isUserAuthenticated, topicstools, currentPath }) => {
+const Header = ({
+  isUserAuthenticated,
+  topicstools,
+  currentPath,
+  toolPath,
+}) => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   useEffect(() => {
@@ -45,8 +50,12 @@ const Header = ({ isUserAuthenticated, topicstools, currentPath }) => {
   }
 
   const setPath = (item) => {
-    dispatch(selectPath(item));
-    navigate("/");
+    if (currentPath === "home") {
+      dispatch(selectPath(item));
+    } else {
+      dispatch(selectPath(item));
+      navigate("/");
+    }
   };
 
   const toolstopics = Object.entries(topicstools).map(([key, value], index) => (
@@ -65,8 +74,10 @@ const Header = ({ isUserAuthenticated, topicstools, currentPath }) => {
                 name={item}
                 onClick={() => setPath(item)}
                 className={
-                  "nav-link nav-link " +
-                  (item === currentPath ? "blue-text" : "grey-text")
+                  "sidenav-close nav-link nav-link " +
+                  (item === toolPath && currentPath === "home"
+                    ? "blue-text"
+                    : "grey-text")
                 }
               >
                 {item}
@@ -84,7 +95,7 @@ const Header = ({ isUserAuthenticated, topicstools, currentPath }) => {
         <a
           href='#'
           data-target='nav-mobile'
-          className='top-nav sidenav-trigger waves-effect waves-light circle hide-on-large-only left'
+          className='top-nav sidenav-trigger  waves-effect waves-light circle hide-on-large-only left'
         >
           <i className='material-icons'>menu</i>
         </a>
@@ -92,13 +103,13 @@ const Header = ({ isUserAuthenticated, topicstools, currentPath }) => {
 
       <ul
         id='nav-mobile'
-        className='sidenav sidenav-fixed'
+        className='sidenav sidenav-fixed '
         style={{ transform: "translateX(-105%)" }}
       >
         <li className='logo'>
           <img
-            src=''
-            width='135px'
+            src={"./devopslogo.png"}
+            width='120px'
             onClick={() => window.location.replace("/")}
           />
         </li>
@@ -107,19 +118,20 @@ const Header = ({ isUserAuthenticated, topicstools, currentPath }) => {
           <ul className='collapsible collapsible-accordion'>{toolstopics}</ul>
         </li>
       </ul>
-      <ul
+      {/* <ul
         className='sidenav sidenav-close transparent z-depth-0'
         id='mobile-demo'
         style={{ top: "50px", width: "150px" }}
       >
         {siteRoutes}
-      </ul>
+      </ul> */}
     </header>
   );
 };
 
 const mapStateToProps = (state) => ({
-  currentPath: state.action.path.selectedPath,
+  toolPath: state.action.path.selectedPath,
+  currentPath: state.action.route.path,
   topicstools: state.blog.topics.tools,
   topics: state.blog.topics.topicsData,
   tools: state.blog.topics.toolsData,

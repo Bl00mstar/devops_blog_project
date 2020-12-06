@@ -18,7 +18,7 @@ export default function LoginForm() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadTitle("Login"));
+    dispatch(loadTitle({ title: "Login", path: "login" }));
   }, []);
 
   useEffect(() => {

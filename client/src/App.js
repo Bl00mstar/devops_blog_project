@@ -23,14 +23,14 @@ const App = ({ pageTitle }) => {
   }, []);
 
   return (
-    <body className='App'>
+    <div className='App'>
       <Header />
       <main>
-        <Navbar title={pageTitle} />
+        <Navbar />
         <div className='container'>{element}</div>
       </main>
       <footer className='page-footer transparent right grey-text'>2020</footer>
-    </body>
+    </div>
   );
 };
 

@@ -6,7 +6,7 @@ import { loadTitle } from "../../store/action/action.actions";
 const AboutPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadTitle("About"));
+    dispatch(loadTitle({ title: "About", path: "about", site: "true" }));
   }, []);
   return <div>About content</div>;
 };

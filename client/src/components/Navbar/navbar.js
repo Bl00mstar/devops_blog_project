@@ -1,7 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const Navbar = ({ title }) => {
+const Navbar = ({ selectedPath, pageTitle, isSite, postTitle }) => {
+  let title;
+
+  if (postTitle) {
+    title = postTitle;
+  } else {
+    if (isSite) {
+      title = pageTitle;
+    } else {
+      if (selectedPath) {
+        title = selectedPath;
+      } else {
+        title = pageTitle;
+      }
+    }
+  }
+
   return (
     <div className='top-nav'>
       <h3
@@ -15,7 +31,10 @@ const Navbar = ({ title }) => {
 };
 
 const mapStateToProps = (state) => ({
-  //   title: state.action.path.title,
+  postTitle: state.action.post.title,
+  selectedPath: state.action.path.selectedPath,
+  isSite: state.action.route.site,
+  pageTitle: state.action.route.title,
 });
 
 export default connect(mapStateToProps)(Navbar);

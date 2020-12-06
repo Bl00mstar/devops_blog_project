@@ -1,5 +1,5 @@
 import axios from "axios";
-const api_url = "http://localhost:5000/";
+const api_url = "http://192.168.55.200:5000/";
 
 export const loginToApi = (creds) => {
   const config = {
