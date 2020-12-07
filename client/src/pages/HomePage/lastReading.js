@@ -3,10 +3,10 @@ import M from "materialize-css/dist/js/materialize.min.js";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
-const LastReading = ({ posts, history }) => {
-  const [his, setHis] = useState([]);
+import ModalHistory from "./modalHistory";
+
+const LastReading = ({ history }) => {
   let navigate = useNavigate();
-  let choosenPost;
   useEffect(() => {
     var elems = document.querySelectorAll(".fixed-action-btn");
     M.FloatingActionButton.init(elems, {});
@@ -14,65 +14,26 @@ const LastReading = ({ posts, history }) => {
     M.Modal.init(ads, {});
   });
 
-  //   ((id, key) => {
-  //     if (post.id === id) {
-  //       return (
-  //         <div className='center-align' key={key}>
-  //           <div>{post.content}</div>
-  //           <img width='300' src={post.photo_url}></img>
-  //         </div>
-  //       );
-  //     }
-  //   });
-
-  //   useEffect(() => {
-  //     const his = history.map((item) => {
-  //       let historyValue = posts.find((x) => x.id === item);
-  //       if (historyValue) {
-  //         return { id: historyValue.id, title: historyValue.title };
-  //       }
-  //     });
-  //     console.log(his);
-  //     setHistoryValues(his);
-  //   }, [history]);
-  //   let content;
-  //   if (his[0] !== undefined) {
-  //     console.log(his);
-  //     content = his.map((item, index) => {
-  //       console.log(item);
-  //       return (
-  //         <div key={index} className='col s12'>
-  //           <p>{item.title}</p>
-  //         </div>
-  //       );
-  //     });
-  //   } else {
-  // useEffect(() => {
-  //     history.map((id) => {
-  //       let historyValue = posts.find((x) => x.id === id);
-  //       setHis((his) => [...his, historyValue]);
-  //     });
-  //     console.log(his);
-  //   }, [history]);
-
-  let content = history.map((item, idx) => <div key={idx}>{item}</div>);
-
-  //   }
+  let choosenPost;
+  if (history[0]) {
+    const reverse = history[0].split(",").reverse();
+    choosenPost = reverse.map((id) => <ModalHistory value={id} />);
+  } else {
+    choosenPost = <span>Nothing to show.</span>;
+  }
 
   return (
     <div>
       <div id='modal1' className='modal'>
-        <div className='modal-content'>
+        <div className='modal-content '>
           <h5 className='blue-text'>History</h5>
-
-          {content}
+          <table>
+            <tbody>{choosenPost}</tbody>
+          </table>
         </div>
       </div>
       <div className='fixed-action-btn'>
-        <a
-          className='btn-floating btn-large blue'
-          //   onMouseOver={() => choosenPost}
-        >
+        <a className='btn-floating btn-large blue'>
           <i className='large material-icons'>apps</i>
         </a>
         <ul>
@@ -92,7 +53,6 @@ const LastReading = ({ posts, history }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  posts: state.blog.posts.postsData,
   history: state.action.history.posts,
 });
 
