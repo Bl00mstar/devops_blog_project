@@ -1,10 +1,9 @@
 import axios from "axios";
-const api_url = "http://192.168.55.200:5000/";
 
 export const getPosts = () => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${api_url}api/blog/post`)
+      .get(`api/blog/post`)
       .then((res) => {
         resolve(res.data);
       })
@@ -17,7 +16,7 @@ export const getPosts = () => {
 export const getTools = () => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${api_url}api/blog/tools`)
+      .get(`api/blog/tools`)
       .then((res) => {
         resolve(res.data);
       })
@@ -30,7 +29,7 @@ export const getTools = () => {
 export const getTopics = () => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${api_url}api/blog/topics`)
+      .get(`api/blog/topics`)
       .then((res) => {
         resolve(res.data);
       })
@@ -43,7 +42,7 @@ export const getTopics = () => {
 export const addTopic = (topic) => {
   return new Promise((resolve, reject) => {
     axios
-      .post(`${api_url}api/blog/topics`, { newTopic: topic })
+      .post(`api/blog/topics`, { newTopic: topic })
       .then((res) => {
         resolve(res.data);
       })
@@ -56,7 +55,7 @@ export const addTopic = (topic) => {
 export const deleteTopic = (id) => {
   return new Promise((resolve, reject) => {
     axios
-      .delete(`${api_url}api/blog/topics/${id}`)
+      .delete(`api/blog/topics/${id}`)
       .then((res) => {
         resolve(res.data);
       })
@@ -69,7 +68,7 @@ export const deleteTopic = (id) => {
 export const addTool = (data) => {
   return new Promise((resolve, reject) => {
     axios
-      .post(`${api_url}api/blog/tools`, { data })
+      .post(`api/blog/tools`, { data })
       .then((res) => {
         resolve(res.data);
       })
@@ -82,7 +81,7 @@ export const addTool = (data) => {
 export const deleteTool = (id) => {
   return new Promise((resolve, reject) => {
     axios
-      .delete(`${api_url}api/blog/tools/${id}`)
+      .delete(`api/blog/tools/${id}`)
       .then((res) => {
         resolve(res.data);
       })
@@ -95,7 +94,7 @@ export const deleteTool = (id) => {
 export const postChapter = (data) => {
   return new Promise((resolve, reject) => {
     axios
-      .post(`${api_url}api/blog/chapter`, { data })
+      .post(`api/blog/chapter`, { data })
       .then((res) => {
         resolve(res.data);
       })
@@ -108,7 +107,7 @@ export const postChapter = (data) => {
 export const getChapters = (id) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${api_url}api/blog/chapter/${id}`)
+      .get(`api/blog/chapter/${id}`)
       .then((res) => {
         resolve(res.data);
       })

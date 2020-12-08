@@ -8,6 +8,7 @@ const config = require("config");
 app.use(express.json());
 
 app.use(cors());
+app.options("*", cors());
 
 const db_mongo = config.get("mongoURI");
 mongoose
@@ -21,6 +22,6 @@ mongoose
 
 app.use(require("./routes/index"));
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 80;
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

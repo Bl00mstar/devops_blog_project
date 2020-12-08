@@ -1,5 +1,4 @@
 import axios from "axios";
-const api_url = "http://192.168.55.200:5000/";
 
 export const loginToApi = (creds) => {
   const config = {
@@ -13,7 +12,7 @@ export const loginToApi = (creds) => {
 
   return new Promise((resolve, reject) => {
     axios
-      .post(`${api_url}api/auth`, body, config)
+      .post(`api/auth`, body, config)
       .then((res) => {
         resolve(res.data);
       })
@@ -39,7 +38,7 @@ export const isAuthenticated = (getState) => {
     }
 
     axios
-      .get(`${api_url}api/auth/user`, config)
+      .get(`api/auth/user`, config)
       .then((res) => {
         resolve(res);
       })

@@ -1,10 +1,8 @@
 version: "3"
 services:
   api:
-    image: docker-node-mongo
-    build: api/.
-    ports:
-      - "5000:5000"
+    build:
+      context: ./api
     volumes:
       - ./api:/usr/src/app
     links:
@@ -12,13 +10,19 @@ services:
     depends_on:
       - db_mongo
       - db_postgres
+    networks:
+      - internal
+    ports:
+      - "400:80"
   db_mongo:
     image: mongo
-    ports:
-      - 27017:27017
+    networks:
+      - internal
   db_postgres:
     image: postgres
     restart: always
+    networks:
+      - internal
     environment:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: docker
@@ -26,18 +30,18 @@ services:
     volumes:
       - ./db/db_script.sh:/docker-entrypoint-initdb.d/initdb.sh
       - ./pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
   frontend:
-    image: react-app
+    build:
+      context: ./client
+    restart: unless-stopped
+    build: ./client
     ports:
-      - 3000:3000
-    stdin_open: true
-    links:
+      - "80:80"
+    networks:
+      - internal
+    depends_on:
       - api
-    volumes:
-      - ./client:/app
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    command: npm start
+
+networks:
+  internal:
+    driver: bridge
