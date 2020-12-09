@@ -20,7 +20,6 @@ const NewChapter = ({ posts }) => {
 
   const onSubmit = (formData) => {
     let chapters = { postId: post, chaptersContent: formData };
-    console.log(formData);
     try {
       postChapter(chapters).then((data) => console.log(data));
     } catch (error) {

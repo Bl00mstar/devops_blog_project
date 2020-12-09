@@ -12,7 +12,6 @@ exports.getTopics = async (req, res) => {
 };
 
 exports.postTopics = async (req, res) => {
-  console.log(req.body);
   const { newTopic } = req.body;
   try {
     const topics = await pool.query(
@@ -31,7 +30,6 @@ exports.postTopics = async (req, res) => {
 };
 
 exports.deleteTopic = async (req, res) => {
-  console.log("Delete Topic" + req.params.id);
   try {
     const { id } = req.params;
     const deleteTodo = await pool.query("DELETE FROM topics WHERE id = $1", [
@@ -61,7 +59,6 @@ exports.getTools = async (req, res) => {
 
 exports.getToolsByTopicId = async (req, res) => {
   const { id } = req.params;
-  console.log(req.params);
   try {
     const toolsById = await pool.query(
       "SELECT * FROM tools WHERE topic_id= $1",

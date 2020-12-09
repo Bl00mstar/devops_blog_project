@@ -33,8 +33,7 @@ const ShowImages = ({ loading, posts, readPost }) => {
             >
               {post.title}
               <i className='material-icons right'>more_vert</i>
-            </span>
-            <p>
+              <br></br>
               <a
                 onClick={() =>
                   dispatch(setPost({ postId: post.id, title: post.title }))
@@ -42,7 +41,7 @@ const ShowImages = ({ loading, posts, readPost }) => {
               >
                 Continue...
               </a>
-            </p>
+            </span>
           </div>
           <div className='card-reveal'>
             <span className='card-title grey-text text-darken-4'>

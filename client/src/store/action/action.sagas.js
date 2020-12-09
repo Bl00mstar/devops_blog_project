@@ -24,7 +24,6 @@ export function* watchSelectedPath() {
 function* setPath({ payload }) {
   try {
     const posts = yield api.postPostsByToolName(payload);
-    // console.log(posts.message);
     yield put(actions.setPathData(posts.message));
   } catch (error) {
     console.log("b");

@@ -2,9 +2,7 @@ const pool = require("../db");
 const { body, validationResult, Result } = require("express-validator");
 
 exports.postChapter = async (req, res) => {
-  //postid value
   const { value } = req.body.data.postId;
-  // console.log(value);
 
   const { chapters } = req.body.data.chaptersContent;
   chapters.forEach((item, index) => {
@@ -65,8 +63,6 @@ exports.postPost = async (req, res) => {
       user,
     } = req.body.newPost;
 
-    console.log(toolsPost);
-
     const post = await pool.query(
       "INSERT INTO posts(title, content, photo_url,user_nick) VALUES($1,$2,$3,$4) RETURNING(id) ",
       [titlePost, descriptionPost, image, user]
@@ -113,7 +109,6 @@ exports.getPost = async (req, res) => {
 };
 
 exports.deletePost = async (req, res) => {
-  console.log(req.body);
   try {
     const { id } = req.params;
     const delPost = await pool.query("DELETE FROM posts WHERE id=$1", [id]);
@@ -128,12 +123,10 @@ exports.deletePost = async (req, res) => {
 
 exports.getPostById = async (req, res) => {
   try {
-    console.log(req.params);
     const { id } = req.params;
     const selectPost = await pool.query("SELECT * FROM posts WHERE id = $1", [
       id,
     ]);
-    console.log(selectPost);
     return res.status(200).json({
       success: true,
       message: selectPost.rows,

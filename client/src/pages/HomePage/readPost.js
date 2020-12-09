@@ -49,8 +49,6 @@ const ReadPost = ({ posts, id }) => {
               <pre className=' language-markup'>
                 <code className=' language-markup '>{chapter.code}</code>
               </pre>
-
-              <h2>{chapter.priority}</h2>
             </div>
           </div>
         ))}

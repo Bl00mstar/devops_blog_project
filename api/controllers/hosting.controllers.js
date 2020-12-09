@@ -27,12 +27,9 @@ module.exports = (upload) => {
   imageRouter
     .route("/")
     .post(upload.single("file"), (req, res, next) => {
-      console.log(req.body);
       let caption = uuidv4();
-      // check for existing images
       Image.findOne({ caption: caption })
         .then((image) => {
-          console.log(image);
           if (image) {
             return res.status(200).json({
               success: false,

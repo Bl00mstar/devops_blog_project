@@ -32,7 +32,6 @@ exports.postRegisterUser = async (req, res) => {
         .status(200)
         .json({ msg: "User " + registerUser.nick + " was created!" });
     }
-    console.log(registerUser);
   } catch (error) {
     return res.status(400).json({ msg: error.message });
   }

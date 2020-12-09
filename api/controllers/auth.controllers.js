@@ -6,25 +6,24 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 
 exports.postAuthUser = async (req, res) => {
-  console.log(req.body);
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json({ msg: "Please enter all fields." });
+      res.status(211).json({ msg: "Please enter all fields." });
       return;
     }
     const { nick, password } = req.body;
     const exsistingUser = await authService.findUser(nick);
     if (!exsistingUser)
-      return res.status(400).json({ msg: "Invalid credentials" });
+      return res.status(211).json({ msg: "Invalid credentials" });
     bcrypt.compare(password, exsistingUser.password).then((isMatch) => {
-      if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
+      if (!isMatch) return res.status(211).json({ msg: "Invalid credentials" });
       jwt.sign(
         { id: exsistingUser.id },
         config.get("jwtSecret"),
         { expiresIn: 3600 },
         (err, token) => {
-          if (err) return res.status(400).json({ msg: "Cannot log in." });
+          if (err) return res.status(211).json({ msg: "Cannot log in." });
           const userInfo = {
             token,
             user: {
@@ -41,7 +40,7 @@ exports.postAuthUser = async (req, res) => {
       );
     });
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return res.status(211).json({ msg: error.message });
   }
 };
 
@@ -54,7 +53,7 @@ exports.getUserData = async (req, res) => {
       message: "Successfully logged in.",
     });
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return res.status(211).json({ msg: error.message });
   }
 };
 

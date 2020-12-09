@@ -13,7 +13,7 @@ export function* watchUserIsLogged() {
   yield takeEvery("USER_LOADING", isAuthenticated);
 }
 
-function* isAuthenticated(getState) {
+function* isAuthenticated() {
   try {
     yield put(requestUser());
     const data = yield api.isAuthenticated();

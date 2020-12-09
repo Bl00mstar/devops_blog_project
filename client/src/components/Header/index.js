@@ -71,6 +71,7 @@ const Header = ({
           {value.map((item, idx) => (
             <li key={idx}>
               <a
+                href=''
                 name={item}
                 onClick={() => setPath(item)}
                 className={
@@ -104,7 +105,7 @@ const Header = ({
       <ul
         id='nav-mobile'
         className='sidenav sidenav-fixed '
-        style={{ transform: "translateX(-105%)" }}
+        style={{ transform: "translateX(-105%)", width: "220px" }}
       >
         <li className='logo'>
           <img

@@ -16,7 +16,6 @@ const EditPost = ({ postId, clearId }) => {
   const getPost = async (id) => {
     try {
       const post = await api.fetchData(`api/blog/post/${id}`, "GET");
-      console.log(post.message);
     } catch (err) {
       M.toast({ html: err.message });
     }

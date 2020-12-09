@@ -67,7 +67,6 @@ const actionReducer = (state = initialState, action) => {
         },
       };
     case actionTypes.SET_PATH:
-      console.log(action.payload);
       return {
         ...state,
         path: {

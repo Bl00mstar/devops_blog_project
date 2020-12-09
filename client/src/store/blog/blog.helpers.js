@@ -8,7 +8,13 @@ export const getPosts = () => {
         resolve(res.data);
       })
       .catch((err) => {
-        reject(err.response);
+        if (err.response) {
+          reject(err.response.data);
+        } else if (err.request) {
+          reject(err.request);
+        } else {
+          reject(err.message);
+        }
       });
   });
 };
@@ -21,7 +27,13 @@ export const getTools = () => {
         resolve(res.data);
       })
       .catch((err) => {
-        reject(err.response);
+        if (err.response) {
+          reject(err.response.data);
+        } else if (err.request) {
+          reject(err.request);
+        } else {
+          reject(err.message);
+        }
       });
   });
 };
@@ -34,7 +46,13 @@ export const getTopics = () => {
         resolve(res.data);
       })
       .catch((err) => {
-        reject(err.response);
+        if (err.response) {
+          reject(err.response.data);
+        } else if (err.request) {
+          reject(err.request);
+        } else {
+          reject(err.message);
+        }
       });
   });
 };
@@ -47,7 +65,13 @@ export const addTopic = (topic) => {
         resolve(res.data);
       })
       .catch((err) => {
-        reject(err.response);
+        if (err.response) {
+          reject(err.response.data);
+        } else if (err.request) {
+          reject(err.request);
+        } else {
+          reject(err.message);
+        }
       });
   });
 };
@@ -60,7 +84,13 @@ export const deleteTopic = (id) => {
         resolve(res.data);
       })
       .catch((err) => {
-        reject(err.response);
+        if (err.response) {
+          reject(err.response.data);
+        } else if (err.request) {
+          reject(err.request);
+        } else {
+          reject(err.message);
+        }
       });
   });
 };

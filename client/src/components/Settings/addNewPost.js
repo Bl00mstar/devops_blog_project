@@ -49,12 +49,10 @@ const AddNewPost = ({ userNick, topics, tools }) => {
   };
 
   const handleCreate = (name, value) => {
-    console.log("asd" + name + value);
     setPostData((postData) => ({
       ...postData,
       [name]: value,
     }));
-    // trySend(postData);
   };
 
   return (

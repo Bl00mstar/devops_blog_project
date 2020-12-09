@@ -17,7 +17,7 @@ const UploadContainer = ({ imageUrl }) => {
   };
 
   useEffect(() => {
-    imageUrl("image", "http://192.168.55.200:5000/api/hosting/image/" + image);
+    imageUrl("image", "api/hosting/image/" + image);
   }, [image]);
 
   const copyToClipBoard = async (copyLink) => {
@@ -34,7 +34,7 @@ const UploadContainer = ({ imageUrl }) => {
     let formData = new FormData();
     formData.append("file", uploadedImage);
     axios
-      .post("http://192.168.55.200:5000/api/hosting", formData)
+      .post("api/hosting", formData)
       .then((response) => {
         response.data.success
           ? setImage(response.data.image.filename) &&
@@ -53,18 +53,14 @@ const UploadContainer = ({ imageUrl }) => {
               <div className='col s4'>
                 <a
                   class='btn-small waves-effect waves-light blue '
-                  onClick={() =>
-                    copyToClipBoard(
-                      "http://192.168.55.200:5000/api/hosting/image/" + image
-                    )
-                  }
+                  onClick={() => copyToClipBoard("api/hosting/image/" + image)}
                 >
                   copy link
                 </a>
               </div>
               <div className='col s4'>
                 <img
-                  src={"http://192.168.55.200:5000/api/hosting/image/" + image}
+                  src={"api/hosting/image/" + image}
                   width='50'
                   height='50'
                   alt='foto'
@@ -102,7 +98,6 @@ const UploadContainer = ({ imageUrl }) => {
                         type='file'
                         onChange={(e) => {
                           setUploadedImage(e.target.files[0]);
-                          console.log(e.target.files[0]);
                           setShowUploadButton(true);
                         }}
                       ></input>
@@ -121,17 +116,3 @@ const UploadContainer = ({ imageUrl }) => {
 };
 
 export default UploadContainer;
-
-{
-  /* {image ? (
-        <div className='container'>
-          <button onClick={handleDelete(image)}>{image}</button>
-          <img
-            src={"http://192.168.55.200:5000/api/hosting/image/" + image}
-            width='50'
-            height='50'
-            alt='foto'
-          ></img>
-          <span>http://192.168.55.200:5000/api/hosting/image/{image}</span>
-        </div>*/
-}
