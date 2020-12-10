@@ -15,8 +15,8 @@ export function* watchGetPosts() {
 
 function* getPost() {
   try {
-    const data = yield api.getPosts();
-    yield put(loadPosts(data.message));
+    const data = yield api.handleRequest("GET", `api/blog/post`);
+    yield put(loadPosts(data));
   } catch (error) {
     console.log("b");
   }
@@ -28,24 +28,24 @@ export function* watchGetToolsTopics() {
 
 function* getTopicsDescription() {
   try {
-    const topics = yield api.getTopics();
-    const tools = yield api.getTools();
-    yield put(loadTools(tools.message));
-    yield put(loadTopics(topics.message));
+    const topics = yield api.handleRequest("GET", `api/blog/topics`);
+    const tools = yield api.handleRequest("GET", `api/blog/tools`);
+    yield put(loadTools(tools));
+    yield put(loadTopics(topics));
 
     const obj = {};
 
-    topics.message.map(({ id }, index) => {
+    topics.map(({ id }, index) => {
       const array = [];
-      tools.message.map(({ topic_id, description }) => {
+      tools.map(({ topic_id, description }) => {
         if (topic_id === id) {
           array.push(description);
         }
       });
-      obj[topics.message[index].description] = array;
+      obj[topics[index].description] = array;
     });
     yield put(loadTopicsTools(obj));
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-import * as api from "../../services/settings.service";
+import { handleRequest } from "../../../store/blog/blog.helpers";
 
 const EditPost = ({ postId, clearId }) => {
   const [postData, setPostData] = useState("");
@@ -15,7 +15,7 @@ const EditPost = ({ postId, clearId }) => {
 
   const getPost = async (id) => {
     try {
-      const post = await api.fetchData(`api/blog/post/${id}`, "GET");
+      const post = await handleRequest("GET", `api/blog/post/${id}`);
     } catch (err) {
       M.toast({ html: err.message });
     }

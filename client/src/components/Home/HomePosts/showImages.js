@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
+import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
-
-import Preloader from "../../components/Preloader/linearPreloader";
+import { setPost } from "../../../store/action/action.actions";
 
 import ReadPost from "./readPost";
-import { useDispatch } from "react-redux";
-import { setPost } from "../../store/action/action.actions";
+import Preloader from "../../Shared/Layout/linearPreloader";
 
 const ShowImages = ({ loading, posts, readPost }) => {
-  // const [readPost, setReadPost] = useState("");
   const dispatch = useDispatch();
   if (loading) {
     return <Preloader />;

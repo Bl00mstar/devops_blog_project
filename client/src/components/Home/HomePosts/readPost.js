@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
-import Preloader from "../../components/Preloader/linearPreloader";
 import { useDispatch } from "react-redux";
 import "./index.css";
-import { addToHistory } from "../../store/action/action.actions";
-import { getChapters } from "../../store/blog/blog.helpers";
+import { addToHistory } from "../../../store/action/action.actions";
+import { handleRequest } from "../../../store/blog/blog.helpers";
 
 const ReadPost = ({ posts, id }) => {
   const dispatch = useDispatch();
@@ -13,8 +11,8 @@ const ReadPost = ({ posts, id }) => {
 
   useEffect(() => {
     dispatch(addToHistory(id));
-    getChapters(id).then((data) =>
-      data.success ? setChapters(data.message) : console.log("falure")
+    handleRequest("GET", `api/blog/chapter/${id}`).then((data) =>
+      setChapters(data)
     );
   }, []);
 

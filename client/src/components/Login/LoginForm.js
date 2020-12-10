@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { logInUser } from "../../store/user/user.actions";
-import Error from "../Alert/Error";
+import Error from "../Shared/Alert/Error";
 
-import Button from "../Button/Button";
-import InputForm from "../Input/InputForm";
+import Button from "../Shared/Layout/Button";
+import InputForm from "../Shared/Input/InputForm";
 
 import { loadTitle } from "../../store/action/action.actions";
 

@@ -1,7 +1,6 @@
 import { put, take, takeEvery } from "redux-saga/effects";
 import * as actions from "./action.actions";
 import actionTypes from "./action.types";
-import * as api from "./action.helpers";
 import * as blogapi from "../blog/blog.helpers";
 
 export function* watchLoadingPath() {
@@ -10,8 +9,8 @@ export function* watchLoadingPath() {
 
 function* loadPath() {
   try {
-    const data = yield blogapi.getPosts();
-    yield put(actions.loadedPath(data.message));
+    const data = yield blogapi.handleRequest("GET", `api/blog/post`);
+    yield put(actions.loadedPath(data));
   } catch (error) {
     console.log("b");
   }
@@ -21,9 +20,13 @@ export function* watchSelectedPath() {
   yield takeEvery(actionTypes.SELECT_PATH, setPath);
 }
 
-function* setPath({ payload }) {
+function* setPath(payload) {
   try {
-    const posts = yield api.postPostsByToolName(payload);
+    const posts = yield blogapi.handleRequest(
+      "POST",
+      `api/blog/toolpost`,
+      payload
+    );
     yield put(actions.setPathData(posts.message));
   } catch (error) {
     console.log("b");

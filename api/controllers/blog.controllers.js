@@ -4,6 +4,7 @@ exports.getTopics = async (req, res) => {
   try {
     const topics = await pool.query("SELECT * FROM topics;");
     return res.status(200).json({
+      success: true,
       message: topics.rows,
     });
   } catch (error) {
@@ -50,6 +51,7 @@ exports.getTools = async (req, res) => {
   try {
     const tools = await pool.query("SELECT * FROM tools;");
     return res.status(200).json({
+      success: true,
       message: tools.rows,
     });
   } catch (error) {
@@ -74,7 +76,8 @@ exports.getToolsByTopicId = async (req, res) => {
 };
 
 exports.postTools = async (req, res) => {
-  const { tool, topic } = req.body.data;
+  console.log(req.body);
+  const { tool, topic } = req.body.newTool;
   try {
     const tools = await pool.query(
       "INSERT INTO tools(topic_id,description) VALUES($1,$2) RETURNING *",

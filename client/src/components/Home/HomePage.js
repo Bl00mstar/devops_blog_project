@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import ShowImages from "./showImages";
-import LastReading from "./lastReading";
 import { useDispatch } from "react-redux";
+
 import { loadTitle } from "../../store/action/action.actions";
+
+import ShowImages from "./HomePosts/showImages";
+import LastReading from "./HomePosts/lastReading";
 
 const HomePage = () => {
   const dispatch = useDispatch();

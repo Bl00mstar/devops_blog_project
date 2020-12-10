@@ -1,5 +1,5 @@
-import { createSelector } from "reselect";
+// import { createSelector } from "reselect";
 
-export const getToken = (state) => state.user.token;
+// export const getToken = (state) => state.user.token;
 
-export const getTokenSelector = createSelector((getToken) => getToken);
+// export const getTokenSelector = createSelector((getToken) => getToken);

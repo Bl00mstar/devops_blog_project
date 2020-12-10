@@ -15,7 +15,6 @@ const Button = ({
       className={className}
       value={value}
       autoComplete={autocomplete}
-      // onClick={onClick}
     >
       {value}
     </button>

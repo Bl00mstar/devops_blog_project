@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-import { addTopic, deleteTopic } from "../../store/blog/blog.helpers";
-import { getTopicsTools } from "../../store/blog/blog.actions";
+import { handleRequest } from "../../../store/blog/blog.helpers";
+import { getTopicsTools } from "../../../store/blog/blog.actions";
 
 const AddTopic = ({ topics }) => {
   const [topic, setTopic] = useState("");
@@ -12,13 +12,9 @@ const AddTopic = ({ topics }) => {
   const dispatch = useDispatch();
 
   const handleDeleteTopic = (id) => {
-    deleteTopic(id)
-      .then((data) =>
-        data.success
-          ? M.toast({ html: `Topic was deleted.` })
-          : M.toast({ html: "Failure." })
-      )
-      .catch((err) => M.toast({ html: err.data.msg }))
+    handleRequest("DELETE", `api/blog/topics/${id}`)
+      .then(() => M.toast({ html: `Topic was deleted.` }))
+      .catch((err) => M.toast({ html: err }))
       .finally(() => {
         dispatch(getTopicsTools());
       });
@@ -26,13 +22,9 @@ const AddTopic = ({ topics }) => {
 
   const handleAddTopic = () => {
     if (topic.length > 4) {
-      addTopic(topic)
-        .then((data) =>
-          data.success
-            ? M.toast({ html: `${topic} was added.` }) && setTopic("")
-            : M.toast({ html: "Failure." })
-        )
-        .catch((err) => M.toast({ html: err.data.msg }))
+      handleRequest("POST", "api/blog/topics", { newTopic: topic })
+        .then(() => M.toast({ html: `${topic} was added.` }) && setTopic(""))
+        .catch((err) => M.toast({ html: err }))
         .finally(() => {
           dispatch(getTopicsTools());
         });

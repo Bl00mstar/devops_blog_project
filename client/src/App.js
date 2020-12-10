@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useRoutes } from "react-router-dom";
 import "materialize-css/dist/css/materialize.min.css";
-import { connect } from "react-redux";
 import "./App.css";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar/navbar";
@@ -11,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { getUser } from "./store/user/user.actions";
 import { getPosts, getTopicsTools } from "./store/blog/blog.actions";
 import { loadPath } from "./store/action/action.actions";
-const App = ({ pageTitle }) => {
+const App = () => {
   const dispatch = useDispatch();
   let element = useRoutes(routes);
 
@@ -21,7 +20,6 @@ const App = ({ pageTitle }) => {
     dispatch(getTopicsTools());
     dispatch(getPosts());
   }, []);
-
   return (
     <div className='App'>
       <Header />
@@ -34,8 +32,4 @@ const App = ({ pageTitle }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  pageTitle: state.action.route.title,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;

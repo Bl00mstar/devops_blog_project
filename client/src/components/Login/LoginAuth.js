@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import LoginForm from "../../components/Form/LoginForm";
+import LoginForm from "./LoginForm";
 
 import { useNavigate } from "react-router-dom";
 

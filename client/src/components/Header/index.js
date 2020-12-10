@@ -71,7 +71,7 @@ const Header = ({
           {value.map((item, idx) => (
             <li key={idx}>
               <a
-                href=''
+                style={{ cursor: "pointer" }}
                 name={item}
                 onClick={() => setPath(item)}
                 className={

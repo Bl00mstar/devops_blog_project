@@ -1,6 +1,6 @@
 import React from "react";
 
-import Modal from "../Layout/modalEffect";
+import ModalEffect from "../../Shared/Layout/modalEffect";
 
 import AddNewPost from "./addNewPost";
 import PostList from "./postList";
@@ -21,7 +21,7 @@ const PostMenu = () => {
           content: <AddNewChapter />,
         },
       ],
-      background: Modal,
+      background: ModalEffect,
     },
 
     {
@@ -35,7 +35,7 @@ const PostMenu = () => {
           content: <AddNewPost />,
         },
       ],
-      background: Modal,
+      background: ModalEffect,
     },
   ];
 

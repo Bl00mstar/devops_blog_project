@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import M from "materialize-css/dist/js/materialize.min.js";
 import { useNavigate } from "react-router-dom";
+
+import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
-import Tool from "../../components/Settings/addTool";
-import Create from "../../components/Settings/postMenu";
-import Topic from "../../components/Settings/addTopic";
 import { loadTitle } from "../../store/action/action.actions";
+
+import M from "materialize-css/dist/js/materialize.min.js";
+import Tool from "./Settingsc/addTool";
+import Create from "./Settingsc/postMenu";
+import Topic from "./Settingsc/addTopic";
 
 const Settings = ({ isUserAuthenticated }) => {
   const dispatch = useDispatch();

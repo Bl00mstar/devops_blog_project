@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-import { addTool, deleteTool } from "../../store/blog/blog.helpers";
-import { getTopicsTools } from "../../store/blog/blog.actions";
+import { handleRequest } from "../../../store/blog/blog.helpers";
+import { getTopicsTools } from "../../../store/blog/blog.actions";
 
 const AddTool = ({ tools, topics }) => {
   const [tool, setTool] = useState("");
@@ -13,13 +13,9 @@ const AddTool = ({ tools, topics }) => {
   const dispatch = useDispatch();
 
   const handleDeleteTool = (id) => {
-    deleteTool(id)
-      .then((data) =>
-        data.success
-          ? M.toast({ html: `Tool was deleted.` })
-          : M.toast({ html: "Failure." })
-      )
-      .catch((err) => M.toast({ html: err.data.msg }))
+    handleRequest("DELETE", `api/blog/tools/${id}`)
+      .then(() => M.toast({ html: `Tool was deleted.` }))
+      .catch((err) => M.toast({ html: err }))
       .finally(() => {
         dispatch(getTopicsTools());
       });
@@ -28,13 +24,10 @@ const AddTool = ({ tools, topics }) => {
     e.preventDefault();
     if (tool.length > 2) {
       const newTool = { tool: tool, topic: selectedTopic };
-      addTool(newTool)
-        .then((data) =>
-          data.success
-            ? M.toast({ html: `${tool} was added.` }) && setTool("")
-            : M.toast({ html: "Failure." })
-        )
-        .catch((err) => M.toast({ html: err.data.msg }))
+      console.log(newTool);
+      handleRequest("POST", `api/blog/tools`, { newTool })
+        .then(() => M.toast({ html: `${tool} was added.` }) && setTool(""))
+        .catch((err) => M.toast({ html: err }))
         .finally(() => {
           dispatch(getTopicsTools());
         });

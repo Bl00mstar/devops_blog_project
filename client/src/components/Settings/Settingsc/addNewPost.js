@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
+
 import { connect } from "react-redux";
-import * as api from "../../services/settings.service";
+import { handleRequest } from "../../../store/blog/blog.helpers";
 
 import M from "materialize-css/dist/js/materialize.min.js";
-
 import UploadContainer from "./uploadContainer";
-
 import Select from "react-select";
 
-const AddNewPost = ({ userNick, topics, tools }) => {
+const AddNewPost = ({ userNick, tools }) => {
   const [selectedTools, setSelectedTools] = useState(null);
   const [user, setUser] = useState("");
   const [postData, setPostData] = useState({
@@ -36,13 +35,13 @@ const AddNewPost = ({ userNick, topics, tools }) => {
 
   const trySend = async () => {
     try {
-      await api
-        .postData(`api/blog/post`, { newPost: postData })
-        .then((data) => {
+      await handleRequest("POST", `api/blog/post`, { newPost: postData }).then(
+        (data) => {
           data.success
             ? M.toast({ html: "Success." })
             : M.toast({ html: "Failure." });
-        });
+        }
+      );
     } catch (err) {
       M.toast({ html: err.message });
     }

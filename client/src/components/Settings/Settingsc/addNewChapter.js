@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import Select from "react-select";
 import UploadContainer from "./uploadContainer";
 
-import { postChapter } from "../../store/blog/blog.helpers";
+import { handleRequest } from "../../../store/blog/blog.helpers";
 
 const NewChapter = ({ posts }) => {
   const [indexes, setIndexes] = React.useState([]);
@@ -21,7 +21,9 @@ const NewChapter = ({ posts }) => {
   const onSubmit = (formData) => {
     let chapters = { postId: post, chaptersContent: formData };
     try {
-      postChapter(chapters).then((data) => console.log(data));
+      handleRequest("POST", `api/blog/chapter`, chapters).then((data) =>
+        console.log(data)
+      );
     } catch (error) {
       console.log(error.data);
     }

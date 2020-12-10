@@ -11,24 +11,21 @@ router.delete("/topics/:id", [blogController.deleteTopic]);
 
 router.get("/tools", [blogController.getTools]);
 router.get("/tools/:id", [blogController.getToolsByTopicId]);
-router.post("/tools", [blogController.postTools]);
-router.delete("/tools/:id", [blogController.deleteTool]);
+router.post("/tools", auth, [blogController.postTools]);
+router.delete("/tools/:id", auth, [blogController.deleteTool]);
 
 // PATH /api/blog
 
-router.post("/post", auth, [
-  postController.validate("addPost"),
-  postController.postPost,
-]);
+router.post("/post", auth, [postController.postPost]);
 router.get("/post", [postController.getPost]);
 router.get("/post/:id", [postController.getPostById]);
-router.delete("/post/:id", [postController.deletePost]);
+router.delete("/post/:id", auth, [postController.deletePost]);
 
-router.post("/toolpost", [postController.findPostByToolName]);
+router.post("/toolpost", auth, [postController.findPostByToolName]);
 
 // /api/blog/chapter
 
-router.post("/chapter", [postController.postChapter]);
+router.post("/chapter", auth, [postController.postChapter]);
 router.get("/chapter/:id", [postController.getChaptersByPostId]);
 
 module.exports = router;

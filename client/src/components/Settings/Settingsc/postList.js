@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-
+import { handleRequest } from "../../../store/blog/blog.helpers";
 import M from "materialize-css/dist/js/materialize.min.js";
-
-import * as api from "../../services/settings.service";
-
-import editPost from "./editPost";
 import EditPost from "./editPost";
 
 export default function PostList() {
   const [posts, setPosts] = useState([]);
-  //   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
 
   const handleId = () => {
@@ -26,10 +21,10 @@ export default function PostList() {
 
   const getPosts = async () => {
     try {
-      const posts = await api.fetchData("api/blog/post", "GET");
-      setPosts(posts.message);
+      const posts = await handleRequest("GET", `api/blog/post`);
+      setPosts(posts);
     } catch (err) {
-      M.toast({ html: err.message });
+      M.toast({ html: err });
     }
   };
   const list = posts.map((post) => {
@@ -60,7 +55,7 @@ export default function PostList() {
 
   const deletePost = async (id) => {
     try {
-      const deletePost = await api.fetchData(`api/blog/post/${id}`, "DELETE");
+      const deletePost = await handleRequest("DELETE", `api/blog/post/${id}`);
       if (deletePost.success) {
         getPosts() && M.toast({ html: deletePost.msg });
       } else {
