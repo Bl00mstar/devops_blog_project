@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 import { connect } from "react-redux";
-import { handleRequest } from "../../../store/blog/blog.helpers";
+import { handleRequest } from "../../../../../store/blog/blog.helpers";
 
 import M from "materialize-css/dist/js/materialize.min.js";
-import UploadContainer from "./uploadContainer";
+import UploadContainer from "../../../../Shared/uploadContainer";
 import Select from "react-select";
 
 const AddNewPost = ({ userNick, tools }) => {
@@ -34,17 +34,13 @@ const AddNewPost = ({ userNick, tools }) => {
   }, [selectedTools]);
 
   const trySend = async () => {
-    try {
-      await handleRequest("POST", `api/blog/post`, { newPost: postData }).then(
-        (data) => {
-          data.success
-            ? M.toast({ html: "Success." })
-            : M.toast({ html: "Failure." });
-        }
-      );
-    } catch (err) {
-      M.toast({ html: err.message });
-    }
+    handleRequest("POST", `api/blog/post`, { newPost: postData })
+      .then(() => {
+        M.toast({ html: "Success." });
+      })
+      .catch(() => {
+        M.toast({ html: "Failure." });
+      });
   };
 
   const handleCreate = (name, value) => {
@@ -55,7 +51,7 @@ const AddNewPost = ({ userNick, tools }) => {
   };
 
   return (
-    <div className='App'>
+    <div>
       <form>
         <div class='input-field col s12'>
           <label for='postTitle'>Title</label>

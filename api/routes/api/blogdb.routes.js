@@ -21,7 +21,7 @@ router.get("/post", [postController.getPost]);
 router.get("/post/:id", [postController.getPostById]);
 router.delete("/post/:id", auth, [postController.deletePost]);
 
-router.post("/toolpost", auth, [postController.findPostByToolName]);
+router.post("/toolpost", [postController.findPostByToolName]);
 
 // /api/blog/chapter
 

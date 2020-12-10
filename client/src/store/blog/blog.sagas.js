@@ -1,6 +1,7 @@
 import * as api from "./blog.helpers";
 import { put, takeEvery } from "redux-saga/effects";
 import blogTypes from "./blog.types";
+import * as errors from "../error/error.actions";
 
 import {
   loadPosts,
@@ -18,7 +19,7 @@ function* getPost() {
     const data = yield api.handleRequest("GET", `api/blog/post`);
     yield put(loadPosts(data));
   } catch (error) {
-    console.log("b");
+    yield put(errors.errorNotification(error));
   }
 }
 
@@ -46,6 +47,6 @@ function* getTopicsDescription() {
     });
     yield put(loadTopicsTools(obj));
   } catch (error) {
-    console.log(error);
+    yield put(errors.errorNotification(error));
   }
 }

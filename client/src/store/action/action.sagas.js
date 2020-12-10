@@ -1,5 +1,6 @@
-import { put, take, takeEvery } from "redux-saga/effects";
+import { put, takeEvery } from "redux-saga/effects";
 import * as actions from "./action.actions";
+import * as errors from "../error/error.actions";
 import actionTypes from "./action.types";
 import * as blogapi from "../blog/blog.helpers";
 
@@ -12,7 +13,7 @@ function* loadPath() {
     const data = yield blogapi.handleRequest("GET", `api/blog/post`);
     yield put(actions.loadedPath(data));
   } catch (error) {
-    console.log("b");
+    yield put(errors.errorNotification(error));
   }
 }
 
@@ -24,11 +25,11 @@ function* setPath(payload) {
   try {
     const posts = yield blogapi.handleRequest(
       "POST",
-      `api/blog/toolpost`,
+      "api/blog/toolpost",
       payload
     );
-    yield put(actions.setPathData(posts.message));
+    yield put(actions.setPathData(posts));
   } catch (error) {
-    console.log("b");
+    yield put(errors.errorNotification(error));
   }
 }

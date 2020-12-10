@@ -44,6 +44,7 @@ exports.getChaptersByPostId = async (req, res) => {
 };
 
 exports.postPost = async (req, res) => {
+  console.log(req.body);
   const errorFormatter = ({ msg }) => {
     return `${msg}`;
   };
@@ -80,15 +81,12 @@ exports.postPost = async (req, res) => {
         }
       }
     }
-
     return res.status(200).json({
       success: true,
-      message: "post ok",
     });
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: "post fail",
     });
   }
 };
@@ -111,8 +109,15 @@ exports.getPost = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     const { id } = req.params;
+    const delConn = await pool.query(
+      "DELETE FROM tools_posts WHERE post_id=$1",
+      [id]
+    );
     const delPost = await pool.query("DELETE FROM posts WHERE id=$1", [id]);
-    return res.status(200).json("deleted");
+    return res.status(200).json({
+      success: true,
+      message: "Post deleted.",
+    });
   } catch (error) {
     return res.status(400).json({
       success: false,
@@ -155,17 +160,17 @@ exports.updatePost = async (req, res) => {
 };
 
 exports.findPostByToolName = async (req, res) => {
-  const { device } = req.body;
+  const { payload } = req.body;
+  console.log(payload);
   try {
     const selectedPosts = await pool.query(
       "SELECT posts.id,posts.title, posts.content,posts.photo_url, tools.description FROM posts left join tools_posts on (tools_posts.post_id = posts.id) LEFT JOIN tools ON (tools.id = tools_posts.tool_id) WHERE tools.description LIKE $1",
-      [device]
+      [payload]
     );
     return res.status(200).json({
       success: true,
       message: selectedPosts.rows,
     });
-    return res.status(200).json("updated");
   } catch (error) {
     return res.status(400).json({
       success: false,

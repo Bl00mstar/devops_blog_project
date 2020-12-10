@@ -1,7 +1,11 @@
 import errorTypes from "./error.types";
 
-export const getError = (msg) => {
-  return { type: errorTypes.GET_ERROR, payload: msg };
+export const errorNotification = (msg) => {
+  return { type: errorTypes.GET_ERROR_STORE, payload: msg };
+};
+
+export const errorField = (msg) => {
+  return { type: errorTypes.GET_ERROR_FRONT, payload: msg };
 };
 
 export const clearError = () => {

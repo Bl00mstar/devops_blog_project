@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-import { handleRequest } from "../../../store/blog/blog.helpers";
-import { getTopicsTools } from "../../../store/blog/blog.actions";
+import { handleRequest } from "../../../../store/blog/blog.helpers";
+import { getTopicsTools } from "../../../../store/blog/blog.actions";
 
-const AddTopic = ({ topics }) => {
+const AddDeleteTopic = ({ topics }) => {
   const [topic, setTopic] = useState("");
 
   const dispatch = useDispatch();
@@ -79,4 +79,4 @@ const mapStateToProps = (state) => ({
   topics: state.blog.topics.topicsData,
 });
 
-export default connect(mapStateToProps)(AddTopic);
+export default connect(mapStateToProps)(AddDeleteTopic);

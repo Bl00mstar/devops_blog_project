@@ -38,7 +38,7 @@ export const isAuthenticated = async () => {
     axios
       .get(`api/auth/user`, { headers: token.headers })
       .then((res) => {
-        if (res.status === 204) {
+        if (res.status === 211) {
           reject(res.data);
         } else {
           resolve(res);

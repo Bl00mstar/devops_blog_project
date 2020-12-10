@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-import { handleRequest } from "../../../store/blog/blog.helpers";
-import { getTopicsTools } from "../../../store/blog/blog.actions";
+import { handleRequest } from "../../../../store/blog/blog.helpers";
+import { getTopicsTools } from "../../../../store/blog/blog.actions";
 
-const AddTool = ({ tools, topics }) => {
+const AddDeleteTool = ({ tools, topics }) => {
   const [tool, setTool] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("select");
 
@@ -24,7 +24,6 @@ const AddTool = ({ tools, topics }) => {
     e.preventDefault();
     if (tool.length > 2) {
       const newTool = { tool: tool, topic: selectedTopic };
-      console.log(newTool);
       handleRequest("POST", `api/blog/tools`, { newTool })
         .then(() => M.toast({ html: `${tool} was added.` }) && setTool(""))
         .catch((err) => M.toast({ html: err }))
@@ -106,4 +105,4 @@ const mapStateToProps = (state) => ({
   tools: state.blog.tools.toolsData,
 });
 
-export default connect(mapStateToProps)(AddTool);
+export default connect(mapStateToProps)(AddDeleteTool);

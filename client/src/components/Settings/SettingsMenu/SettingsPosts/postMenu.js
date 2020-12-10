@@ -1,12 +1,12 @@
 import React from "react";
 
-import ModalEffect from "../../Shared/Layout/modalEffect";
+import ModalEffect from "../../../Shared/Layout/modalEffect";
 
-import AddNewPost from "./addNewPost";
-import PostList from "./postList";
+import AddNewPost from "./Posts/addNewPost";
+import PostList from "./Posts/postList";
 
-import ChapterList from "./chapterList";
-import AddNewChapter from "./addNewChapter";
+import ChapterList from "./Chapters/chapterList";
+import AddNewChapter from "./Chapters/addNewChapter";
 
 const PostMenu = () => {
   const postOptions = [
