@@ -10,6 +10,7 @@ router.post("/topics", [blogController.postTopics]);
 router.delete("/topics/:id", [blogController.deleteTopic]);
 
 router.get("/tools", [blogController.getTools]);
+router.get("/toolsByPost/:id", [postController.getToolsByPostId]);
 router.get("/tools/:id", [blogController.getToolsByTopicId]);
 router.post("/tools", auth, [blogController.postTools]);
 router.delete("/tools/:id", auth, [blogController.deleteTool]);
@@ -18,6 +19,7 @@ router.delete("/tools/:id", auth, [blogController.deleteTool]);
 
 router.post("/post", auth, [postController.postPost]);
 router.get("/post", [postController.getPost]);
+
 router.get("/post/:id", [postController.getPostById]);
 router.delete("/post/:id", auth, [postController.deletePost]);
 

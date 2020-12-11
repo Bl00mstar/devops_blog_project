@@ -106,6 +106,25 @@ exports.getPost = async (req, res) => {
   }
 };
 
+exports.getToolsByPostId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const tools = await pool.query(
+      "SELECT tools.id,  tools.description, posts.id FROM tools LEFT JOIN tools_posts on (tools_posts.tool_id = tools.id) LEFT JOIN posts on (posts.id = tools_posts.tool_id) where tools_posts.post_id=$1",
+      [id]
+    );
+    return res.status(200).json({
+      success: true,
+      message: tools.rows,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: "post fail",
+    });
+  }
+};
+
 exports.deletePost = async (req, res) => {
   try {
     const { id } = req.params;

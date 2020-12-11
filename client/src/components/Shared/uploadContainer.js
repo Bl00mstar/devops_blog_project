@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const UploadContainer = ({ imageUrl }) => {
+const UploadContainer = () => {
   const [uploadedImage, setUploadedImage] = useState("");
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [image, setImage] = useState("");
   const [imageId, setImageId] = useState("");
 
   const removeAddedImage = () => {
-    setImageId("") &&
-      setImage("") &&
-      setShowUploadButton(false) &&
-      setUploadedImage("");
+    setImageId("");
+    setImage("");
+    setShowUploadButton(false);
+    setUploadedImage("");
   };
-
-  useEffect(() => {
-    imageUrl("image", "api/hosting/image/" + image);
-  }, [image]);
 
   const copyToClipBoard = async (copyLink) => {
     try {
@@ -41,7 +36,7 @@ const UploadContainer = ({ imageUrl }) => {
             setImageId(response.data.image._id)
           : alert("File already exists");
       })
-      .catch((err) => alert("Error: " + err));
+      .catch((err) => alert("Error: " + err + "File can be too large."));
   };
 
   return (
@@ -80,9 +75,19 @@ const UploadContainer = ({ imageUrl }) => {
           return (
             <>
               <div className='col s12'>
-                <button className='btn-small' onClick={handleClick}>
-                  Upload image
-                </button>
+                <div className='col s6'>
+                  <button className='btn-small blue' onClick={handleClick}>
+                    Upload image
+                  </button>
+                </div>
+                <div className='col s6'>
+                  <button
+                    className='btn-small blue'
+                    onClick={() => removeAddedImage()}
+                  >
+                    Remove image
+                  </button>
+                </div>
               </div>
             </>
           );

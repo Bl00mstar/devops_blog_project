@@ -1,10 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
+import { connect } from "react-redux";
+import UploadContainer from "../../../../Shared/uploadContainer";
+import Select from "react-select";
 
-const PostLayout = ({ post }) => {
+const PostLayout = ({ post, name, handleState, tools }) => {
+  const [selectedTools, setSelectedTools] = useState(null);
+  const [data, setData] = useState(post);
+
   useEffect(() => {
     M.updateTextFields();
   });
+
+  useEffect(() => {
+    setData((data) => ({
+      ...data,
+      toolsPost: selectedTools,
+    }));
+  }, [selectedTools]);
+
+  const handleData = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setData((data) => ({
+      ...data,
+      [name]: value,
+    }));
+  };
+
+  const options = tools.map((item) => ({
+    value: item.id,
+    label: item.description,
+  }));
 
   return (
     <div>
@@ -17,10 +44,10 @@ const PostLayout = ({ post }) => {
             id={"postTitle"}
             minLength={10}
             type={"text"}
-            value={post.title}
+            value={data.title}
             className='validate'
-            name={"Post Title"}
-            // onChange={(e) => handleCreate("titlePost", e.target.value)}
+            name={"title"}
+            onChange={(e) => handleData(e)}
           />
           <span
             class='helper-text'
@@ -35,10 +62,10 @@ const PostLayout = ({ post }) => {
             id={"postDescription"}
             minLength={10}
             className='validate'
-            value={post.content}
+            value={data.content}
             type={"text"}
-            name={"Description"}
-            // onChange={(e) => handleCreate("descriptionPost", e.target.value)}
+            name={"content"}
+            onChange={(e) => handleData(e)}
           />
           <span
             class='helper-text'
@@ -46,15 +73,42 @@ const PostLayout = ({ post }) => {
           ></span>
         </div>
         <div class='input-field col s12'>
-          {/* <UploadContainer imageUrl={handleCreate} /> */}
+          <label className='active' for='photoURL'>
+            Photo URL
+          </label>
+          <input
+            id={"photoURL"}
+            minLength={10}
+            className='validate'
+            value={data.photo_url}
+            type={"text"}
+            name={"photo_url"}
+            onChange={(e) => handleData(e)}
+          />
+          <span
+            class='helper-text'
+            data-error='Please input minimum 10 characters.'
+          ></span>
         </div>
         <div class='input-field col s12'>
-          {/* <Select options={options} isMulti onChange={setSelectedTools} /> */}
+          <UploadContainer />
         </div>
-        <button className='btn-small blue'>CREATE</button>
+        <div class='input-field col s12'>
+          <Select options={options} isMulti onChange={setSelectedTools} />
+        </div>
+        <button
+          className='btn-small blue'
+          onClick={(e) => handleState(e, data)}
+        >
+          {name}
+        </button>
       </form>
     </div>
   );
 };
 
-export default PostLayout;
+const mapStateToProps = (state) => ({
+  tools: state.blog.tools.toolsData,
+});
+
+export default connect(mapStateToProps)(PostLayout);
