@@ -133,7 +133,7 @@ module.exports = (upload) => {
 
       res.status(200).json({
         success: true,
-        files,
+        message: files,
       });
     });
   });

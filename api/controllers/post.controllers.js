@@ -102,9 +102,12 @@ exports.getToolsByPostId = async (req, res) => {
   try {
     const { id } = req.params;
     const tools = await pool.query(
-      "SELECT tools.id,  tools.description, posts.id FROM tools LEFT JOIN tools_posts on (tools_posts.tool_id = tools.id) LEFT JOIN posts on (posts.id = tools_posts.tool_id) where tools_posts.post_id=$1",
+      "SELECT tools.id as value,  tools.description as label FROM tools \
+      LEFT JOIN tools_posts on (tools_posts.tool_id = tools.id) \
+      LEFT JOIN posts on (posts.id = tools_posts.tool_id) where tools_posts.post_id=$1",
       [id]
     );
+    console.log(tools.rows);
     return res.status(200).json({
       success: true,
       message: tools.rows,
@@ -175,17 +178,41 @@ exports.findPostByToolName = async (req, res) => {
 };
 
 exports.updatePost = async (req, res) => {
-  console.log(req.body);
-  //posts tools ?
   const { id } = req.params;
-  // id,title,content,photo_url
-  // await pool.query(
-  //   "UPDATE posts  SET title=$2,content=$3,photo_url=$4 WHERE id=$1",
-  //   [id, title, content, photo_url]
-  // );
+  const { content, photo_url, title, toolsPost } = req.body;
+
+  await pool
+    .query("UPDATE posts SET title=$2, content=$3, photo_url=$4 WHERE id=$1", [
+      id,
+      title,
+      content,
+      photo_url,
+    ])
+    .then(() => {
+      pool.query("DELETE from tools_posts WHERE post_id=$1", [id]);
+    })
+    .then(() => {
+      for (const key in toolsPost) {
+        pool.query("INSERT INTO tools_posts(tool_id, post_id) VALUES ($1,$2)", [
+          toolsPost[key].value,
+          id,
+        ]);
+      }
+    })
+    .then(() => {
+      return res.status(200).json({
+        success: true,
+      });
+    })
+    .catch((err) => {
+      return res.status(400).json({
+        success: false,
+        message: err,
+      });
+    });
 };
 
-exports.updateChapter = async (req, res) => {
+exports.updateChapter = async (reqgetToolsByPostId, res) => {
   const { id, topic, content, code, photo_url } = req.body;
 
   try {

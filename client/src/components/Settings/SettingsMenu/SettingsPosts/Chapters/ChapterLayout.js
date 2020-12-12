@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import UploadContainer from "../../../../Shared/uploadContainer";
+import UploadContainer from "../../SettingsImages/uploadContainer";
 import M from "materialize-css/dist/js/materialize.min.js";
 
 const ChapterLayout = ({ name, chapter, handleState }) => {

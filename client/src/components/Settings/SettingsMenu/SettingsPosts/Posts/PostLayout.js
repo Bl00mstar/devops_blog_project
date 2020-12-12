@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { connect } from "react-redux";
-import UploadContainer from "../../../../Shared/uploadContainer";
+import UploadContainer from "../../SettingsImages/uploadContainer";
 import Select from "react-select";
 
-const PostLayout = ({ post, name, handleState, tools }) => {
+const PostLayout = ({ post, name, handleState, tools, toolsDB }) => {
   const [selectedTools, setSelectedTools] = useState(null);
   const [data, setData] = useState(post);
+
+  useEffect(() => {
+    setSelectedTools(toolsDB);
+  }, [toolsDB]);
 
   useEffect(() => {
     M.updateTextFields();
@@ -94,7 +98,12 @@ const PostLayout = ({ post, name, handleState, tools }) => {
           <UploadContainer />
         </div>
         <div class='input-field col s12'>
-          <Select options={options} isMulti onChange={setSelectedTools} />
+          <Select
+            value={selectedTools}
+            options={options}
+            isMulti
+            onChange={setSelectedTools}
+          />
         </div>
         <button
           className='btn-small blue'
