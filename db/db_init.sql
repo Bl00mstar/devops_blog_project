@@ -87,6 +87,13 @@ CREATE TABLE tools_posts(
 -- 	WHERE tools.description LIKE 'AWS'
 
 
+-- SELECT  posts.id,tools.id, tools.description
+-- 	FROM tools
+-- 	left join tools_posts on (tools_posts.tool_id = tools.id)
+-- 	LEFT JOIN posts ON (tools.id = tools_posts.tool_id)
+-- 	WHERE tools.description LIKE 'AWS'
+
+
 --get chapterrs from posts
 
 -- SELECT  posts.*, chapters.*

@@ -1,43 +1,38 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from "react";
 import PostLayout from "./PostLayout";
+import { connect } from "react-redux";
 
-import { handleRequest } from "../../../../../store/blog/blog.helpers";
+const EditPost = ({ goBack, postid, posts }) => {
+  const [post, setPost] = useState("");
 
-const EditPost = ({ postId, clearId, posts }) => {
-  handleRequest("GET", `api/blog/toolsByPost/${postId}`);
+  useEffect(() => {
+    Object.entries(posts).map(([key, value], index) => {
+      if (postid === value.id) {
+        setPost(value);
+      }
+    });
+  }, [postid]);
 
   const handleData = (e, val) => {
     e.preventDefault();
     console.log(val);
   };
-
-  const editLayout = Object.entries(posts).map(([key, value], index) => {
-    if (postId === value.id) {
-      return <PostLayout post={value} name={"EDIT"} handleState={handleData} />;
-    }
-  });
-
   return (
-    <div className='row'>
-      <div className='col s12'>
-        <div className='col s12'>
-          <button className='btn btn-small blue left' onClick={clearId}>
-            <i className=' tiny material-icons '>chevron_left</i>
-          </button>
-        </div>
-        <div className='col s12'>
-          <div>EDIT:</div>
-          {editLayout}
-        </div>
-      </div>
+    <div>
+      <button className='btn btn-small green ' onClick={goBack}>
+        Back to List
+      </button>
+      {post ? (
+        <PostLayout post={post} name={"EDIT"} handleState={handleData} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   posts: state.blog.posts.postsData,
-  tools: state.blog.tools.toolsData,
 });
 
 export default connect(mapStateToProps)(EditPost);

@@ -17,7 +17,7 @@ router.delete("/tools/:id", auth, [blogController.deleteTool]);
 
 // PATH /api/blog
 
-router.post("/post", auth, [postController.postPost]);
+router.post("/post", [postController.postPost]);
 router.get("/post", [postController.getPost]);
 
 router.get("/post/:id", [postController.getPostById]);
@@ -27,7 +27,12 @@ router.post("/toolpost", [postController.findPostByToolName]);
 
 // /api/blog/chapter
 
-router.post("/chapter", auth, [postController.postChapter]);
+// /api/blog/update/
+router.post("/update/post/:id", [postController.updatePost]);
+router.post("/update/chapter/:id", [postController.updateChapter]);
+
+router.post("/chapter/:id", [postController.postChapter]);
 router.get("/chapter/:id", [postController.getChaptersByPostId]);
+router.get("/chapterById/:id", [postController.getChapterById]);
 
 module.exports = router;

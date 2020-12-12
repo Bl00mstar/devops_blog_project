@@ -2,30 +2,44 @@ const pool = require("../db");
 const { body, validationResult, Result } = require("express-validator");
 
 exports.postChapter = async (req, res) => {
-  const { value } = req.body.data.postId;
+  const { id } = req.params;
+  const { topic, content, code, photo_url } = req.body;
 
-  const { chapters } = req.body.data.chaptersContent;
-  chapters.forEach((item, index) => {
-    if (item) {
-      pool.query(
-        "INSERT INTO chapters(post_id,topic,content,code,photo_url) VALUES ($1,$2,$3,$4,$5)",
-        [
-          value,
-          item.chapterTitle,
-          item.chapterContent,
-          item.chapterCode,
-          item.chapterImage,
-        ]
-      );
-    }
-  });
+  pool.query(
+    "INSERT INTO chapters(post_id,topic,content,code,photo_url) VALUES ($1,$2,$3,$4,$5)",
+    [id, topic, content, code, photo_url]
+  );
 
   try {
-    res.status(200).json("siema");
+    const addChapter = await pool.query(
+      "SELECT * FROM chapters WHERE id = $1",
+      [id]
+    );
+    return res.status(200).json({
+      success: true,
+      message: addChapter.rows,
+    });
   } catch (error) {
     res.status(400);
   }
 };
+
+exports.getChapterById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const selectedChapter = await pool.query(
+      "SELECT * FROM chapters WHERE id = $1",
+      [id]
+    );
+    return res.status(200).json({
+      success: true,
+      message: selectedChapter.rows,
+    });
+  } catch (error) {
+    res.status(400);
+  }
+};
+
 exports.getChaptersByPostId = async (req, res) => {
   try {
     const { id } = req.params;
@@ -44,41 +58,19 @@ exports.getChaptersByPostId = async (req, res) => {
 };
 
 exports.postPost = async (req, res) => {
-  console.log(req.body);
-  const errorFormatter = ({ msg }) => {
-    return `${msg}`;
-  };
-  const result = validationResult(req).formatWith(errorFormatter);
-  if (!result.isEmpty()) {
-    return res.status(422).json({
-      success: false,
-      message: { errors: result.array() },
-    });
-  }
+  const { title, content, photo_url, toolsPost, nick } = req.body;
   try {
-    const {
-      titlePost,
-      image,
-      descriptionPost,
-      toolsPost,
-      user,
-    } = req.body.newPost;
-
     const post = await pool.query(
       "INSERT INTO posts(title, content, photo_url,user_nick) VALUES($1,$2,$3,$4) RETURNING(id) ",
-      [titlePost, descriptionPost, image, user]
+      [title, content, photo_url, nick]
     );
-    let post_id = post.rows[0].id;
-
-    if (post_id) {
+    const returnedPostId = post.rows[0].id;
+    if (returnedPostId) {
       for (const key in toolsPost) {
-        if (user.hasOwnProperty(key)) {
-          let tool_id = `${toolsPost[key].value}`;
-          await pool.query(
-            "INSERT INTO tools_posts(tool_id, post_id) VALUES ($1,$2)",
-            [tool_id, post_id]
-          );
-        }
+        await pool.query(
+          "INSERT INTO tools_posts(tool_id, post_id) VALUES ($1,$2)",
+          [toolsPost[key].value, returnedPostId]
+        );
       }
     }
     return res.status(200).json({
@@ -163,24 +155,8 @@ exports.getPostById = async (req, res) => {
   }
 };
 
-exports.updatePost = async (req, res) => {
-  try {
-    const updPost = await pool.query(
-      "UPDATE posts SET title=newtitle where id=$1",
-      [13]
-    );
-    return res.status(200).json("updated");
-  } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
 exports.findPostByToolName = async (req, res) => {
   const { payload } = req.body;
-  console.log(payload);
   try {
     const selectedPosts = await pool.query(
       "SELECT posts.id,posts.title, posts.content,posts.photo_url, tools.description FROM posts left join tools_posts on (tools_posts.post_id = posts.id) LEFT JOIN tools ON (tools.id = tools_posts.tool_id) WHERE tools.description LIKE $1",
@@ -189,6 +165,37 @@ exports.findPostByToolName = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: selectedPosts.rows,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.updatePost = async (req, res) => {
+  console.log(req.body);
+  //posts tools ?
+  const { id } = req.params;
+  // id,title,content,photo_url
+  // await pool.query(
+  //   "UPDATE posts  SET title=$2,content=$3,photo_url=$4 WHERE id=$1",
+  //   [id, title, content, photo_url]
+  // );
+};
+
+exports.updateChapter = async (req, res) => {
+  const { id, topic, content, code, photo_url } = req.body;
+
+  try {
+    const updatedChapter = await pool.query(
+      "UPDATE chapters SET topic=$2, content=$3, code=$4,photo_url=$5 WHERE id=$1",
+      [id, topic, content, code, photo_url]
+    );
+    return res.status(200).json({
+      success: true,
+      message: updatedChapter.rows,
     });
   } catch (error) {
     return res.status(400).json({

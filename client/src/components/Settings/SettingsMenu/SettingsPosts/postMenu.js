@@ -1,49 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 
-import ModalEffect from "../../../Shared/Layout/modalEffect";
+import PostList from "./PostList";
+import NewPost from "./Posts/NewPost";
+import EditPost from "./Posts/EditPost";
 
-import AddNewPost from "./Posts/addNewPost";
-import PostList from "./Posts/postList";
-
-import ChapterList from "./Chapters/chapterList";
-import AddNewChapter from "./Chapters/addNewChapter";
+import ChapterList from "./Chapters/ChapterList";
 
 const PostMenu = () => {
-  const postOptions = [
-    {
-      id: "chapter",
-      label: "CHAPTERS",
-      elements: [
-        { label: "Chapters", name: "chapterList", content: <ChapterList /> },
-        {
-          label: "Add chapter",
-          name: "addChapter",
-          content: <AddNewChapter />,
-        },
-      ],
-      background: ModalEffect,
-    },
+  const [newPost, setNewPost] = useState(false);
+  const [editPost, setEditPost] = useState(0);
+  const [editChapter, setEditChapter] = useState(0);
 
-    {
-      id: "post",
-      label: "POSTS",
-      elements: [
-        { label: "Posts", name: "postList", content: <PostList /> },
-        {
-          label: "Add post",
-          name: "addPost",
-          content: <AddNewPost />,
-        },
-      ],
-      background: ModalEffect,
-    },
-  ];
+  if (editPost) {
+    return <EditPost postid={editPost} goBack={() => setEditPost(0)} />;
+  }
 
-  let options = postOptions.map(({ label, id, background, elements }, key) => {
-    return <div id={key}>{background(label, id, elements)}</div>;
-  });
+  if (newPost) {
+    return (
+      <NewPost
+        goBack={() => setNewPost(false)}
+        clearState={() => setNewPost(false)}
+      />
+    );
+  }
 
-  return <div>{options}</div>;
+  if (editChapter) {
+    return (
+      <ChapterList postid={editChapter} goBack={() => setEditChapter(0)} />
+    );
+  }
+
+  const handleEditId = (e, val) => {
+    e.preventDefault();
+    setEditPost(val);
+  };
+
+  const selectedChapter = (e, id) => {
+    e.preventDefault();
+    setEditChapter(id);
+  };
+
+  return (
+    <div style={{ overflow: "auto" }}>
+      <button className='btn btn-small blue' onClick={() => setNewPost(true)}>
+        Add new post
+      </button>
+
+      <PostList onEdit={handleEditId} onChapter={selectedChapter} />
+    </div>
+  );
 };
 
 export default PostMenu;

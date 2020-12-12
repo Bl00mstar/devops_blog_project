@@ -9,7 +9,7 @@ import M from "materialize-css/dist/js/materialize.min.js";
 
 import AddDeleteTool from "./SettingsMenu/SettingsTools";
 import AddDeleteTopic from "./SettingsMenu/SettingsTopics";
-import Create from "./SettingsMenu/SettingsPosts/postMenu";
+import Posts from "./SettingsMenu/SettingsPosts";
 
 const SettingsMenu = ({ isUserAuthenticated }) => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const SettingsMenu = ({ isUserAuthenticated }) => {
   const tools = [
     { name: "Topic", element: <AddDeleteTopic /> },
     { name: "Tool", element: <AddDeleteTool /> },
-    { name: "Create", element: <Create /> },
+    { name: "Posts", element: <Posts /> },
   ];
 
   let settingsTools;
