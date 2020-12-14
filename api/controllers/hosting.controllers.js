@@ -70,10 +70,12 @@ module.exports = (upload) => {
         GET: Delete an image from the collection
     */
   imageRouter.route("/delete/:id").get((req, res, next) => {
-    Image.findOne({ _id: req.params.id })
-      .then((image) => {
-        if (image) {
-          Image.deleteOne({ _id: req.params.id })
+    console.log(req.params.id);
+    Image.find({ _id: req.params.id })
+      .then((data) => {
+        console.log(data);
+        if (data) {
+          Image.deleteOne({ filename: req.params.id })
             .then(() => {
               return res.status(200).json({
                 success: true,

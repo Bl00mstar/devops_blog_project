@@ -18,6 +18,7 @@ services:
     image: mongo
     networks:
       - internal
+
   db_postgres:
     image: postgres
     restart: always
@@ -28,8 +29,9 @@ services:
       POSTGRES_DB: docker
       POSTGRES_USERNAME: docker
     volumes:
-      - ./db/db_script.sh:/docker-entrypoint-initdb.d/initdb.sh
-      - ./pgdata:/var/lib/postgresql/data
+      - "/var/run/postgres/postgres.sock:/var/run/postgres/postgres.sock"
+      - "blogpg:/var/lib/postgresql/data"
+
   frontend:
     build:
       context: ./client
@@ -45,3 +47,6 @@ services:
 networks:
   internal:
     driver: bridge
+
+volumes:
+  blogpg:

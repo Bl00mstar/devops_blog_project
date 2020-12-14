@@ -10,7 +10,7 @@ const crypto = require("crypto");
 const config = require("config");
 // PATH /api/hosting
 
-//init storage
+//init storaged
 const storage = new GridFsStorage({
   url: config.mongoURI,
   file: (req, file) => {
