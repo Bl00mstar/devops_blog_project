@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import M from "materialize-css/dist/js/materialize.min.js";
+import "./index.css";
 
 const UploadContainer = () => {
   const [uploadedImage, setUploadedImage] = useState("");
@@ -53,9 +54,7 @@ const UploadContainer = () => {
               <div className='col s4'>
                 <img
                   src={"api/hosting/image/" + image}
-                  width='50'
-                  height='50'
-                  alt='foto'
+                  className='x-mini-image'
                 ></img>
               </div>
               <div className='col s4'>

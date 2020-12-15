@@ -11,6 +11,7 @@ import AddDeleteTool from "./SettingsMenu/SettingsTools";
 import AddDeleteTopic from "./SettingsMenu/SettingsTopics";
 import Posts from "./SettingsMenu/SettingsPosts";
 import Images from "./SettingsMenu/SettingsImages";
+import About from "./SettingsMenu/SettingsAbout";
 
 const SettingsMenu = ({ isUserAuthenticated }) => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const SettingsMenu = ({ isUserAuthenticated }) => {
     { name: "Tool", element: <AddDeleteTool /> },
     { name: "Posts", element: <Posts /> },
     { name: "Images", element: <Images /> },
+    { name: "About", element: <About /> },
   ];
 
   let settingsTools;
