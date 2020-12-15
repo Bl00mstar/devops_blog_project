@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
-import ModalHistory from "./modalHistory";
+import ModalHistory from "./HomeHistory";
 
-const LastReading = ({ history }) => {
+const HomeHistory = ({ history }) => {
   let navigate = useNavigate();
   useEffect(() => {
     var elems = document.querySelectorAll(".fixed-action-btn");
@@ -17,7 +17,8 @@ const LastReading = ({ history }) => {
   let choosenPost;
   if (history[0]) {
     const reverse = history[0].split(",").reverse();
-    choosenPost = reverse.map((id) => <ModalHistory value={id} />);
+    let unique = [...new Set(reverse)];
+    choosenPost = unique.map((id) => <ModalHistory value={id} />);
   } else {
     choosenPost = <span>Nothing to show.</span>;
   }
@@ -56,4 +57,4 @@ const mapStateToProps = (state) => ({
   history: state.action.history.posts,
 });
 
-export default connect(mapStateToProps)(LastReading);
+export default connect(mapStateToProps)(HomeHistory);

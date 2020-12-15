@@ -6,10 +6,8 @@ const UploadContainer = () => {
   const [uploadedImage, setUploadedImage] = useState("");
   const [showUploadButton, setShowUploadButton] = useState(false);
   const [image, setImage] = useState("");
-  const [imageId, setImageId] = useState("");
 
   const removeAddedImage = () => {
-    setImageId("");
     setImage("");
     setShowUploadButton(false);
     setUploadedImage("");
@@ -32,8 +30,7 @@ const UploadContainer = () => {
       .post("api/hosting", formData)
       .then((response) => {
         response.data.success
-          ? setImage(response.data.image.filename) &&
-            setImageId(response.data.image._id)
+          ? setImage(response.data.image.filename)
           : alert("File already exists");
       })
       .catch((err) => alert("Error: " + err + "File can be too large."));

@@ -85,7 +85,9 @@ exports.postPost = async (req, res) => {
 
 exports.getPost = async (req, res) => {
   try {
-    const posts = await pool.query("SELECT * FROM posts;");
+    const posts = await pool.query(
+      "SELECT * FROM posts ORDER BY created_at desc;"
+    );
     return res.status(200).json({
       success: true,
       message: posts.rows,
@@ -212,7 +214,7 @@ exports.updatePost = async (req, res) => {
     });
 };
 
-exports.updateChapter = async (reqgetToolsByPostId, res) => {
+exports.updateChapter = async (req, res) => {
   const { id, topic, content, code, photo_url } = req.body;
 
   try {

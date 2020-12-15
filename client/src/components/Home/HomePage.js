@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 
 import { loadTitle } from "../../store/action/action.actions";
 
-import ShowImages from "./HomePosts/showImages";
-import LastReading from "./HomePosts/lastReading";
+import HomePosts from "./HomeContent/HomePosts";
+import HomeFloatButton from "./HomeContent/HomeFloatButton";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -14,8 +14,8 @@ const HomePage = () => {
   }, []);
   return (
     <div>
-      <ShowImages />
-      <LastReading />
+      <HomePosts />
+      <HomeFloatButton />
     </div>
   );
 };

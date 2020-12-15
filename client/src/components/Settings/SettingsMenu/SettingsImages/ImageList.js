@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { handleRequest } from "../../../../store/blog/blog.helpers";
 import ImageListLayout from "./ImageListLayout";
 import UploadContainer from "./uploadContainer";
+import "./index.css";
 
 const ImageList = () => {
   const [images, setImages] = useState([]);
@@ -17,7 +18,7 @@ const ImageList = () => {
   return (
     <div className='row'>
       <div className='col s12'>
-        <div style={{ overflow: "auto" }}>
+        <div className='fixed-container'>
           <div className='col s10'>
             <UploadContainer />
           </div>

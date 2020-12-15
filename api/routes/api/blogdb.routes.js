@@ -6,8 +6,8 @@ const blogController = require("../../controllers/blog.controllers");
 const postController = require("../../controllers/post.controllers");
 
 router.get("/topics", [blogController.getTopics]);
-router.post("/topics", [blogController.postTopics]);
-router.delete("/topics/:id", [blogController.deleteTopic]);
+router.post("/topics", auth, [blogController.postTopics]);
+router.delete("/topics/:id", auth, [blogController.deleteTopic]);
 
 router.get("/tools", [blogController.getTools]);
 router.get("/toolsByPost/:id", [postController.getToolsByPostId]);

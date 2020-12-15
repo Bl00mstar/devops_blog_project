@@ -22,7 +22,7 @@ export const routes = [
     element: <Logout />,
     type: "private",
   },
-  { name: "404", path: "*", element: <div>404</div>, type: "noone" },
+  { name: "404", path: "*", element: <div>404</div>, type: "none" },
 ];
 
 export default routes;

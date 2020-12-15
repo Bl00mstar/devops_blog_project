@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import "./index.css";
 
 const Navbar = ({ selectedPath, pageTitle, isSite, postTitle }) => {
   let title;
@@ -20,12 +21,7 @@ const Navbar = ({ selectedPath, pageTitle, isSite, postTitle }) => {
 
   return (
     <div className='top-nav'>
-      <h3
-        className='header center blue-text text-darken-3'
-        style={{ fontFamily: "Poppins" }}
-      >
-        {title}
-      </h3>
+      <h3 className='header center blue-text text-darken-3'>{title}</h3>
     </div>
   );
 };

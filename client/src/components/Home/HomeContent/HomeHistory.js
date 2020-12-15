@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setPost } from "../../../store/action/action.actions";
 
-export const ModalHistory = ({ value, posts }) => {
+export const HomeHistory = ({ value, posts }) => {
   const dispatch = useDispatch();
 
   const choosenPost = posts.map(({ id, title }, key) => {
@@ -34,4 +34,4 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalHistory);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeHistory);

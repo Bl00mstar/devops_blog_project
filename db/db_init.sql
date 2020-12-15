@@ -17,6 +17,7 @@ CREATE TABLE posts(
     content VARCHAR(200) ,
     photo_url VARCHAR(220),
     user_nick VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
-import "./index.css";
 import { addToHistory } from "../../../store/action/action.actions";
 import { handleRequest } from "../../../store/blog/blog.helpers";
+import "./index.css";
 
 const ReadPost = ({ posts, id }) => {
   const dispatch = useDispatch();
@@ -20,8 +20,11 @@ const ReadPost = ({ posts, id }) => {
     if (post.id === id) {
       return (
         <div className='center-align' key={key}>
-          <div>{post.content}</div>
-          <img width='300' src={post.photo_url}></img>
+          <div>
+            <h6>{post.content}</h6>
+          </div>
+          <img className='post-image' src={post.photo_url}></img>
+          <div className='divider'></div>
         </div>
       );
     }
@@ -33,18 +36,13 @@ const ReadPost = ({ posts, id }) => {
       <div>
         {chapters.map((chapter, key) => (
           <div key={key}>
-            <div className='divider'></div>
             <div className='section'>
               <div className='center-align'>
                 <h5>{chapter.topic}</h5>
-                <img
-                  width='300'
-                  className='materialboxed'
-                  src={chapter.photo_url}
-                ></img>
+                <img className='materialboxed' src={chapter.photo_url}></img>
               </div>
               <p>{chapter.content}</p>
-              <pre className=' language-markup'>
+              <pre className=' language-markup '>
                 <code className=' language-markup '>{chapter.code}</code>
               </pre>
             </div>

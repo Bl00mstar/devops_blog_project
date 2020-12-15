@@ -1,20 +1,19 @@
 import React from "react";
-
 import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import { setPost } from "../../../store/action/action.actions";
-
-import ReadPost from "./readPost";
+import HomePostChapters from "./HomePostChapters";
 import Preloader from "../../Shared/Layout/linearPreloader";
+import "./index.css";
 
-const ShowImages = ({ loading, posts, readPost }) => {
+const HomePosts = ({ isLoading, posts, selectedPost }) => {
   const dispatch = useDispatch();
-  if (loading) {
+  if (isLoading) {
     return <Preloader />;
   }
 
-  if (readPost) {
-    return <ReadPost id={readPost} />;
+  if (selectedPost) {
+    return <HomePostChapters id={selectedPost} />;
   }
 
   const list = posts.map((post, key) => {
@@ -25,10 +24,7 @@ const ShowImages = ({ loading, posts, readPost }) => {
             <img className='activator' src={post.photo_url} />
           </div>
           <div className='card-content'>
-            <span
-              className='card-title activator grey-text text-darken-4 '
-              style={{ overflow: "hidden" }}
-            >
+            <span className='card-title activator grey-text text-darken-4 post-title'>
               {post.title}
               <i className='material-icons right'>more_vert</i>
               <br></br>
@@ -61,9 +57,9 @@ const ShowImages = ({ loading, posts, readPost }) => {
 };
 
 const mapStateToProps = (state) => ({
-  readPost: state.action.post.postId,
-  loading: state.action.path.isLoading,
+  selectedPost: state.action.post.postId,
+  isLoading: state.action.path.isLoading,
   posts: state.action.path.content,
 });
 
-export default connect(mapStateToProps)(ShowImages);
+export default connect(mapStateToProps)(HomePosts);

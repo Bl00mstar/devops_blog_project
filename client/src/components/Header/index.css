@@ -1,3 +1,8 @@
+/* Sidenav.js */
+ul.sidenav ul.sidenav-fixed {
+  width: "220px";
+  transform: translateX(-105%);
+}
 .sidenav .collapsible-header,
 .sidenav.fixed .collapsible-header {
   background-color: transparent;
@@ -6,8 +11,10 @@
   height: inherit;
   padding: 0 32px;
 }
-
 .sidenav .collapsible-body li a,
 .sidenav.fixed .collapsible-body li a {
   padding: 0 23.5px 0 50px;
+}
+a.nav-link {
+  cursor: pointer;
 }
