@@ -1,12 +1,10 @@
-version: "3"
+version: "3.8"
 services:
   api:
     build:
       context: ./api
     volumes:
       - ./api:/usr/src/app
-    links:
-      - db_postgres
     depends_on:
       - db_mongo
       - db_postgres
@@ -14,20 +12,26 @@ services:
       - internal
     ports:
       - "400:80"
+
   db_mongo:
     image: mongo
+    restart: always
     networks:
       - internal
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_LOGIN}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_PASSWORD}"
 
   db_postgres:
     image: postgres
     restart: always
     networks:
       - internal
+    ports:
+      - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: docker
-      POSTGRES_DB: docker
-      POSTGRES_USERNAME: docker
+      POSTGRES_PASSWORD: "${PG_DB_PASSWORD}"
+      POSTGRES_DB: "${PG_DB_NAME}"
     volumes:
       - "/var/run/postgres/postgres.sock:/var/run/postgres/postgres.sock"
       - "blogpg:/var/lib/postgresql/data"
