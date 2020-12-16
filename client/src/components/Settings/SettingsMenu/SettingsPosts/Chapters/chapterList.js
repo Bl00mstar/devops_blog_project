@@ -16,7 +16,7 @@ const ChapterList = ({ goBack, postid }) => {
   };
 
   const deleteChapter = async (id) => {
-    await handleRequest("DELETE", `api/blog/chapter/${id}`)
+    handleRequest("DELETE", `api/blog/chapter/${id}`)
       .then((data) => {
         M.toast({ html: data });
       })
