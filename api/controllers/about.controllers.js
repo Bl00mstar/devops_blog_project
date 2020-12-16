@@ -1,7 +1,6 @@
-const pool = require("../db");
+const pool = require("../config/db");
 
 exports.getAbout = async (req, res) => {
-  const { id } = req.params;
   try {
     const about = await pool.query("SELECT * FROM about;");
     return res.status(200).json({

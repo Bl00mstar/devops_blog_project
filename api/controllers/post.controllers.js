@@ -1,4 +1,4 @@
-const pool = require("../db");
+const pool = require("../config/db");
 const { body, validationResult, Result } = require("express-validator");
 
 exports.postChapter = async (req, res) => {

@@ -11,6 +11,8 @@ import { getUser } from "./store/user/user.actions";
 import { getPosts, getTopicsTools } from "./store/blog/blog.actions";
 import { loadPath } from "./store/action/action.actions";
 
+import "./App.css";
+
 const App = () => {
   const dispatch = useDispatch();
   const element = useRoutes(routes);

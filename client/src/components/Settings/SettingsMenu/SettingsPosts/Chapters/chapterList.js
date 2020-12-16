@@ -3,6 +3,7 @@ import { handleRequest } from "../../../../../store/blog/blog.helpers";
 import NewChapter from "./NewChapter";
 import EditChapter from "./EditChapter";
 import M from "materialize-css/dist/js/materialize.min.js";
+import "./index.css";
 
 const ChapterList = ({ goBack, postid }) => {
   const [updated, isUpdated] = useState(false);
@@ -31,8 +32,9 @@ const ChapterList = ({ goBack, postid }) => {
   const chapterList = chapters.map((chapter) => {
     return (
       <tr key={chapter.id}>
-        <th>{chapter.topic}</th>
-        <th>
+        <td>{chapter.topic}</td>
+        <td>{chapter.content}</td>
+        <td>
           {" "}
           <button
             className='btn btn-small blue'
@@ -40,15 +42,15 @@ const ChapterList = ({ goBack, postid }) => {
           >
             <i className='tiny material-icons'>edit</i>
           </button>
-        </th>
-        <th>
+        </td>
+        <td>
           <button
             className='btn btn-small red'
             onClick={() => deleteChapter(chapter.id)}
           >
             <i className=' tiny material-icons '>delete</i>
           </button>
-        </th>
+        </td>
       </tr>
     );
   });
@@ -102,6 +104,7 @@ const ChapterList = ({ goBack, postid }) => {
           <thead>
             <tr>
               <th>Title</th>
+              <th>Content</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>
