@@ -104,11 +104,17 @@ const Sidenav = ({
 
       <ul id='nav-mobile' className='sidenav sidenav-fixed '>
         <li className='logo'>
-          <img
-            src={"./devopslogo.png"}
-            width='120px'
+          <a
             onClick={() => window.location.replace("/")}
-          />
+            id='logo-container'
+            className='brand-logo transparent'
+          >
+            <object
+              id='front-page-logo'
+              type='image/png'
+              data='./devopslogo.png'
+            ></object>
+          </a>
         </li>
         {siteRoutes}
         <li className='no-padding'>

@@ -1,0 +1,60 @@
+/* Sidenav.js */
+ul.sidenav ul.sidenav-fixed {
+  transform: translateX(-105%);
+  overflow: hidden;
+  box-shadow: none;
+}
+.sidenav .collapsible-header,
+.sidenav.fixed .collapsible-header {
+  background-color: transparent;
+  border: none;
+  line-height: inherit;
+  height: inherit;
+  padding: 0 32px;
+}
+
+.sidenav .collapsible-body li a,
+.sidenav.fixed .collapsible-body li a {
+  padding: 0 23.5px 0 50px;
+}
+
+.sidenav.sidenav-fixed {
+  left: 0;
+  position: fixed;
+}
+
+a.sidenav-trigger.top-nav {
+  position: absolute;
+  text-align: center;
+  top: 30px;
+  margin-left: 1.5rem;
+}
+
+a.sidenav-trigger.top-nav i {
+  font-size: 32px;
+}
+
+a.navlink:-webkit-any-link {
+  cursor: pointer;
+}
+
+a {
+  cursor: pointer;
+}
+
+#front-page-logo {
+  display: inline-block;
+  height: 110%;
+  pointer-events: none;
+}
+
+#logo-container {
+  cursor: pointer;
+  height: 57px;
+  margin-bottom: 10px;
+}
+
+ul.sidenav.sidenav-fixed li.logo {
+  text-align: center;
+  margin-top: 30px;
+}

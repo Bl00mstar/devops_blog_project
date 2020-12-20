@@ -3,7 +3,7 @@ import { useRoutes } from "react-router-dom";
 import { routes } from "./Routes";
 
 import "materialize-css/dist/css/materialize.min.css";
-import Header from "./components/Header";
+import Sidenav from "./components/Sidenav";
 import NavbarTitle from "./components/Navbar";
 
 import { useDispatch } from "react-redux";
@@ -25,14 +25,14 @@ const App = () => {
   }, []);
 
   return (
-    <div className='App'>
-      <Header />
+    <>
+      <Sidenav />
       <main>
         <NavbarTitle />
         <div className='container'>{element}</div>
       </main>
       <footer className='page-footer transparent grey-text'>2020</footer>
-    </div>
+    </>
   );
 };
 
