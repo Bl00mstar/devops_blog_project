@@ -1,3 +1,4 @@
+CREATE DATABASE blog;
 CREATE TABLE topics(
     id serial NOT NULL,
     description VARCHAR(30) NOT NULL,
