@@ -78,7 +78,7 @@ const Sidenav = ({
                   "sidenav-close nav-link nav-link " +
                   (item === toolPath && currentPath === "home"
                     ? "blue-text"
-                    : "grey-text")
+                    : "white-text")
                 }
               >
                 {item}
