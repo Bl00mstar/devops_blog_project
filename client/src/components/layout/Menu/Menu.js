@@ -10,13 +10,14 @@ import {
   StyledFontAwesomeIcon,
   MainIcon,
   RefLinks,
+  BurgerMenu,
   StyledNavLink,
   MobileList,
   StyleLi,
 } from './MenuStyling';
 
 const Menu = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const isMobile = useMediaQuery({
     query: '(max-width: 780px)',
   });
@@ -26,46 +27,57 @@ const Menu = () => {
   }, [isMobile]);
 
   const elementsMobile = routes.map(({ description, path }, key) => {
-    return <li style={{ display: 'block' }}>asd</li>;
+    return (
+      <StyleLi>
+        <StyledNavLink
+          to={path}
+          initial={{ x: -50 }}
+          animate={{ x: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          {description}
+        </StyledNavLink>
+      </StyleLi>
+    );
   });
 
   const elementsLargeScreen = routes.map(
     ({ icon, description, path, type }, key) => {
       return (
         <StyleLi>
-          <StyledNavLink
-            to={path}
-            initial={{ x: -50 }}
-            animate={{ x: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
-            {description}
-          </StyledNavLink>
+          <StyledNavLink to={path}>{description}</StyledNavLink>
         </StyleLi>
       );
     }
   );
-
+  const toggle = () => setIsOpen(!isOpen);
   return (
     <>
       {isMobile && (
-        <Wrapper>
-          <AnimatePresence>
-            {isOpen && (
-              <>
-                <MobileList>{elementsMobile}</MobileList>
-              </>
-            )}
-          </AnimatePresence>
-        </Wrapper>
+        <>
+          <BurgerMenu onClick={toggle} open={isOpen}>
+            <span />
+            <span />
+            <span />
+          </BurgerMenu>
+          <Wrapper open={isOpen}>
+            <AnimatePresence>
+              {isOpen && (
+                <>
+                  <MobileList>{elementsMobile}</MobileList>
+                </>
+              )}
+            </AnimatePresence>
+          </Wrapper>
+        </>
       )}
       {!isMobile && (
         <Wrapper
-          initial={{ x: '-4vw' }}
+          initial={{ x: '-1vw' }}
           animate={{ x: 0 }}
           transition={{ duration: 1 }}
         >
-          <div>
+          <StyleLi>
             <StyledNavLink
               to="/"
               initial={{ x: -50 }}
@@ -74,10 +86,10 @@ const Menu = () => {
             >
               asd
             </StyledNavLink>
-          </div>
+          </StyleLi>
 
           <motion.div
-            initial={{ x: -50 }}
+            initial={{ x: -100 }}
             animate={{ x: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
           >

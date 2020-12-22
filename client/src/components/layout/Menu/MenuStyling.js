@@ -5,38 +5,33 @@ import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 
 export const Wrapper = styled(motion.header)`
-  width: 220px;
-  height: 100vh;
-  background-color: ${({ theme }) => theme.colors.menu};
   display: flex;
   flex-direction: column;
-  align-items: center;
-  p {
-    padding: 0;
-    margin: 0;
-    font-size: 0.8rem;
+  // justify-content: center;
+  background: ${({ theme }) => theme.colors.primaryDark};
+  transform: ${({ open }) => (open ? 'translateX(-100%)' : 'translateX(0)')};
+  height: 100vh;
+  text-align: left;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease-in-out;
+  @media (max-width: ${({ theme }) => theme.mobile}) {
+    width: 100%;
   }
-  > div {
-    padding: 2rem 0;
-    ${media.tablet`
-      padding: 0;
-  `}
+  a {
+    font-weight: bold;
+    color: ${({ theme }) => theme.primaryDark};
+    text-decoration: none;
+    transition: color 0.3s linear;
+    @media (max-width: ${({ theme }) => theme.mobile}) {
+      font-size: 1.5rem;
+      text-align: center;
+    }
+    &:hover {
+      color: ${({ theme }) => theme.primaryHover};
+    }
   }
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0 0;
-    text-align: center;
-    ${media.tablet`
-      display: flex;
-    `}
-  }
-  ${media.tablet`
-    flex-direction: row-reverse;
-    width: 100vw;
-    height: 90px;
-     position: fixed;
-  `}
 `;
 
 export const StyledList = styled(motion.li)`
@@ -69,6 +64,7 @@ export const RefLinks = styled(StyledFontAwesomeIcon)`
 
 export const StyledNavLink = styled(NavLink)`
   color: ${({ theme }) => theme.colors.icon};
+  transition: color 0.3s linear;
   text-decoration: none;
   font-size: 1.25em;
   margin: 1em;
@@ -86,29 +82,42 @@ export const StyleLi = styled(motion.div)`
   margin: 1.25em;
 `;
 
-export const BurgerMenu = styled(motion.div)`
-  width: 3rem;
-  cursor: pointer;
-  height: 2rem;
-  text-align: center;
-  margin-right: 1rem;
-  :hover {
-    > * {
-      background: ${({ theme }) => theme.colors.active};
-    }
-  }
-  span {
-    margin-top: 0.4rem;
-    display: block;
-    width: 100%;
-    border-radius: 2px;
-    height: 0.2rem;
-    background: #fff;
-  }
+export const MobileList = styled(motion.ul)`
+  display: block;
 `;
 
-export const MobileList = styled(motion.ul)`
-  width: 100vw;
+export const BurgerMenu = styled(motion.div)`
+  position: absolute;
+  top: 5%;
+  left: 2rem;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+  span {
+    width: 2rem;
+    height: 0.25rem;
+    background: ${({ theme, open }) =>
+      open ? theme.colors.active : theme.colors.active};
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+    :first-child {
+      transform: ${({ open }) => (open ? 'rotate(0)' : 'rotate(45deg)')};
+    }
+    :nth-child(2) {
+      opacity: ${({ open }) => (open ? '1' : '0')};
+      transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(20px)')};
+    }
+    :nth-child(3) {
+      transform: ${({ open }) => (open ? 'rotate(0)' : 'rotate(-45deg)')};
+    }
+  }
 `;

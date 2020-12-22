@@ -27,9 +27,6 @@ const StyledMain = styled.main`
   height: 100%;
   background-color: ${({ theme }) => theme.colors.ground};
   color: ${({ theme }) => theme.colors.light};
-  ${media.medium`
-    margin-top: 220px;
-`}
 `;
 
 export default MainLayout;
