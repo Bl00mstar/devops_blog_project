@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { routes } from '../../../Routes';
-import { faGgCircle } from '@fortawesome/free-brands-svg-icons';
-import NavLinkIcon from './NavLinkIcon';
+import { faOldRepublic } from '@fortawesome/free-brands-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMediaQuery } from 'react-responsive';
+import styled from 'styled-components';
 import {
   Wrapper,
-  StyledList,
-  StyledFontAwesomeIcon,
+  StyledNavLinkTool,
   MainIcon,
-  RefLinks,
   BurgerMenu,
   StyledNavLink,
   MobileList,
   StyleLi,
+  StyledNavLinkDatabase,
+  StyleContent,
 } from './MenuStyling';
 
-const Menu = () => {
+import MenuLinks from './MenuLinks';
+
+const Menu = ({ isUserAuthenticated, currentPath, toolPath }) => {
   const [isOpen, setIsOpen] = useState(true);
   const isMobile = useMediaQuery({
     query: '(max-width: 780px)',
@@ -25,34 +29,49 @@ const Menu = () => {
   useEffect(() => {
     setIsOpen(true);
   }, [isMobile]);
-
-  const elementsMobile = routes.map(({ description, path }, key) => {
-    return (
-      <StyleLi>
-        <StyledNavLink
-          to={path}
-          initial={{ x: -50 }}
-          animate={{ x: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-        >
-          {description}
-        </StyledNavLink>
-      </StyleLi>
-    );
-  });
-
-  const elementsLargeScreen = routes.map(
-    ({ icon, description, path, type }, key) => {
-      return (
-        <StyleLi>
-          <StyledNavLink to={path}>{description}</StyledNavLink>
-        </StyleLi>
-      );
-    }
-  );
   const toggle = () => setIsOpen(!isOpen);
+
+  let possibleRoutes;
+
+  if (isUserAuthenticated) {
+    possibleRoutes = routes.map(({ description, path, type }, key) => {
+      if (type === 'public' || type === 'private')
+        return (
+          <StyleLi key={key}>
+            <StyledNavLink to={path}>{description}</StyledNavLink>
+          </StyleLi>
+        );
+      return <></>;
+    });
+  } else {
+    possibleRoutes = routes.map(({ description, path, type }, key) => {
+      if (type === 'public' || type === 'auth')
+        return (
+          <StyleLi key={key}>
+            <StyledNavLink to={path}>{description}</StyledNavLink>
+          </StyleLi>
+        );
+      return <></>;
+    });
+  }
+
+  const handleNavLinkDB = (e, key, value) => {
+    e.preventDefault();
+    console.log(key);
+    console.log(value);
+  };
+
+  let topicstools = {
+    CICD: ['gsdfgsdf', 'gsdfgsdfg', 'sdfg'],
+    tester: ['sadfasdf', 'asdfasd', 'fasdf', 'asdf'],
+  };
+
+  const toolstopics = Object.entries(topicstools).map(([key, value]) => (
+    <MenuLinks topic={key} tools={value} />
+  ));
+
   return (
-    <>
+    <div>
       {isMobile && (
         <>
           <BurgerMenu onClick={toggle} open={isOpen}>
@@ -64,7 +83,7 @@ const Menu = () => {
             <AnimatePresence>
               {isOpen && (
                 <>
-                  <MobileList>{elementsMobile}</MobileList>
+                  <MobileList>{possibleRoutes}</MobileList>
                 </>
               )}
             </AnimatePresence>
@@ -73,49 +92,45 @@ const Menu = () => {
       )}
       {!isMobile && (
         <Wrapper
-          initial={{ x: '-1vw' }}
+          initial={{ x: '-50vw' }}
           animate={{ x: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.2 }}
         >
-          <StyleLi>
-            <StyledNavLink
-              to="/"
-              initial={{ x: -50 }}
-              animate={{ x: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              asd
-            </StyledNavLink>
-          </StyleLi>
-
           <motion.div
-            initial={{ x: -100 }}
-            animate={{ x: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-          >
-            <ul>{elementsLargeScreen}</ul>
-          </motion.div>
-          <motion.div
-            initial={{ x: -50 }}
+            initial={{ x: 0 }}
             animate={{ x: 0 }}
             transition={{ duration: 0.5, delay: 1.1 }}
           >
             <ul>
-              <StyledList>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://github.com/Bl00mstar"
-                >
-                  {/* <RefLinks icon={faGithub} /> */}
-                </a>
-              </StyledList>
+              <StyleLi>
+                <StyledNavLink to="/">
+                  <MainIcon icon={faOldRepublic} />
+                </StyledNavLink>
+              </StyleLi>
+            </ul>
+          </motion.div>
+          <motion.div
+            initial={{ x: 0 }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.5, delay: 1.1 }}
+          >
+            <ul>
+              {possibleRoutes}
+              {toolstopics}
             </ul>
           </motion.div>
         </Wrapper>
       )}
-    </>
+    </div>
   );
 };
 
-export default Menu;
+const mapStateToProps = (state) => ({
+  toolPath: state.action.path.selectedPath,
+  currentPath: state.action.route.path,
+  topicstools: state.blog.topics.tools,
+  isUserLoading: state.user.isLoading,
+  isUserAuthenticated: state.user.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(Menu);

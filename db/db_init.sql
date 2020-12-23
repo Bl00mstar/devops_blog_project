@@ -47,3 +47,7 @@ CREATE TABLE about(
     photo_url VARCHAR(150) NOT NULL,
     content VARCHAR(9999) NOT NULL
 );
+
+
+-- INSERT INTO topics (description) VALUES ('tester');
+-- INSERT INTO topics (description) VALUES ('sdnkfgks');

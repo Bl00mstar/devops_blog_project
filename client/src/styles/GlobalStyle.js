@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
   }
   html {
     font-size: 16px;
-    overflow: hidden;
+    // overflow: hidden;
     ${media.medium`
       font-size: 14px;
     `}

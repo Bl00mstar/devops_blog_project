@@ -1,14 +1,14 @@
-import * as api from "./blog.helpers";
-import { put, takeEvery } from "redux-saga/effects";
-import blogTypes from "./blog.types";
-import * as errors from "../error/error.actions";
+import * as api from './blog.helpers';
+import { put, takeEvery } from 'redux-saga/effects';
+import blogTypes from './blog.types';
+import * as errors from '../error/error.actions';
 
 import {
   loadPosts,
   loadTools,
   loadTopicsTools,
   loadTopics,
-} from "./blog.actions";
+} from './blog.actions';
 
 export function* watchGetPosts() {
   yield takeEvery(blogTypes.POSTS_LOADING, getPost);
@@ -16,7 +16,7 @@ export function* watchGetPosts() {
 
 function* getPost() {
   try {
-    const data = yield api.handleRequest("GET", `api/blog/post`);
+    const data = yield api.handleRequest('GET', `api/blog/post`);
     yield put(loadPosts(data));
   } catch (error) {
     yield put(errors.errorNotification(error));
@@ -29,8 +29,8 @@ export function* watchGetToolsTopics() {
 
 function* getTopicsDescription() {
   try {
-    const topics = yield api.handleRequest("GET", `api/blog/topics`);
-    const tools = yield api.handleRequest("GET", `api/blog/tools`);
+    const topics = yield api.handleRequest('GET', `api/blog/topics`);
+    const tools = yield api.handleRequest('GET', `api/blog/tools`);
     yield put(loadTools(tools));
     yield put(loadTopics(topics));
 
@@ -42,8 +42,10 @@ function* getTopicsDescription() {
         if (topic_id === id) {
           array.push(description);
         }
+        return null;
       });
       obj[topics[index].description] = array;
+      return null;
     });
     yield put(loadTopicsTools(obj));
   } catch (error) {
