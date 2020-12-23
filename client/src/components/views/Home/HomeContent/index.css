@@ -1,0 +1,20 @@
+/* HomePostChapters.js */
+.center .materialboxed,
+.materialboxed {
+  margin: 0 auto;
+  position: relative !important;
+  width: 300px;
+}
+img.post-image {
+  width: 300px;
+}
+pre.language-markup {
+  text-align: left;
+  white-space: pre-wrap;
+  background-color: aliceblue;
+}
+
+/* HomePosts.js */
+span.post-title {
+  overflow: hidden;
+}

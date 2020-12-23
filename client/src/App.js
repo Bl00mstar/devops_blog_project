@@ -1,21 +1,22 @@
-import React, { useEffect } from "react";
-import { useRoutes } from "react-router-dom";
-import { routes } from "./Routes";
+import React, { useEffect } from 'react';
+import { useRoutes } from 'react-router-dom';
+import { routes } from './Routes';
+import { useDispatch } from 'react-redux';
 
-import "materialize-css/dist/css/materialize.min.css";
-import Sidenav from "./components/Sidenav";
-import NavbarTitle from "./components/Navbar";
+import MainLayout from '@layout/MainLayout/MainLayout';
 
-import { useDispatch } from "react-redux";
-import { getUser } from "./store/user/user.actions";
-import { getPosts, getTopicsTools } from "./store/blog/blog.actions";
-import { loadPath } from "./store/action/action.actions";
+import { AnimatePresence } from 'framer-motion';
+import Content from './components/views/Shared/Content';
 
-import "./App.css";
+import { getUser } from '@store/user/user.actions';
+import { getPosts, getTopicsTools } from '@store/blog/blog.actions';
+import { loadPath } from '@store/action/action.actions';
 
 const App = () => {
   const dispatch = useDispatch();
   const element = useRoutes(routes);
+  console.log(routes);
+  const { val } = useRoutes(routes);
 
   useEffect(() => {
     dispatch(loadPath());
@@ -25,14 +26,11 @@ const App = () => {
   }, []);
 
   return (
-    <>
-      <Sidenav />
-      <main>
-        <NavbarTitle />
-        <div className='container'>{element}</div>
-      </main>
-      <footer className='page-footer transparent grey-text'>2020</footer>
-    </>
+    <MainLayout>
+      <AnimatePresence exitBeforeEnter>
+        <Content val={val} layoutElement={element} />
+      </AnimatePresence>
+    </MainLayout>
   );
 };
 

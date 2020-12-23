@@ -1,28 +1,42 @@
-import React from "react";
+import React from 'react';
 
-import Login from "./components/Login";
-import Home from "./components/Home";
-import About from "./components/About";
-import Settings from "./components/Settings";
-import Logout from "./components/Logout";
+import Login from '@views/Login';
+import Home from '@views/Home';
+import About from '@views/About';
+import Settings from '@views/Settings';
 
 export const routes = [
-  { name: "Home", path: "/", element: <Home />, type: "image" },
-  { name: "Login", path: "/Login", element: <Login />, type: "none" },
-  { name: "About", path: "/About", element: <About />, type: "public" },
+  { description: 'Home', path: '/', element: <Home />, type: 'public' },
   {
-    name: "Settings",
-    path: "/settings",
+    description: 'Login',
+    path: '/login',
+    element: <Login />,
+    type: 'none',
+  },
+  {
+    description: 'About',
+    path: '/About',
+    element: <About />,
+    type: 'public',
+  },
+  {
+    description: 'Settings',
+    path: '/settings',
     element: <Settings />,
-    type: "private",
+    type: 'private',
   },
   {
-    name: "Logout",
-    path: "/logout",
-    element: <Logout />,
-    type: "private",
+    name: 'Logout',
+    path: '/logout',
+    element: <div>Logout</div>,
+    type: 'private',
   },
-  { name: "404", path: "*", element: <div>404</div>, type: "none" },
+  {
+    description: '404',
+    path: '*',
+    element: <div>404</div>,
+    type: 'none',
+  },
 ];
 
 export default routes;
