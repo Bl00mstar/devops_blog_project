@@ -34,7 +34,7 @@ const HomeHistory = ({ history, themeMode, setTheme }) => {
         </div>
       </div>
       <div className="fixed-action-btn">
-        <a className="btn-floating btn-large blue">
+        <a className="btn-floating btn-large">
           <i className="large material-icons">apps</i>
         </a>
         <ul>

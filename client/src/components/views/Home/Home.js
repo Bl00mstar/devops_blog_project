@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import { loadTitle } from '@store/action/action.actions';
 
 import HomePosts from './HomeContent/HomePosts';
-import HomeFloatButton from './HomeContent/HomeFloatButton';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -18,7 +17,6 @@ const HomePage = () => {
   return (
     <>
       <HomePosts />
-      <HomeFloatButton />
     </>
   );
 };

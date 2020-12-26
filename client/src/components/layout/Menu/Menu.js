@@ -137,11 +137,27 @@ const Menu = ({ currentPath, toolPath, isMenuTopicActive }) => {
             transition={{ duration: 0.5, delay: 1.1 }}
           >
             <ul>
-              <StyleLi>
-                <StyledNavLink to="/">
-                  <MainIcon icon={faOldRepublic} />
-                </StyledNavLink>
-              </StyleLi>
+              <a
+                onClick={() => window.location.replace('/')}
+                id="logo-container"
+                className="brand-logo transparent"
+                style={{
+                  width: '120px',
+                  alignItems: 'center',
+                  dispaly: 'flex',
+                }}
+              >
+                <object
+                  style={{
+                    width: '120px',
+                    alignItems: 'center',
+                    dispaly: 'flex',
+                  }}
+                  id="front-page-logo"
+                  type="image/png"
+                  data="./devopslogo.png"
+                ></object>
+              </a>
             </ul>
           </motion.div>
           <motion.div
