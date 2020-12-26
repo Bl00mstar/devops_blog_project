@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import M from 'materialize-css/dist/js/materialize.min.js';
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import ModalHistory from './HomeHistory';
+import { setTheme } from '@store/action/action.actions';
 
-const HomeHistory = ({ history }) => {
+const HomeHistory = ({ history, themeMode, setTheme }) => {
   let navigate = useNavigate();
   useEffect(() => {
     var elems = document.querySelectorAll('.fixed-action-btn');
@@ -48,6 +48,20 @@ const HomeHistory = ({ history }) => {
               <i className="material-icons">history</i>
             </a>
           </li>
+          <li>
+            {themeMode === 'dark' ? (
+              <a
+                onClick={() => setTheme('light')}
+                className="btn-floating blue"
+              >
+                <i className="material-icons">light_mode</i>
+              </a>
+            ) : (
+              <a onClick={() => setTheme('dark')} className="btn-floating blue">
+                <i className="material-icons">dark_mode</i>
+              </a>
+            )}
+          </li>
         </ul>
       </div>
     </div>
@@ -55,6 +69,13 @@ const HomeHistory = ({ history }) => {
 };
 const mapStateToProps = (state) => ({
   history: state.action.history.posts,
+  themeMode: state.action.menu.darkMode,
 });
 
-export default connect(mapStateToProps)(HomeHistory);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setTheme: (params) => dispatch(setTheme(params)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeHistory);

@@ -7,11 +7,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useMediaQuery } from 'react-responsive';
 
 import { setMenuActiveTopic } from '@store/action/action.actions';
-
+import MenuAuthenticated from './MenuAuthenticated';
 import styled, { css } from 'styled-components';
 import {
   Wrapper,
   StyledNavLinkTool,
+  StyledList,
   MainIcon,
   BurgerMenu,
   StyledNavLink,
@@ -26,12 +27,9 @@ import Collapse from '@containers/Menu/Collapse';
 import HeaderCollapse from '@containers/Menu/HeaderCollapse';
 import HeaderTool from '@containers/Menu/HeaderTool';
 
-const Menu = ({
-  isUserAuthenticated,
-  currentPath,
-  toolPath,
-  isMenuToolActive,
-}) => {
+const Menu = ({ currentPath, toolPath, isMenuTopicActive }) => {
+  useEffect(() => {}, [isMenuTopicActive]);
+
   const [isOpen, setIsOpen] = useState(true);
   const isMobile = useMediaQuery({
     query: '(max-width: 780px)',
@@ -43,30 +41,6 @@ const Menu = ({
     setIsOpen(true);
   }, [isMobile]);
   const toggle = () => setIsOpen(!isOpen);
-
-  let possibleRoutes;
-
-  if (isUserAuthenticated) {
-    possibleRoutes = routes.map(({ description, path, type }, key) => {
-      if (type === 'public' || type === 'private')
-        return (
-          <StyleLi key={key}>
-            <StyledNavLink to={path}>{description}</StyledNavLink>
-          </StyleLi>
-        );
-      return <></>;
-    });
-  } else {
-    possibleRoutes = routes.map(({ description, path, type }, key) => {
-      if (type === 'public' || type === 'auth')
-        return (
-          <StyleLi key={key}>
-            <StyledNavLink to={path}>{description}</StyledNavLink>
-          </StyleLi>
-        );
-      return <></>;
-    });
-  }
 
   const handleNavLinkDB = (e, key, value) => {
     e.preventDefault();
@@ -83,18 +57,12 @@ const Menu = ({
   ////////////APPEND ITEMS FROM DB TO MENU=SIDENAV///////
   ///////////////////////////////////////////////////////
 
-  const [isActiveTopicIndex, setActiveTopicIndex] = useState(null);
   const [isActiveToolIndex, setActiveToolIndex] = useState(null);
   const [isActiveTopicName, setIsActiveTopicName] = useState('');
 
-  const [activeTopic, setActiveTopic] = useState('');
-
   const toogleTopic = (name) => {
-    console.log(name);
-    // setActiveTopicIndex(isActiveTopicIndex === index ? null : index);
     dispatch(setMenuActiveTopic(name));
-    setIsActiveTopicName(isActiveTopicName === name ? null : name);
-    setActiveTopic(name);
+    setIsActiveTopicName(isMenuTopicActive === name ? null : name);
   };
 
   const [activeTool, setActiveTool] = useState('');
@@ -104,7 +72,6 @@ const Menu = ({
   };
 
   const toolstopics = Object.entries(topicstools).map(([key, value], index) => {
-    // const checkTopicClicked = isActiveTopicIndex === index;
     const checkTopicClicked = isActiveTopicName === key + index;
     return (
       <TopicContainer key={index}>
@@ -149,7 +116,9 @@ const Menu = ({
             <AnimatePresence>
               {isOpen && (
                 <>
-                  <MobileList>{possibleRoutes}</MobileList>
+                  <MobileList>
+                    <MenuAuthenticated toogleTopic={toogleTopic} />
+                  </MobileList>
                 </>
               )}
             </AnimatePresence>
@@ -181,7 +150,7 @@ const Menu = ({
             transition={{ duration: 0.5, delay: 1.1 }}
           >
             <ul>
-              {possibleRoutes}
+              <MenuAuthenticated toogleTopic={toogleTopic} />
               {toolstopics}
             </ul>
           </motion.div>
@@ -197,7 +166,7 @@ const mapStateToProps = (state) => ({
   topicstools: state.blog.topics.tools,
   isUserLoading: state.user.isLoading,
   isUserAuthenticated: state.user.isAuthenticated,
-  isMenuToolActive: state.action.menu.active,
+  isMenuTopicActive: state.action.menu.active,
 });
 
 export default connect(mapStateToProps)(Menu);

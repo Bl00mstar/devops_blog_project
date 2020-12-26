@@ -33,3 +33,20 @@ function* setPath(payload) {
     yield put(errors.errorNotification(error));
   }
 }
+
+export function* watchSelectedTheme() {
+  yield takeEvery(actionTypes.LOAD_THEME, loadTheme);
+}
+
+function* loadTheme() {
+  try {
+    if (!localStorage.getItem('mode')) {
+      localStorage.setItem('mode', 'light');
+    } else {
+      let dm = localStorage.getItem('mode');
+      yield put(actions.setTheme(dm));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}

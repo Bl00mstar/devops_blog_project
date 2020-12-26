@@ -10,7 +10,7 @@ const initialState = {
   },
   post: { postId: '', title: '' },
   history: { posts: [localStorage.getItem('history')] },
-  menu: { active: '' },
+  menu: { active: '', darkMode: localStorage.getItem('mode') },
 };
 
 const actionReducer = (state = initialState, action) => {
@@ -80,6 +80,12 @@ const actionReducer = (state = initialState, action) => {
       return {
         ...state,
         menu: { ...state.menu, active: action.payload },
+      };
+    case actionTypes.SET_THEME_MODE:
+      localStorage.setItem('mode', action.payload);
+      return {
+        ...state,
+        menu: { ...state.menu, darkMode: action.payload },
       };
     default:
       return state;

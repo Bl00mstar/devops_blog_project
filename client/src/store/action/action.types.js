@@ -6,8 +6,9 @@ const actionTypes = {
   LOAD_TITLE: 'LOAD_TITLE',
   SET_POST: 'SET_POST',
   ADD_HISTORY: 'ADD_HISTORY',
-
+  SET_THEME_MODE: 'SET_THEME_MODE',
   MENU_SET_ACTIVE: 'MENU_SET_ACTIVE',
+  LOAD_THEME: 'LOAD_THEME',
 };
 
 export default actionTypes;

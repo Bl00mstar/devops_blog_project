@@ -1,28 +1,30 @@
+import userTypes from './user.types';
+
 export const requestUser = () => {
-  return { type: "REQUESTED_USER" };
+  return { type: userTypes.REQUESTED_USER };
 };
 
 export const requestUserSuccess = (data) => {
-  return { type: "USER_LOADED", payload: data };
+  return { type: userTypes.USER_LOADED, payload: data };
 };
 
 export const requestUserError = () => {
-  return { type: "AUTH_ERROR" };
+  return { type: userTypes.AUTH_ERROR };
 };
 
 export const getUser = () => {
-  return { type: "USER_LOADING" };
+  return { type: userTypes.USER_LOADING };
 };
 export const logoutUser = () => {
-  return { type: "LOGOUT_SUCCESS" };
+  return { type: userTypes.LOGOUT_SUCCESS };
 };
 
 export const logInUser = (data) => {
-  return { type: "FETCH_USER", params: data };
+  return { type: userTypes.FETCH_USER, params: data };
 };
 export const requestedUserSuccess = (data) => {
-  return { type: "FETCHED_USER_SUCCESS", payload: data };
+  return { type: userTypes.FETCHED_USER_SUCCESS, payload: data };
 };
 export const requestedUserFailed = (data) => {
-  return { type: "FETCHED_USER_FAIL", payload: data };
+  return { type: userTypes.FETCHED_USER_FAIL, payload: data };
 };

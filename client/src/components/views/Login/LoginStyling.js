@@ -25,7 +25,7 @@ export const Button = styled(motion.button)`
   }
   :hover {
     background-position: 0 100%;
-    color: ${({ theme }) => theme.colors.ground};
+    color: ${({ theme }) => theme.ground};
   }
 `;
 
@@ -36,7 +36,7 @@ export const MessageInfo = styled.p`
 export const MotionSpan = styled(motion.span)`
   display: inline-block;
   font-size: 4rem;
-  color: ${({ theme }) => theme.colors.active};
+  color: ${({ theme }) => theme.active};
   ${media.tablet`
   font-size: 3rem;
   `}
@@ -68,15 +68,15 @@ export const StyledSpan = styled(motion.div)`
 `;
 
 export const StyledInput = styled(motion.input)`
-  background-color: ${({ theme }) => theme.colors.form};
-  color: ${({ theme }) => theme.colors.icon};
-  border: 1px solid ${({ theme }) => theme.colors.form};
+  background-color: ${({ theme }) => theme.form};
+  color: ${({ theme }) => theme.icon};
+  border: 1px solid ${({ theme }) => theme.form};
   ::placeholder {
-    color: ${({ theme }) => theme.colors.icon};
+    color: ${({ theme }) => theme.icon};
   }
   :focus {
     outline: none;
-    color: ${({ theme }) => theme.colors.error};
+    color: ${({ theme }) => theme.error};
     ::placeholder {
       color: transparent;
     }
@@ -85,5 +85,5 @@ export const StyledInput = styled(motion.input)`
 
 export const ErrorInput = styled(motion.div)`
   height: 2px;
-  background-color: ${({ theme }) => theme.colors.error};
+  background-color: ${({ theme }) => theme.error};
 `;

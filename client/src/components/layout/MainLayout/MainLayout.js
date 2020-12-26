@@ -25,8 +25,8 @@ const MainContaier = styled.div`
 const StyledMain = styled.main`
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.ground};
-  color: ${({ theme }) => theme.colors.light};
+  background-color: ${({ theme }) => theme.ground};
+  color: ${({ theme }) => theme.light};
 `;
 
 export default MainLayout;

@@ -9,11 +9,10 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    background-color: ${({ theme }) => theme.colors.ground};
+    background-color: ${({ theme }) => theme.background};
   }
   html {
     font-size: 16px;
-    // overflow: hidden;
     ${media.medium`
       font-size: 14px;
     `}

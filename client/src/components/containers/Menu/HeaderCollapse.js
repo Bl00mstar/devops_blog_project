@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Item = styled.a`
-  color: ${({ theme }) => theme.colors.icon};
-  background: ${({ theme }) => theme.colors.primaryDark};
+  color: ${({ theme }) => theme.font};
+  background: ${({ theme }) => theme.menu};
   cursor: pointer;
   display: block;
   border: none;
@@ -13,14 +13,10 @@ const Item = styled.a`
   transition: all 0.9s;
   width: 100%;
   &.active {
-    color: ${({ theme }) => theme.colors.active};
+    background: ${({ theme }) => theme.ulActive};
   }
   &:hover {
-    background: ${({ theme }) => theme.colors.primaryLight};
-  }
-  &:focus {
-    color: ${({ theme }) => theme.colors.icon};
-    background: ${({ theme }) => theme.colors.primaryLight};
+    background: ${({ theme }) => theme.ulActive};
   }
 `;
 
@@ -35,10 +31,6 @@ const Header = ({ title, onClick, id, active }) => {
     e.preventDefault();
     let name = e.target.name;
     onClick(title + id);
-    console.log(e);
-    console.log(id);
-    console.log(name);
-    console.log(active);
   };
 
   return (

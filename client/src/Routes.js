@@ -6,7 +6,7 @@ import About from '@views/About';
 import Settings from '@views/Settings';
 
 export const routes = [
-  { description: 'Home', path: '/', element: <Home />, type: 'public' },
+  { description: 'Home', path: '/', element: <Home /> },
   {
     description: 'Login',
     path: '/login',
@@ -25,12 +25,12 @@ export const routes = [
     element: <Settings />,
     type: 'private',
   },
-  {
-    name: 'Logout',
-    path: '/logout',
-    element: <div>Logout</div>,
-    type: 'private',
-  },
+  //   {
+  //     name: 'Logout',
+  //     path: '/logout',
+  //     element: <div>Logout</div>,
+  //     type: 'private',
+  //   },
   {
     description: '404',
     path: '*',

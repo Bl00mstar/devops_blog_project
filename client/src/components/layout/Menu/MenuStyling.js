@@ -5,59 +5,60 @@ import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 
 export const Wrapper = styled(motion.header)`
-  background: ${({ theme }) => theme.colors.primaryDark};
+  background: ${({ theme }) => theme.menu};
   transform: ${({ open }) => (open ? 'translateX(-100%)' : 'translateX(0)')};
+  color: ${({ theme }) => theme.font};
   height: 100vh;
   width: 20vh;
   top: 0;
-  border: 1px solid;
+  border: 1px solid transparent;
   text-align: left;
   transition: transform 0.3s ease-in-out;
 
-  @media (min-width: ${({ theme }) => theme.colors.mobile}) {
+  @media (min-width: ${({ theme }) => theme.mobile}) {
     position: sticky;
     height: 100vh;
   }
 
   @media (max-width: 780px) {
-    background: ${({ theme }) => theme.colors.primaryDark};
+    background: ${({ theme }) => theme.menu};
     position: fixed;
     display: block;
     z-index: 1;
   }
   a {
     font-weight: bold;
-    color: ${({ theme }) => theme.primaryDark};
+    color: ${({ theme }) => theme.font};
     text-decoration: none;
     transition: color 0.3s linear;
     @media (max-width: ${({ theme }) => theme.mobile}) {
       font-size: 1.5rem;
       text-align: center;
     }
-    &:hover {
-      color: ${({ theme }) => theme.primaryLight};
-    }
+    // &:hover {
+    //   color: ${({ theme }) => theme.primaryLight};
+    // }
   }
 `;
 
 export const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   font-size: 1.5rem;
-  color: ${({ theme }) => theme.colors.icon};
+  color: ${({ theme }) => theme.icon};
 `;
 
 export const MainIcon = styled(StyledFontAwesomeIcon)`
   font-size: 3rem;
-  color: ${({ theme }) => theme.colors.active};
+  color: ${({ theme }) => theme.active};
 `;
 
 export const RefLinks = styled(StyledFontAwesomeIcon)`
   :hover {
-    color: ${({ theme }) => theme.colors.active};
+    color: ${({ theme }) => theme.active};
   }
 `;
 
 export const StyledNavLink = styled(NavLink)`
-  color: ${({ theme }) => theme.colors.icon};
+  color: ${({ theme }) => theme.icon};
   transition: all 0.9s linear;
   text-decoration: none;
   font-size: 1.25em;
@@ -65,10 +66,10 @@ export const StyledNavLink = styled(NavLink)`
   width: 100%;
   padding: 0.25em 1em;
   &:hover {
-    background: ${({ theme }) => theme.colors.primaryLight};
+    background: ${({ theme }) => theme.ulActive};
   }
   &.active {
-    color: ${({ theme }) => theme.colors.active};
+    color: ${({ theme }) => theme.active};
   }
 `;
 
@@ -119,8 +120,7 @@ export const BurgerMenu = styled(motion.div)`
   span {
     width: 2rem;
     height: 0.25rem;
-    background: ${({ theme, open }) =>
-      open ? theme.colors.active : theme.colors.active};
+    background: ${({ theme, open }) => (open ? theme.active : theme.active)};
     border-radius: 10px;
     transition: all 0.3s linear;
     position: relative;
@@ -136,4 +136,16 @@ export const BurgerMenu = styled(motion.div)`
       transform: ${({ open }) => (open ? 'rotate(0)' : 'rotate(-45deg)')};
     }
   }
+`;
+
+export const StyledList = styled(motion.li)`
+  padding: 0.6rem 0;
+  height: 4rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  ${media.tablet`
+      padding: 0.6rem 1rem;
+      align-items: center;
+    `}
 `;

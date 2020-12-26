@@ -1,13 +1,16 @@
+import userTypes from './user.types';
+
 const initialState = {
-  token: localStorage.getItem("token"),
+  token: localStorage.getItem('token'),
+  darkMode: false,
   isAuthenticated: null,
   isLoading: true,
-  user: "",
+  user: '',
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "USER_LOADING":
+    case userTypes.USER_LOADING:
       return {
         ...state,
         isLoading: true,
@@ -16,22 +19,22 @@ const userReducer = (state = initialState, action) => {
         },
       };
 
-    case "USER_LOADED":
+    case userTypes.USER_LOADED:
       return {
         ...state,
         isAuthenticated: true,
         isLoading: false,
         user: action.payload.data,
       };
-    case "FETCHED_USER_SUCCESS":
-      localStorage.setItem("token", action.payload.token);
+    case userTypes.FETCHED_USER_SUCCESS:
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         ...action.payload,
         isAuthenticated: true,
         isLoading: false,
       };
-    case "FETCHED_USER_FAIL":
+    case userTypes.FETCHED_USER_FAIL:
       return {
         ...state,
         isLoading: false,
@@ -39,19 +42,19 @@ const userReducer = (state = initialState, action) => {
           name: action.payload,
         },
       };
-    case "AUTH_ERROR":
+    case userTypes.AUTH_ERROR:
       return {
         ...state,
         isLoading: false,
       };
-    case "LOGIN_FAIL":
-    case "LOGOUT_SUCCESS":
-      localStorage.removeItem("token");
+    case userTypes.LOGIN_FAIL:
+    case userTypes.LOGOUT_SUCCESS:
+      localStorage.removeItem('token');
       return {
         ...state,
         token: null,
         user: {
-          name: "",
+          name: '',
         },
         isAuthenticated: false,
         isLoading: false,
