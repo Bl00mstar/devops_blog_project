@@ -1,27 +1,28 @@
-import actionTypes from "./action.types";
+import actionTypes from './action.types';
 
 const initialState = {
-  route: { title: "DevOps Notes", path: "home", site: false },
+  route: { title: 'DevOps Notes', path: 'home', site: false },
   path: {
     isLoading: true,
-    selectedPath: "",
-    title: "DevOps Notes",
+    selectedPath: '',
+    title: 'DevOps Notes',
     content: [],
   },
-  post: { postId: "", title: "" },
-  history: { posts: [localStorage.getItem("history")] },
+  post: { postId: '', title: '' },
+  history: { posts: [localStorage.getItem('history')] },
+  menu: { active: '' },
 };
 
 const actionReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_HISTORY:
-      if (localStorage.getItem("history")) {
-        let item = localStorage.getItem("history");
-        localStorage.setItem("history", [item, action.payload]);
+      if (localStorage.getItem('history')) {
+        let item = localStorage.getItem('history');
+        localStorage.setItem('history', [item, action.payload]);
       } else {
-        localStorage.setItem("history", [action.payload]);
+        localStorage.setItem('history', [action.payload]);
       }
-      let historyValues = localStorage.getItem("history");
+      let historyValues = localStorage.getItem('history');
       return {
         ...state,
         history: { posts: [historyValues] },
@@ -38,7 +39,7 @@ const actionReducer = (state = initialState, action) => {
     case actionTypes.LOAD_TITLE:
       return {
         ...state,
-        post: { postId: "", title: "" },
+        post: { postId: '', title: '' },
         path: { ...state.path },
         route: {
           title: action.payload.title,
@@ -58,10 +59,10 @@ const actionReducer = (state = initialState, action) => {
     case actionTypes.SELECT_PATH:
       return {
         ...state,
-        post: { postId: "" },
+        post: { postId: '' },
         path: {
           selectedPath: action.payload,
-          title: action.payload + " posts",
+          title: action.payload + ' posts',
           isLoading: true,
           content: [],
         },
@@ -74,6 +75,11 @@ const actionReducer = (state = initialState, action) => {
           isLoading: false,
           content: action.payload,
         },
+      };
+    case actionTypes.MENU_SET_ACTIVE:
+      return {
+        ...state,
+        menu: { ...state.menu, active: action.payload },
       };
     default:
       return state;

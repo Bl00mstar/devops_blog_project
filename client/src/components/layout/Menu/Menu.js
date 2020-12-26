@@ -5,7 +5,10 @@ import { routes } from '../../../Routes';
 import { faOldRepublic } from '@fortawesome/free-brands-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMediaQuery } from 'react-responsive';
-import styled from 'styled-components';
+
+import { setMenuActiveTopic } from '@store/action/action.actions';
+
+import styled, { css } from 'styled-components';
 import {
   Wrapper,
   StyledNavLinkTool,
@@ -14,17 +17,27 @@ import {
   StyledNavLink,
   MobileList,
   StyleLi,
-  StyledNavLinkDatabase,
-  StyleContent,
+  TopicContainer,
+  ToolContainer,
+  Body,
 } from './MenuStyling';
 
-import MenuLinks from './MenuLinks';
+import Collapse from '@containers/Menu/Collapse';
+import HeaderCollapse from '@containers/Menu/HeaderCollapse';
+import HeaderTool from '@containers/Menu/HeaderTool';
 
-const Menu = ({ isUserAuthenticated, currentPath, toolPath }) => {
+const Menu = ({
+  isUserAuthenticated,
+  currentPath,
+  toolPath,
+  isMenuToolActive,
+}) => {
   const [isOpen, setIsOpen] = useState(true);
   const isMobile = useMediaQuery({
     query: '(max-width: 780px)',
   });
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsOpen(true);
@@ -66,9 +79,62 @@ const Menu = ({ isUserAuthenticated, currentPath, toolPath }) => {
     tester: ['sadfasdf', 'asdfasd', 'fasdf', 'asdf'],
   };
 
-  const toolstopics = Object.entries(topicstools).map(([key, value]) => (
-    <MenuLinks topic={key} tools={value} />
-  ));
+  ///////////////////////////////////////////////////////
+  ////////////APPEND ITEMS FROM DB TO MENU=SIDENAV///////
+  ///////////////////////////////////////////////////////
+
+  const [isActiveTopicIndex, setActiveTopicIndex] = useState(null);
+  const [isActiveToolIndex, setActiveToolIndex] = useState(null);
+  const [isActiveTopicName, setIsActiveTopicName] = useState('');
+
+  const [activeTopic, setActiveTopic] = useState('');
+
+  const toogleTopic = (name) => {
+    console.log(name);
+    // setActiveTopicIndex(isActiveTopicIndex === index ? null : index);
+    dispatch(setMenuActiveTopic(name));
+    setIsActiveTopicName(isActiveTopicName === name ? null : name);
+    setActiveTopic(name);
+  };
+
+  const [activeTool, setActiveTool] = useState('');
+  const toggleTool = (index) => {
+    setActiveToolIndex(isActiveToolIndex === index ? null : index);
+    setActiveTool(index);
+  };
+
+  const toolstopics = Object.entries(topicstools).map(([key, value], index) => {
+    // const checkTopicClicked = isActiveTopicIndex === index;
+    const checkTopicClicked = isActiveTopicName === key + index;
+    return (
+      <TopicContainer key={index}>
+        <HeaderCollapse
+          title={key}
+          id={index}
+          name={key + index}
+          onClick={toogleTopic}
+          active={isActiveTopicName}
+        />
+        <Body isOpen={checkTopicClicked}>
+          {value.map((item, idx) => {
+            const checkToolClicked = isActiveToolIndex === idx;
+            return (
+              <Collapse id={idx} isOpen={checkTopicClicked}>
+                <ToolContainer key={idx}>
+                  <HeaderTool
+                    title={item}
+                    id={idx}
+                    onClick={toggleTool}
+                    active={activeTool}
+                  />
+                </ToolContainer>
+              </Collapse>
+            );
+          })}
+        </Body>
+      </TopicContainer>
+    );
+  });
 
   return (
     <div>
@@ -131,6 +197,7 @@ const mapStateToProps = (state) => ({
   topicstools: state.blog.topics.tools,
   isUserLoading: state.user.isLoading,
   isUserAuthenticated: state.user.isAuthenticated,
+  isMenuToolActive: state.action.menu.active,
 });
 
 export default connect(mapStateToProps)(Menu);

@@ -76,7 +76,7 @@ export const StyledInput = styled(motion.input)`
   }
   :focus {
     outline: none;
-    color: ${({ theme }) => theme.colors.icon};
+    color: ${({ theme }) => theme.colors.error};
     ::placeholder {
       color: transparent;
     }

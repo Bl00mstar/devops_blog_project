@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import media from '@utils/media';
 import { motion } from 'framer-motion';
@@ -10,7 +10,7 @@ export const Wrapper = styled(motion.header)`
   height: 100vh;
   width: 20vh;
   top: 0;
-  border: 1px solid transparent;
+  border: 1px solid;
   text-align: left;
   transition: transform 0.3s ease-in-out;
 
@@ -20,7 +20,7 @@ export const Wrapper = styled(motion.header)`
   }
 
   @media (max-width: 780px) {
-    background: ${({ theme }) => theme.colors.primaryLight};
+    background: ${({ theme }) => theme.colors.primaryDark};
     position: fixed;
     display: block;
     z-index: 1;
@@ -35,7 +35,7 @@ export const Wrapper = styled(motion.header)`
       text-align: center;
     }
     &:hover {
-      color: ${({ theme }) => theme.primaryHover};
+      color: ${({ theme }) => theme.primaryLight};
     }
   }
 `;
@@ -58,37 +58,17 @@ export const RefLinks = styled(StyledFontAwesomeIcon)`
 
 export const StyledNavLink = styled(NavLink)`
   color: ${({ theme }) => theme.colors.icon};
-  transition: color 0.3s linear;
+  transition: all 0.9s linear;
   text-decoration: none;
   font-size: 1.25em;
   display: block;
-  width: 20vh;
+  width: 100%;
   padding: 0.25em 1em;
+  &:hover {
+    background: ${({ theme }) => theme.colors.primaryLight};
+  }
   &.active {
     color: ${({ theme }) => theme.colors.active};
-  }
-`;
-
-export const StyledNavLinkDatabase = styled(motion.a)`
-  color: ${({ theme }) => theme.colors.icon};
-  background: ${({ theme }) => theme.colors.primaryDark};
-  transition: all 0.9s;
-  display: block;
-  text-decoration: none;
-  font-size: 1.25em;
-  padding: 0em 1em;
-  cursor: pointer;
-  padding: 15px;
-  marginbottom: 0;
-  &.hover {
-    background: ${({ theme }) => theme.colors.backgroundIcon};
-  }
-  &.active {
-    background: ${({ theme }) => theme.colors.backgroundIcon};
-  }
-
-  a {
-    margin: 0;
   }
 `;
 
@@ -106,15 +86,21 @@ export const StyleContent = styled.div`
   transition: all 0.2s;
 `;
 
-export const StyledNavLinkTool = styled(motion.a)`
-  display: block;
-  color: ${({ theme }) => theme.colors.icon};
-  background: ${({ theme }) => theme.colors.primaryDark};
-`;
-
 export const MobileList = styled(motion.ul)`
   display: block;
 `;
+
+export const Body = styled.div`
+  ${(props) =>
+    props.isOpen &&
+    css`
+      padding: 0px;
+    `}
+`;
+
+export const TopicContainer = styled.div``;
+
+export const ToolContainer = styled.div``;
 
 export const BurgerMenu = styled(motion.div)`
   position: fixed;

@@ -1,4 +1,4 @@
-import actionTypes from "./action.types";
+import actionTypes from './action.types';
 
 export const loadPath = () => {
   return { type: actionTypes.LOAD_PATH };
@@ -26,4 +26,8 @@ export const setPost = (data) => {
 
 export const addToHistory = (data) => {
   return { type: actionTypes.ADD_HISTORY, payload: data };
+};
+
+export const setMenuActiveTopic = (data) => {
+  return { type: actionTypes.MENU_SET_ACTIVE, payload: data };
 };
