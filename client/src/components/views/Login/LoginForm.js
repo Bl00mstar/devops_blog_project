@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import letterVariants from '@utils/letterVariants';
+import { logInUser } from '@store/user/user.actions';
 import { divideText } from '@utils/textTemplates';
 import { loadTitle } from '@store/action/action.actions';
 import {
@@ -33,8 +33,9 @@ const LoginForm = () => {
     dispatch(loadTitle({ title: 'Login', path: 'login', site: 'true' }));
   }, []);
 
-  const sendFormConfirm = () => {
-    setIsSent(!isSent);
+  const onSubmit = (e, data) => {
+    e.preventDefault();
+    dispatch(logInUser(data));
   };
 
   useEffect(() => {
@@ -61,7 +62,7 @@ const LoginForm = () => {
             SIGN IN
           </StyledSpan>
         </StyledDiv>
-        <StyledForm>
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
           {isSent && <MessageInfo>Message Sent!</MessageInfo>}
           <div>
             <StyledInput

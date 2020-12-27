@@ -140,12 +140,8 @@ const Menu = ({ currentPath, toolPath, isMenuTopicActive }) => {
               <a
                 onClick={() => window.location.replace('/')}
                 id="logo-container"
-                className="brand-logo transparent"
-                style={{
-                  width: '120px',
-                  alignItems: 'center',
-                  dispaly: 'flex',
-                }}
+                className="brand-logo transparent center"
+                style={{ padding: '2rem', cursor: 'pointer' }}
               >
                 <object
                   style={{

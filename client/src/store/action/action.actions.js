@@ -36,7 +36,3 @@ export const setTheme = (data) => {
   console.log(data);
   return { type: actionTypes.SET_THEME_MODE, payload: data };
 };
-
-// export const loadTheme = () => {
-//   return { type: actionTypes.LOAD_THEME };
-// };

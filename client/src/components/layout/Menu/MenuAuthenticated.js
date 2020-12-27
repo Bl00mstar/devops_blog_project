@@ -18,7 +18,7 @@ const MenuAuthenticated = ({ isUserAuthenticated, toogleTopic }) => {
   }
 
   return routes.map(({ description, path, type }, key) => {
-    if (type === 'public' || type === 'private')
+    if (type === 'public')
       return (
         <StyleLi key={key}>
           <StyledNavLink

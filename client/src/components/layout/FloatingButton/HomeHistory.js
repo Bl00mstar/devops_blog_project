@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setPost } from '@store/action/action.actions';
+import { ButtonColor } from './FloatingButtonStyling';
 
 export const HomeHistory = ({ value, posts }) => {
   const dispatch = useDispatch();
@@ -14,10 +15,12 @@ export const HomeHistory = ({ value, posts }) => {
           <td className="center">
             {' '}
             <a
-              className="btn-floating btn-small blue"
+              className="btn-floating btn-small"
               onClick={() => dispatch(setPost({ postId: id, title: title }))}
             >
-              <i className="material-icons">arrow_forward</i>
+              <ButtonColor>
+                <i className="material-icons">arrow_forward</i>
+              </ButtonColor>
             </a>
           </td>
         </tr>

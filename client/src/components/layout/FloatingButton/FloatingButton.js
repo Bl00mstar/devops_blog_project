@@ -5,8 +5,11 @@ import { connect } from 'react-redux';
 import ModalHistory from './HomeHistory';
 import { setTheme } from '@store/action/action.actions';
 
-const HomeHistory = ({ history, themeMode, setTheme }) => {
+import { ButtonColor } from './FloatingButtonStyling';
+
+const FloatingButton = ({ history, themeMode, setTheme }) => {
   let navigate = useNavigate();
+
   useEffect(() => {
     var elems = document.querySelectorAll('.fixed-action-btn');
     M.FloatingActionButton.init(elems, {});
@@ -35,30 +38,38 @@ const HomeHistory = ({ history, themeMode, setTheme }) => {
       </div>
       <div className="fixed-action-btn">
         <a className="btn-floating btn-large">
-          <i className="large material-icons">apps</i>
+          <ButtonColor>
+            <i className="large material-icons">apps</i>
+          </ButtonColor>
         </a>
+
         <ul>
           <li>
-            <a onClick={() => navigate('login')} className="btn-floating blue">
-              <i className="material-icons">settings</i>
+            <a onClick={() => navigate('login')} className="btn-floating">
+              <ButtonColor>
+                <i className="material-icons">settings</i>
+              </ButtonColor>
             </a>
           </li>
           <li>
-            <a className="btn-floating blue modal-trigger" data-target="modal1">
-              <i className="material-icons">history</i>
+            <a className="btn-floating modal-trigger" data-target="modal1">
+              <ButtonColor>
+                <i className="material-icons">history</i>
+              </ButtonColor>
             </a>
           </li>
           <li>
             {themeMode === 'dark' ? (
-              <a
-                onClick={() => setTheme('light')}
-                className="btn-floating blue"
-              >
-                <i className="material-icons">light_mode</i>
+              <a onClick={() => setTheme('light')} className="btn-floating">
+                <ButtonColor>
+                  <i className="material-icons">light_mode</i>
+                </ButtonColor>
               </a>
             ) : (
-              <a onClick={() => setTheme('dark')} className="btn-floating blue">
-                <i className="material-icons">dark_mode</i>
+              <a onClick={() => setTheme('dark')} className="btn-floating">
+                <ButtonColor>
+                  <i className="material-icons">dark_mode</i>
+                </ButtonColor>
               </a>
             )}
           </li>
@@ -78,4 +89,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHistory);
+export default connect(mapStateToProps, mapDispatchToProps)(FloatingButton);
