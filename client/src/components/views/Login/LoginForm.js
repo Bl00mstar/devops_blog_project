@@ -33,9 +33,10 @@ const LoginForm = () => {
     dispatch(loadTitle({ title: 'Login', path: 'login', site: 'true' }));
   }, []);
 
-  const onSubmit = (e, data) => {
+  const onSubmit = (data, e) => {
     e.preventDefault();
-    dispatch(logInUser(data));
+    let { nick, password } = data;
+    dispatch(logInUser({ nick, password }));
   };
 
   useEffect(() => {
@@ -72,16 +73,16 @@ const LoginForm = () => {
                 duration: 1,
                 delay: 0.3,
               }}
-              placeholder="Nick"
+              placeholder="Nickname"
               type="text"
               autoComplete="off"
-              name="login"
+              name="nick"
               ref={register({
                 required: true,
                 minLength: 5,
               })}
             />
-            {errors.login && (
+            {errors.nick && (
               <ErrorInput
                 initial="initial"
                 animate="animate"
@@ -101,13 +102,13 @@ const LoginForm = () => {
               placeholder="Password"
               type="password"
               autoComplete="off"
-              name="subject"
+              name="password"
               ref={register({
                 required: true,
                 minLength: 5,
               })}
             />
-            {errors.subject && (
+            {errors.password && (
               <ErrorInput
                 initial="initial"
                 animate="animate"

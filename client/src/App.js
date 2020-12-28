@@ -22,7 +22,7 @@ const App = ({ themeMode, checkSelectedTheme }) => {
   const { val } = useRoutes(routes);
 
   useEffect(() => {
-    checkSelectedTheme();
+    // checkSelectedTheme();
     dispatch(loadPath());
     dispatch(getUser());
     dispatch(getTopicsTools());

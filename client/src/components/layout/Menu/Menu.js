@@ -61,7 +61,7 @@ const Menu = ({ currentPath, toolPath, isMenuTopicActive }) => {
   const [isActiveTopicName, setIsActiveTopicName] = useState('');
 
   const toogleTopic = (name) => {
-    dispatch(setMenuActiveTopic(name));
+    // dispatch(setMenuActiveTopic(name));
     setIsActiveTopicName(isMenuTopicActive === name ? null : name);
   };
 

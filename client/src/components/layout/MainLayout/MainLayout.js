@@ -17,16 +17,32 @@ MainLayout.propTypes = {
 
 const MainContaier = styled.div`
   display: flex;
-  ${media.small`
-  flex-direction: column;
-`}
+  justify-content: center;
 `;
 
 const StyledMain = styled.main`
+  padding-right: 20px;
+  margin-top: 30px;
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.ground};
   color: ${({ theme }) => theme.light};
+  ${media.xmedium`
+    width: 80%;
+   height:95%;
+`}
+  ${media.medium`
+    width: 80%;
+   height:100%;
+`}
+${media.tablet`
+    width: 80%;
+   height:100%;
+`}
+${media.small`
+    width: 70%;
+   height:100%;
+`}
 `;
 
 export default MainLayout;

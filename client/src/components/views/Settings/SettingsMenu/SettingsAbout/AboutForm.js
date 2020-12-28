@@ -8,45 +8,45 @@ export default function AboutForm() {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setLoading(false);
-  }, [data]);
+  //   useEffect(() => {
+  //     setLoading(false);
+  //   }, [data]);
 
-  useEffect(() => {
-    handleRequest('GET', 'api/about/1')
-      .then((data) => {
-        setData({
-          id: data[0].id,
-          content: data[0].content,
-          photo_url: data[0].photo_url,
-        });
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  //   useEffect(() => {
+  //     handleRequest('GET', 'api/about/1')
+  //       .then((data) => {
+  //         setData({
+  //           id: data[0].id,
+  //           content: data[0].content,
+  //           photo_url: data[0].photo_url,
+  //         });
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }, []);
 
-  const handleData = (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setData((data) => ({
-      ...data,
-      [name]: value,
-    }));
-  };
+  //   const handleData = (e) => {
+  //     e.preventDefault();
+  //     const { name, value } = e.target;
+  //     setData((data) => ({
+  //       ...data,
+  //       [name]: value,
+  //     }));
+  //   };
 
-  const sendData = (e) => {
-    e.preventDefault();
-    handleRequest('POST', 'api/about/1', data)
-      .then((data) => {
-        M.toast({ html: 'About was updated.' });
-      })
-      .catch((err) => {
-        M.toast({ html: err });
-      });
-  };
+  //   const sendData = (e) => {
+  //     e.preventDefault();
+  //     handleRequest('POST', 'api/about/1', data)
+  //       .then((data) => {
+  //         M.toast({ html: 'About was updated.' });
+  //       })
+  //       .catch((err) => {
+  //         M.toast({ html: err });
+  //       });
+  //   };
 
   return (
     <div>
-      {data.content && data.photo_url ? (
+      {/* {data.content && data.photo_url ? (
         <form>
           <div className="input-field col s12">
             <label className="active" for="photoURL">
@@ -92,7 +92,7 @@ export default function AboutForm() {
       ) : (
         // <Preloader />
         <div>asd</div>
-      )}
+      )} */}
     </div>
   );
 }

@@ -9,7 +9,7 @@ export const Wrapper = styled(motion.header)`
   transform: ${({ open }) => (open ? 'translateX(-100%)' : 'translateX(0)')};
   color: ${({ theme }) => theme.font};
   height: 100vh;
-  width: 20vh;
+  width: 100%;
   top: 0;
   border: 1px solid transparent;
   text-align: left;
@@ -35,9 +35,6 @@ export const Wrapper = styled(motion.header)`
       font-size: 1.5rem;
       text-align: center;
     }
-    // &:hover {
-    //   color: ${({ theme }) => theme.primaryLight};
-    // }
   }
 `;
 
