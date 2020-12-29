@@ -22,7 +22,7 @@ const MainContaier = styled.div`
 
 const StyledMain = styled.main`
   padding-right: 20px;
-  margin-top: 30px;
+  margin-top: 10px;
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.ground};

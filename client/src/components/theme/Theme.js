@@ -20,7 +20,7 @@ export const darkTheme = {
   active: '#0000CC',
   ulActive: '#00102a',
   // liActive: '',
-  font: '#7C00CC',
+  font: '#6a5acd',
   // backgroundIcon: '#95a532f',
   // light: '#474747',
   // form: '#FFEFD5',

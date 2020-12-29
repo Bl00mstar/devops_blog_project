@@ -3,14 +3,10 @@ import { useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import { setPost } from '@store/action/action.actions';
 import HomePostChapters from './HomePostChapters';
-// import Preloader from '../../Shared/Layout/linearPreloader';
 import './index.css';
 
 const HomePosts = ({ isLoading, posts, selectedPost }) => {
   const dispatch = useDispatch();
-  //   if (isLoading) {
-  //     return <Preloader />;
-  //   }
 
   if (selectedPost) {
     return <HomePostChapters id={selectedPost} />;

@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { routes } from '../../../Routes';
-import { faOldRepublic } from '@fortawesome/free-brands-svg-icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMediaQuery } from 'react-responsive';
 
-import { setMenuActiveTopic } from '@store/action/action.actions';
 import MenuAuthenticated from './MenuAuthenticated';
-import styled, { css } from 'styled-components';
 import {
   Wrapper,
-  StyledNavLinkTool,
-  StyledList,
-  MainIcon,
   BurgerMenu,
-  StyledNavLink,
   MobileList,
-  StyleLi,
   TopicContainer,
   ToolContainer,
   Body,
@@ -93,7 +84,7 @@ const Menu = ({ currentPath, toolPath, isMenuTopicActive }) => {
                     id={idx}
                     onClick={toggleTool}
                     active={activeTool}
-                  />
+                  ></HeaderTool>
                 </ToolContainer>
               </Collapse>
             );
@@ -145,7 +136,7 @@ const Menu = ({ currentPath, toolPath, isMenuTopicActive }) => {
               >
                 <object
                   style={{
-                    width: '120px',
+                    width: '110px',
                     alignItems: 'center',
                     dispaly: 'flex',
                   }}

@@ -15,9 +15,10 @@ const HomePage = () => {
     dispatch(loadTitle({ title: 'DevOps Notes', path: 'home' }));
   }, []);
   return (
-    <>
+    <div className="center">
+      <h3>devops notes</h3>
       <HomePosts />
-    </>
+    </div>
   );
 };
 

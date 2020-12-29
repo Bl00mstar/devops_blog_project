@@ -6,7 +6,9 @@ import { NavLink } from 'react-router-dom';
 
 export const Wrapper = styled(motion.header)`
   background: ${({ theme }) => theme.menu};
-  transform: ${({ open }) => (open ? 'translateX(-100%)' : 'translateX(0)')};
+  display: ${({ open }) => (open ? 'none' : 'block')};
+  transform: ${({ open }) => (open ? 'translateX(-130%)' : 'translateX(0)')};
+
   color: ${({ theme }) => theme.font};
   height: 100vh;
   width: 100%;
@@ -15,15 +17,11 @@ export const Wrapper = styled(motion.header)`
   text-align: left;
   transition: transform 0.3s ease-in-out;
 
-  @media (min-width: ${({ theme }) => theme.mobile}) {
-    position: sticky;
-    height: 100vh;
-  }
-
   @media (max-width: 780px) {
     background: ${({ theme }) => theme.menu};
     position: fixed;
-    display: block;
+    width: 30%;
+
     z-index: 1;
   }
   a {

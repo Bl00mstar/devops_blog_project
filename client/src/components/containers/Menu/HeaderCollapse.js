@@ -21,7 +21,7 @@ const Item = styled.a`
 `;
 
 const Wrapper = styled.span`
-  align-items: center;
+  //   align-items: center;
   display: flex;
   //   justify-content: space-between;
 `;
@@ -39,7 +39,10 @@ const Header = ({ title, onClick, id, active }) => {
       name={title + id}
       className={title + id === active && 'active'}
     >
-      <Wrapper>{title}</Wrapper>
+      <Wrapper>
+        {title}
+        <i className="material-icons right ">arrow_drop_down</i>
+      </Wrapper>
     </Item>
   );
 };
