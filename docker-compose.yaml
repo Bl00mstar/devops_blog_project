@@ -39,10 +39,11 @@ services:
   frontend:
     build:
       context: ./client
-    restart: unless-stopped
+    restart: always
     build: ./client
     ports:
       - "80:80"
+      - "443:443"
     networks:
       - internal
     depends_on:
