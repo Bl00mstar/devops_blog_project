@@ -19,7 +19,7 @@ FROM nginx:latest
 EXPOSE 80 443
 
 COPY --from=client /app/build/ /var/www/html
-COPY ./nginx/ssl/certs/cert.crt  /etc/ssl/certs
+COPY ./nginx/ssl/certs/cert.pem  /etc/ssl/certs
 COPY ./nginx/ssl/private/key.key  /etc/ssl/private
 COPY ./nginx/default.conf /etc/nginx/conf.d
 

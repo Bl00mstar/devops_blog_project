@@ -7,4 +7,5 @@ api/db.js
 db/Dockerfile
 db/db_script.sh
 demodomain/
+client/demodomain
 client/nginx/ssl
