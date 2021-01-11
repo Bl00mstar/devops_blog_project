@@ -7,17 +7,17 @@ exports.postRegisterUser = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json({ msg: "Please enter all fields." });
+      res.status(500).json({ message: "Pease enter all fields." });
       return;
     }
     const { nick, email, password } = req.body;
     const busyEmail = await registerService.isEmailInDb(email);
     if (busyEmail) {
-      return res.status(400).json({ msg: "Email is already used." });
+      return res.status(500).json({ message: "Email is already in use." });
     }
     const busyNick = await registerService.isNickInDb(nick);
     if (busyNick) {
-      return res.status(400).json({ msg: "Nick is already used." });
+      return res.status(500).json({ message: "Nick is already used." });
     }
     user = new User({
       nick,
@@ -30,10 +30,10 @@ exports.postRegisterUser = async (req, res) => {
     if (registerUser) {
       return res
         .status(200)
-        .json({ msg: "User " + registerUser.nick + " was created!" });
+        .json({ message: "User " + registerUser.nick + " was created!" });
     }
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 

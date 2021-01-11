@@ -19,22 +19,23 @@ services:
     networks:
       - internal
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "${MONGO_LOGIN}"
-      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_PASSWORD}"
+      MONGO_INITDB_ROOT_USERNAME: mongouserksdfh
+      MONGO_INITDB_ROOT_PASSWORD: lkdjfhg8dfubmd8fb
 
   db_postgres:
-    image: postgres
+    build:
+      context: ./db
+      dockerfile: db.Dockerfile
+    volumes:
+      - ./var/pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     restart: always
     networks:
       - internal
-    ports:
-      - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: "${PG_DB_PASSWORD}"
-      POSTGRES_DB: "${PG_DB_NAME}"
-    volumes:
-      - "/var/run/postgres/postgres.sock:/var/run/postgres/postgres.sock"
-      - "blogpg:/var/lib/postgresql/data"
+      POSTGRES_PASSWORD: user_blog_password
+      POSTGRES_DB: blog
 
   frontend:
     build:

@@ -1,3 +1,4 @@
+import userTypes from "./user.types";
 import * as api from "./user.helpers";
 import { put, takeEvery } from "redux-saga/effects";
 import {
@@ -9,7 +10,7 @@ import {
 import * as errors from "../error/error.actions";
 
 export function* watchUserIsLogged() {
-  yield takeEvery("USER_LOADING", isAuthenticated);
+  yield takeEvery(userTypes.USER_LOADING, isAuthenticated);
 }
 
 function* isAuthenticated() {
@@ -23,7 +24,7 @@ function* isAuthenticated() {
 }
 
 export function* watchLoginUser() {
-  yield takeEvery("FETCH_USER", loginUser);
+  yield takeEvery(userTypes.FETCH_USER, loginUser);
 }
 
 function* loginUser(action) {

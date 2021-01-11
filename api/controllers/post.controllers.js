@@ -16,11 +16,10 @@ exports.postChapter = async (req, res) => {
       [id]
     );
     return res.status(200).json({
-      success: true,
       message: addChapter.rows,
     });
   } catch (error) {
-    res.status(400);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -32,11 +31,10 @@ exports.getChapterById = async (req, res) => {
       [id]
     );
     return res.status(200).json({
-      success: true,
       message: selectedChapter.rows,
     });
   } catch (error) {
-    res.status(400);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -49,11 +47,10 @@ exports.getChaptersByPostId = async (req, res) => {
       [id]
     );
     return res.status(200).json({
-      success: true,
       message: selectChapters.rows,
     });
   } catch (error) {
-    res.status(400);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -74,12 +71,10 @@ exports.postPost = async (req, res) => {
       }
     }
     return res.status(200).json({
-      success: true,
+      messgae: "Post Was Added",
     });
   } catch (error) {
-    return res.status(400).json({
-      success: false,
-    });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -89,14 +84,10 @@ exports.getPost = async (req, res) => {
       "SELECT * FROM posts ORDER BY created_at desc;"
     );
     return res.status(200).json({
-      success: true,
       message: posts.rows,
     });
   } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: "post fail",
-    });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -111,14 +102,10 @@ exports.getToolsByPostId = async (req, res) => {
     );
     console.log(tools.rows);
     return res.status(200).json({
-      success: true,
       message: tools.rows,
     });
   } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: "post fail",
-    });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -131,14 +118,10 @@ exports.deletePost = async (req, res) => {
     );
     const delPost = await pool.query("DELETE FROM posts WHERE id=$1", [id]);
     return res.status(200).json({
-      success: true,
       message: "Post deleted.",
     });
   } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -149,14 +132,10 @@ exports.getPostById = async (req, res) => {
       id,
     ]);
     return res.status(200).json({
-      success: true,
       message: selectPost.rows,
     });
   } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -168,14 +147,10 @@ exports.findPostByToolName = async (req, res) => {
       [payload]
     );
     return res.status(200).json({
-      success: true,
       message: selectedPosts.rows,
     });
   } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -207,10 +182,7 @@ exports.updatePost = async (req, res) => {
       });
     })
     .catch((err) => {
-      return res.status(400).json({
-        success: false,
-        message: err,
-      });
+      return res.status(500).json({ message: err.message });
     });
 };
 
@@ -223,14 +195,10 @@ exports.updateChapter = async (req, res) => {
       [id, topic, content, code, photo_url]
     );
     return res.status(200).json({
-      success: true,
       message: updatedChapter.rows,
     });
   } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+    return res.status(500).json({ message: error.message });
   }
 };
 

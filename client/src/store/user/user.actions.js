@@ -1,3 +1,4 @@
+import userTypes from "./user.types";
 export const requestUser = () => {
   return { type: "REQUESTED_USER" };
 };
@@ -18,10 +19,10 @@ export const logoutUser = () => {
 };
 
 export const logInUser = (data) => {
-  return { type: "FETCH_USER", params: data };
+  return { type: userTypes.FETCH_USER, params: data };
 };
 export const requestedUserSuccess = (data) => {
-  return { type: "FETCHED_USER_SUCCESS", payload: data };
+  return { type: userTypes.FETCHED_USER_SUCCESS, payload: data };
 };
 export const requestedUserFailed = (data) => {
   return { type: "FETCHED_USER_FAIL", payload: data };

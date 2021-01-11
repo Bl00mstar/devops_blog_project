@@ -4,6 +4,9 @@ const userTypes = {
   AUTH_ERROR: "AUTH_ERROR",
   LOGIN_FAIL: "LOGIN_FAIL",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
+
+  FETCH_USER: "FETCH_USER",
+  FETCHED_USER_SUCCESS: "FETCHED_USER_SUCCESS",
 };
 
 export default userTypes;

@@ -14,7 +14,7 @@ export const loginToApi = (creds) => {
     axios
       .post(`api/auth`, body, config)
       .then((res) => {
-        if (res.status === 211) {
+        if (res.status === 500) {
           reject(res.data);
         } else {
           resolve(res.data);
@@ -38,7 +38,7 @@ export const isAuthenticated = async () => {
     axios
       .get(`api/auth/user`, { headers: token.headers })
       .then((res) => {
-        if (res.status === 211) {
+        if (res.status === 500) {
           reject(res.data);
         } else {
           resolve(res);

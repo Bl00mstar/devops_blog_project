@@ -22,18 +22,18 @@ const ImageList = () => {
   }, [refresh]);
 
   return (
-    <div className='row'>
-      <div className='col s12'>
-        <div className='fixed-container'>
-          <div className='col s10'>
+    <div className="row">
+      <div className="col s12">
+        <div className="fixed-container">
+          <div className="col s10">
             <UploadContainer />
           </div>
-          <div className='col s2'>
+          <div className="col s2">
             <button
-              className='btn-large green'
+              className="btn-large green"
               onClick={() => setRefresh(true)}
             >
-              <i className=' tiny material-icons '>refresh</i>
+              <i className=" tiny material-icons ">refresh</i>
             </button>
           </div>
           {loading ? <Preloader /> : <ImageListLayout images={images} />}

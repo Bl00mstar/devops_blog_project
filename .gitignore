@@ -4,5 +4,5 @@ stat.txt
 database.env
 api/db.js
 .env
-db/Dockerfile
 db/db_script.sh
+docker-compose.yaml

@@ -4,11 +4,10 @@ exports.getTopics = async (req, res) => {
   try {
     const topics = await pool.query("SELECT * FROM topics;");
     return res.status(200).json({
-      success: true,
       message: topics.rows,
     });
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -21,12 +20,11 @@ exports.postTopics = async (req, res) => {
     );
     if (topics) {
       return res.status(200).json({
-        success: true,
         message: topics,
       });
     }
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -38,12 +36,11 @@ exports.deleteTopic = async (req, res) => {
     ]);
     if (deleteTodo) {
       return res.status(200).json({
-        success: true,
-        msg: "Topic was deleted.",
+        message: "Topic was deleted.",
       });
     }
   } catch (error) {
-    return res.status(400).json({ success: false, msg: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -51,11 +48,10 @@ exports.getTools = async (req, res) => {
   try {
     const tools = await pool.query("SELECT * FROM tools;");
     return res.status(200).json({
-      success: true,
       message: tools.rows,
     });
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -67,11 +63,10 @@ exports.getToolsByTopicId = async (req, res) => {
       [id]
     );
     return res.status(200).json({
-      success: true,
       message: toolsById.rows,
     });
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -85,25 +80,21 @@ exports.postTools = async (req, res) => {
     );
     if (tools) {
       return res.status(200).json({
-        success: true,
         message: tools,
       });
     }
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 exports.deleteTool = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleteTool = await pool.query("DELETE FROM tools WHERE id = $1", [
-      id,
-    ]);
+    await pool.query("DELETE FROM tools WHERE id = $1", [id]);
     return res.status(200).json({
-      success: true,
-      msg: "Tool was deleted.",
+      message: "Tool was deleted.",
     });
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };

@@ -9,21 +9,22 @@ exports.postAuthUser = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(211).json({ msg: "Please enter all fields." });
+      res.status(500).json({ message: "Please enter all fields." });
       return;
     }
     const { nick, password } = req.body;
     const exsistingUser = await authService.findUser(nick);
     if (!exsistingUser)
-      return res.status(211).json({ msg: "Invalid credentials" });
+      return res.status(500).json({ message: "Invalid credentials" });
     bcrypt.compare(password, exsistingUser.password).then((isMatch) => {
-      if (!isMatch) return res.status(211).json({ msg: "Invalid credentials" });
+      if (!isMatch)
+        return res.status(500).json({ message: "Invalid credentials" });
       jwt.sign(
         { id: exsistingUser.id },
         config.get("jwtSecret"),
         { expiresIn: 3600 },
         (err, token) => {
-          if (err) return res.status(211).json({ msg: "Cannot log in." });
+          if (err) return res.status(500).json({ message: "Cannot log in." });
           const userInfo = {
             token,
             user: {
@@ -40,7 +41,7 @@ exports.postAuthUser = async (req, res) => {
       );
     });
   } catch (error) {
-    return res.status(211).json({ msg: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -53,7 +54,7 @@ exports.getUserData = async (req, res) => {
       message: "Successfully logged in.",
     });
   } catch (error) {
-    return res.status(211).json({ msg: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 

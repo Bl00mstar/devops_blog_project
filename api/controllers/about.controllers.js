@@ -4,11 +4,10 @@ exports.getAbout = async (req, res) => {
   try {
     const about = await pool.query("SELECT * FROM about;");
     return res.status(200).json({
-      success: true,
       message: about.rows,
     });
   } catch (error) {
-    return res.status(400).json({ msg: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -21,10 +20,9 @@ exports.editAbout = async (req, res) => {
       [id, content, photo_url]
     );
     return res.status(200).json({
-      success: true,
-      message: "ok",
+      message: "About updated!",
     });
   } catch (error) {
-    res.status(400);
+    res.status(500).json({ message: error.message });
   }
 };

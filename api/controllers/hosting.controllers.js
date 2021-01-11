@@ -15,7 +15,6 @@ module.exports = (upload) => {
   let gfs;
 
   connect.once("open", () => {
-    // initialize stream
     gfs = new mongoose.mongo.GridFSBucket(connect.db, {
       bucketName: "uploads",
     });
@@ -51,9 +50,9 @@ module.exports = (upload) => {
                 image,
               });
             })
-            .catch((err) => res.status(500).json(err));
+            .catch((err) => res.status(500).json({ message: err.message }));
         })
-        .catch((err) => res.status(500).json(err));
+        .catch((err) => res.status(500).json({ message: err.message }));
     })
     .get((req, res, next) => {
       Image.find({})
@@ -63,7 +62,7 @@ module.exports = (upload) => {
             images,
           });
         })
-        .catch((err) => res.status(500).json(err));
+        .catch((err) => res.status(500).json({ message: err.message }));
     });
 
   /*
@@ -83,7 +82,7 @@ module.exports = (upload) => {
               });
             })
             .catch((err) => {
-              return res.status(500).json(err);
+              return res.status(500).json({ message: err.message });
             });
         } else {
           res.status(200).json({
@@ -92,21 +91,7 @@ module.exports = (upload) => {
           });
         }
       })
-      .catch((err) => res.status(500).json(err));
-  });
-
-  /*
-        GET: Fetch most recently added record
-    */
-  imageRouter.route("/recent").get((req, res, next) => {
-    Image.findOne({}, {}, { sort: { _id: -1 } })
-      .then((image) => {
-        res.status(200).json({
-          success: true,
-          image,
-        });
-      })
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => res.status(500).json({ message: err.message }));
   });
 
   /*
@@ -179,9 +164,7 @@ module.exports = (upload) => {
         // render image to browser
         gfs.openDownloadStreamByName(req.params.filename).pipe(res);
       } else {
-        res.status(404).json({
-          err: "Not an image",
-        });
+        res.status(500).json({ message: "This is not image." });
       }
     });
   });
@@ -193,7 +176,7 @@ module.exports = (upload) => {
     console.log(req.params.id);
     gfs.delete(new mongoose.Types.ObjectId(req.params.id), (err, data) => {
       if (err) {
-        return res.status(404).json({ err: err });
+        return res.status(500).json({ message: err.message });
       }
 
       res.status(200).json({

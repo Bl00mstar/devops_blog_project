@@ -28,7 +28,7 @@ export default function ImageListLayout({ images }) {
         <tr key={image.id}>
           <th>
             <img
-              className='mini-image'
+              className="mini-image"
               src={"api/hosting/image/" + image.filename}
             ></img>
           </th>
@@ -36,10 +36,10 @@ export default function ImageListLayout({ images }) {
           <th>
             {" "}
             <button
-              className='btn btn-small red'
+              className="btn btn-small red"
               onClick={() => deleteImage(image._id)}
             >
-              <i className=' tiny material-icons '>delete</i>
+              <i className=" tiny material-icons ">delete</i>
             </button>
           </th>
         </tr>
